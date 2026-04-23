@@ -6,7 +6,7 @@
 /*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 13:07:09 by smenard           #+#    #+#             */
-/*   Updated: 2026/04/23 16:17:41 by smenard          ###   ########.fr       */
+/*   Updated: 2026/04/23 18:46:21 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ typedef enum e_log_level
 {
 	DEBUG = 0,
 	INFO = 1,
-	ERRO = 2
+	WARN = 2,
+	ERROR = 3
 }	t_log_level;
 
 typedef struct s_heap_queue
