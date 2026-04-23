@@ -57,7 +57,7 @@ HEADERS_DIR = headers
 
 # ========== INCLUDES ==========
 
-INCLUDES =	I$(MAIN_DIR)/$(HEADERS_DIR)
+INCLUDES =	-I$(MAIN_DIR)/$(HEADERS_DIR)
 
 # ========== FILES ==========
 
