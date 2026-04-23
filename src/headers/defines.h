@@ -6,7 +6,7 @@
 /*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 13:07:09 by smenard           #+#    #+#             */
-/*   Updated: 2026/04/23 14:50:11 by smenard          ###   ########.fr       */
+/*   Updated: 2026/04/23 16:17:41 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,28 @@
 # define DEFINES_H
 
 # include "includes.h"
+
+/* PROGRAM ARGUMENTS */
+# define EXPECTED_AC					8
+# define NUMBER_OF_CODERS				"--number_of_coders"
+# define TIME_TO_BURNOUT				"--time_to_burnout"
+# define TIME_TO_COMPILE				"--time_to_compile"
+# define TIME_TO_DEBUG					"--time_to_debug"
+# define TIME_TO_REFACTOR				"--time_to_refactor"
+# define NUMBER_OF_COMPILES_REQUIRED	"--number_of_compiles_required"
+# define DONGLE_COOLDOWN				"--dongle_cooldown"
+# define SCHEDULER						"--scheduler"
+
+# ifndef LOG_LEVEL
+#  define LOG_LEVEL 1 /* INFO */
+# endif
+
+typedef enum e_log_level
+{
+	DEBUG = 0,
+	INFO = 1,
+	ERRO = 2
+}	t_log_level;
 
 typedef struct s_heap_queue
 {
