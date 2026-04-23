@@ -6,7 +6,7 @@
 /*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 13:07:25 by smenard           #+#    #+#             */
-/*   Updated: 2026/04/23 16:16:26 by smenard          ###   ########.fr       */
+/*   Updated: 2026/04/23 18:45:42 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,10 @@
 # include "defines.h"
 
 /* logging.c */
-void				*ft_log_debug(char *message);
-void				*ft_log_info(char *message);
-void				*ft_log_error(char *message);
+void				*ft_log_debug(char *message, size_t *coder_id);
+void				*ft_log_info(char *message, size_t *coder_id);
+void				*ft_log_warm(char *message, size_t *coder_id);
+void				*ft_log_error(char *message, size_t *coder_id);
 
 /* routine.c */
 void				*coder_routine(void *data);
