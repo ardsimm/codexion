@@ -6,24 +6,30 @@
 /*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 14:58:53 by smenard           #+#    #+#             */
-/*   Updated: 2026/04/23 18:47:43 by smenard          ###   ########.fr       */
+/*   Updated: 2026/04/23 19:19:25 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lib.h"
 
-void	*parse_int_value(size_t *ptr, char *value)
+int	parse_int_value(size_t *ptr, char *value)
 {
-	(void) ptr;
-	(void) value;
-	return (EXIT_SUCCESS);
+	if (!validate_int_value(value))
+		return (FAILURE);
+	*ptr = atoi(value);
+	if ((int64_t *) *ptr < 0)
+		return (FAILURE);
+	return (SUCCESS);
 }
 
-void	*parse_str_value(char **ptr, char *value)
+int	parse_str_value(char **ptr, char *value)
 {
-	(void) ptr;
-	(void) value;
-	return (EXIT_SUCCESS);
+	if (strlen(value) == 0)
+		return (FAILURE);
+	if (strcmp("FIFO", value) || strcmp("EDF", value))
+		return (FAILURE);
+	*ptr = ft_strcpy(value);
+	return (SUCCESS);
 }
 
 const t_simulation	*parse(int ac, char **av)

@@ -6,7 +6,7 @@
 /*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 16:27:19 by smenard           #+#    #+#             */
-/*   Updated: 2026/04/23 18:47:47 by smenard          ###   ########.fr       */
+/*   Updated: 2026/04/23 19:09:05 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,14 @@
 
 bool	validate_int_value(char *value)
 {
-	(void) value;
-	return (false);
+	size_t	i;
+
+	i = 0;
+	while (value[i])
+	{
+		if (value[i] < '0' || value[i] > '9')
+			return (EXIT_FAILURE);
+		i++;
+	}
+	return (true);
 }

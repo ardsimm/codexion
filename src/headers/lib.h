@@ -6,7 +6,7 @@
 /*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 13:07:25 by smenard           #+#    #+#             */
-/*   Updated: 2026/04/23 18:45:42 by smenard          ###   ########.fr       */
+/*   Updated: 2026/04/23 19:13:11 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,14 @@ void				*heap_queue_clear(t_heap_queue *queue);
 /* parse.c */
 const t_simulation	*parse(int ac, char **av);
 
+/* parse_validate.c */
+bool				validate_int_value(char *value);
+
+/* parse_free.c */
+void				*free_return(t_simulation *simulation, void *value);
+
 /* utils.c */
 void				*ft_calloc(size_t nmemb, size_t size);
+char				*ft_strcpy(char *s1);
 
 #endif

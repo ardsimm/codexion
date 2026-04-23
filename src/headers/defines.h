@@ -6,7 +6,7 @@
 /*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 13:07:09 by smenard           #+#    #+#             */
-/*   Updated: 2026/04/23 18:46:21 by smenard          ###   ########.fr       */
+/*   Updated: 2026/04/23 19:08:16 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,10 @@
 # ifndef LOG_LEVEL
 #  define LOG_LEVEL 1 /* INFO */
 # endif
+
+/* EXIT STATUSES */
+# define SUCCESS 0
+# define FAILURE 1
 
 typedef enum e_log_level
 {
