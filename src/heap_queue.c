@@ -6,15 +6,16 @@
 /*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 14:32:39 by smenard           #+#    #+#             */
-/*   Updated: 2026/04/23 14:37:56 by smenard          ###   ########.fr       */
+/*   Updated: 2026/04/23 15:01:44 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lib.h"
 
-t_heap_queue	*heap_queue_create(size_t initial_size)
+t_heap_queue	*heap_queue_create(size_t initial_size, size_t el_size)
 {
 	(void) initial_size;
+	(void) el_size;
 	return (NULL);
 }
 
@@ -28,13 +29,6 @@ void	*heap_queue_remove(t_heap_queue *queue, void *data)
 {
 	(void) queue;
 	(void) data;
-	return (NULL);
-}
-
-void	*heap_queue_remove_idx(t_heap_queue *queue, size_t idx)
-{
-	(void) queue;
-	(void) idx;
 	return (NULL);
 }
 
