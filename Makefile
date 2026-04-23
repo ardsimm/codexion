@@ -49,7 +49,7 @@ ARGUMENTS =	$(NUMBER_OF_CODERS) \
 
 MAIN_DIR = src
 
-PARSE_DIR = parse
+PARSE_DIR = parsing
 
 # ---------- HEADERS ----------
 
