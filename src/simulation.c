@@ -1,16 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   defines.h                                          :+:      :+:    :+:   */
+/*   simulation.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/23 13:07:09 by smenard           #+#    #+#             */
-/*   Updated: 2026/04/23 13:07:21 by smenard          ###   ########.fr       */
+/*   Created: 2026/04/23 13:03:38 by smenard           #+#    #+#             */
+/*   Updated: 2026/04/23 13:04:44 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef DEFINES_H
-# define DEFINES_H
+#include "headers/includes.h"
 
-#endif
+void	*simulation(void)
+{
+	return (EXIT_SUCCESS);
+}
