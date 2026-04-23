@@ -64,16 +64,16 @@ INCLUDES =	-I$(MAIN_DIR)/$(HEADERS_DIR)
 # ---------- MAIN ----------
 
 MAIN_FILES =	$(MAIN_DIR)/main.c \
+				$(MAIN_DIR)/utils.c \
 				$(MAIN_DIR)/heap_queue.c \
 				$(MAIN_DIR)/logging.c \
 				$(MAIN_DIR)/routine.c \
 				$(MAIN_DIR)/simulation.c \
-				$(MAIN_DIR)/utils.c \
 				$(MAIN_DIR)/$(PARSE_DIR)/parse.c \
 				$(MAIN_DIR)/$(PARSE_DIR)/parse_validate.c \
 				$(MAIN_DIR)/$(PARSE_DIR)/parse_free.c \
 
-ALL_FILES =				$(MAIN_FILES)
+ALL_FILES =		$(MAIN_FILES)
 
 # ========== OBJ ==========
 
