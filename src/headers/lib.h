@@ -6,17 +6,18 @@
 /*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 13:07:25 by smenard           #+#    #+#             */
-/*   Updated: 2026/04/23 14:39:12 by smenard          ###   ########.fr       */
+/*   Updated: 2026/04/23 14:50:22 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIB_H
 # define LIB_H
 
-# include "headers/includes.h"
+# include "includes.h"
+# include "defines.h"
 
 /* logging.c */
-void			*log(char *str);
+void			*print(char *str);
 
 /* routine.c */
 void			*coder_routine(void *data);

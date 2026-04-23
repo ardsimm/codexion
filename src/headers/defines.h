@@ -6,14 +6,20 @@
 /*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 13:07:09 by smenard           #+#    #+#             */
-/*   Updated: 2026/04/23 14:34:01 by smenard          ###   ########.fr       */
+/*   Updated: 2026/04/23 14:50:11 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DEFINES_H
 # define DEFINES_H
 
-# include "headers/includes.h"
+# include "includes.h"
+
+typedef struct s_heap_queue
+{
+	size_t	size;
+	void	*data;
+}	t_heap_queue;
 
 typedef enum e_scheduler_mode
 {
@@ -80,11 +86,5 @@ typedef struct s_simulation
 	size_t				dongle_cooldown;
 	pthread_mutex_t		logging_mutex;
 }	t_simulation;
-
-typedef struct s_heap_queue
-{
-	size_t	size;
-	void	*data;
-}	t_heap_queue;
 
 #endif

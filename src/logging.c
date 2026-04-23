@@ -6,13 +6,13 @@
 /*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 13:05:02 by smenard           #+#    #+#             */
-/*   Updated: 2026/04/23 13:06:30 by smenard          ###   ########.fr       */
+/*   Updated: 2026/04/23 14:50:26 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "headers/includes.h"
+#include "includes.h"
 
-void	*log(char *str)
+void	*print(char *str)
 {
 	(void) str;
 	return (EXIT_SUCCESS);

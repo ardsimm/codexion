@@ -6,11 +6,11 @@
 /*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 13:01:17 by smenard           #+#    #+#             */
-/*   Updated: 2026/04/23 13:03:26 by smenard          ###   ########.fr       */
+/*   Updated: 2026/04/23 14:48:36 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "headers/includes.h"
+#include "includes.h"
 
 int	main(int ac, char **av)
 {
