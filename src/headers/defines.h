@@ -6,7 +6,7 @@
 /*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 13:07:09 by smenard           #+#    #+#             */
-/*   Updated: 2026/04/23 13:23:46 by smenard          ###   ########.fr       */
+/*   Updated: 2026/04/23 14:34:01 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,28 +21,25 @@ typedef enum e_scheduler_mode
 	EDF
 }	t_scheduler_mode;
 
-typedef enum e_coder_task
-{
-	COMPILING,
-	DEBUGGING,
-	REFACTORING,
-	NONE
-}	t_coder_task;
-
 typedef struct s_dongle
 {
 	size_t				id;
-	t_coder				*queue;
+	t_heap_queue		*queue;
 	pthread_mutex_t		mutex;
 	t_scheduler_mode	scheduler_mode;
+	size_t				cooldown;
 	size_t				last_use_timestamp;
 }	t_dongle;
 
 typedef struct s_coder
 {
 	size_t				id;
-	t_coder_task		last_task;
 	size_t				last_task_end_timestamp;
+	size_t				compilation_count;
+	size_t				time_to_burnout;
+	size_t				time_to_compile;
+	size_t				time_to_debug;
+	size_t				time_to_refactor;
 }	t_coder;
 
 /**
@@ -83,5 +80,11 @@ typedef struct s_simulation
 	size_t				dongle_cooldown;
 	pthread_mutex_t		logging_mutex;
 }	t_simulation;
+
+typedef struct s_heap_queue
+{
+	size_t	size;
+	void	*data;
+}	t_heap_queue;
 
 #endif
