@@ -6,11 +6,11 @@
 /*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 13:06:38 by smenard           #+#    #+#             */
-/*   Updated: 2026/04/23 16:17:54 by smenard          ###   ########.fr       */
+/*   Updated: 2026/04/23 18:47:25 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes.h"
+#include "lib.h"
 
 void	*ft_calloc(size_t nmemb, size_t size)
 {
