@@ -6,7 +6,7 @@
 /*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 14:58:53 by smenard           #+#    #+#             */
-/*   Updated: 2026/04/23 16:10:11 by smenard          ###   ########.fr       */
+/*   Updated: 2026/04/23 17:23:04 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	*parse_int_value(size_t *ptr, char *value)
 	return (EXIT_SUCCESS);
 }
 
-void	*parse_int_value(char **ptr, char *value)
+void	*parse_str_value(char **ptr, char *value)
 {
 	(void) ptr;
 	(void) value;
