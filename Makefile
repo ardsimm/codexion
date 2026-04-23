@@ -1,4 +1,47 @@
+# ========== FLAGS ==========
 CFLAGS = -Wall -Wextra -Werror
+
+# ========== PROGRAM ARGUMENTS ==========
+
+# ---------- MARKERS ----------
+NUMBER_OF_CODERS_MARKER =				--number_of_coders
+TIME_TO_BURNOUT_MARKER =				--time_to_burnout
+TIME_TO_COMPILE_MARKER =				--time_to_compile
+TIME_TO_DEBUG_MARKER =					--time_to_debug
+TIME_TO_REFACTOR_MARKER =				--time_to_refactor
+NUMBER_OF_COMPILES_REQUIRED_MARKER =	--number_of_compiles_required
+DONGLE_COOLDOWN_MARKER =				--dongle_cooldown
+SCHEDULER_MARKER =						--scheduler
+
+# ---------- VALUES ----------
+NUMBER_OF_CODERS_VALUE =			42
+TIME_TO_BURNOUT_VALUE =				240
+TIME_TO_COMPILE_VALUE =				30
+TIME_TO_DEBUG_VALUE =				30
+TIME_TO_REFACTOR_VALUE =			30
+NUMBER_OF_COMPILES_REQUIRED_VALUE =	12
+DONGLE_COOLDOWN_VALUE =				60
+SCHEDULER_VALUE =					FIFO
+
+# ---------- FULL ARGUMENTS ----------
+NUMBER_OF_CODERS =				$(NUMBER_OF_CODERS_MARKER) $(NUMBER_OF_CODERS_VALUE)
+TIME_TO_BURNOUT =				$(TIME_TO_BURNOUT_MARKER) $(TIME_TO_BURNOUT_VALUE)
+TIME_TO_COMPILE =				$(TIME_TO_COMPILE_MARKER) $(TIME_TO_COMPILE_VALUE)
+TIME_TO_DEBUG =					$(TIME_TO_DEBUG_MARKER) $(TIME_TO_DEBUG_VALUE)
+TIME_TO_REFACTOR =				$(TIME_TO_REFACTOR_MARKER) $(TIME_TO_REFACTOR_VALUE)
+NUMBER_OF_COMPILES_REQUIRED =	$(NUMBER_OF_COMPILES_REQUIRED_MARKER) $(NUMBER_OF_COMPILES_REQUIRED_VALUE)
+DONGLE_COOLDOWN =				$(DONGLE_COOLDOWN_MARKER) $(DONGLE_COOLDOWN_VALUE)
+SCHEDULER =						$(SCHEDULER_MARKER) $(SCHEDULER_VALUE)
+
+# ---------- COMBINED ARGUMENTS ----------
+ARGUMENTS =	$(NUMBER_OF_CODERS) \
+			$(TIME_TO_BURNOUT) \
+			$(TIME_TO_COMPILE) \
+			$(TIME_TO_DEBUG) \
+			$(TIME_TO_REFACTOR) \
+			$(NUMBER_OF_COMPILES_REQUIRED) \
+			$(DONGLE_COOLDOWN) \
+			$(SCHEDULER)
 
 # ========== DIRECTORIES ==========
 
@@ -6,25 +49,29 @@ CFLAGS = -Wall -Wextra -Werror
 
 MAIN_DIR = src
 
+PARSE_DIR = parse
+
 # ---------- HEADERS ----------
 
 HEADERS_DIR = headers
 
 # ========== INCLUDES ==========
 
-INCLUDES = -I$(MAIN_DIR)/$(HEADERS_DIR)
+INCLUDES =	I$(MAIN_DIR)/$(HEADERS_DIR)
 
 # ========== FILES ==========
 
 # ---------- MAIN ----------
 
-MAIN_FILES =			$(MAIN_DIR)/main.c \
-						$(MAIN_DIR)/heap_queue.c \
-						$(MAIN_DIR)/logging.c \
-						$(MAIN_DIR)/routine.c \
-						$(MAIN_DIR)/simulation.c \
-						$(MAIN_DIR)/utils.c \
-						$(MAIN_DIR)/parse.c
+MAIN_FILES =	$(MAIN_DIR)/main.c \
+				$(MAIN_DIR)/heap_queue.c \
+				$(MAIN_DIR)/logging.c \
+				$(MAIN_DIR)/routine.c \
+				$(MAIN_DIR)/simulation.c \
+				$(MAIN_DIR)/utils.c \
+				$(MAIN_DIR)/$(PARSE_DIR)/parse.c \
+				$(MAIN_DIR)/$(PARSE_DIR)/parse_validate.c \
+				$(MAIN_DIR)/$(PARSE_DIR)/parse_free.c \
 
 ALL_FILES =				$(MAIN_FILES)
 
@@ -50,6 +97,9 @@ TOTAL_FILES := $(words $(ALL_FILES))
 COUNTER_FILE := .compile_counter
 
 # ========== RULES ==========
+
+run: $(NAME_MAIN)
+	./codexion $(ARGUMENTS)
 
 all: reset_counter $(NAME_MAIN)
 
@@ -97,6 +147,6 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re reset_counter
+.PHONY: all clean fclean re reset_counter run
 
 -include $(DFILES)
