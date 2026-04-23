@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   parse_free.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/23 13:01:17 by smenard           #+#    #+#             */
-/*   Updated: 2026/04/23 18:47:37 by smenard          ###   ########.fr       */
+/*   Created: 2026/04/23 16:25:54 by smenard           #+#    #+#             */
+/*   Updated: 2026/04/23 18:48:13 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lib.h"
 
-int	main(int ac, char **av)
+void	*free_return(t_simulation *simulation, void *value)
 {
-	(void) ac;
-	(void) av;
-	return (EXIT_SUCCESS);
+	(void) simulation;
+	(void) value;
+	return (NULL);
 }

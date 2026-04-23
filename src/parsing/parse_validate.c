@@ -1,20 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   parse_validate.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/23 13:01:17 by smenard           #+#    #+#             */
-/*   Updated: 2026/04/23 18:47:37 by smenard          ###   ########.fr       */
+/*   Created: 2026/04/23 16:27:19 by smenard           #+#    #+#             */
+/*   Updated: 2026/04/23 18:47:47 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lib.h"
+#include "includes.h"
 
-int	main(int ac, char **av)
+bool	validate_int_value(char *value)
 {
-	(void) ac;
-	(void) av;
-	return (EXIT_SUCCESS);
+	(void) value;
+	return (false);
 }

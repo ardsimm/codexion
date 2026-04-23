@@ -1,20 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   simulation.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/23 13:01:17 by smenard           #+#    #+#             */
-/*   Updated: 2026/04/23 18:47:37 by smenard          ###   ########.fr       */
+/*   Created: 2026/04/23 13:03:38 by smenard           #+#    #+#             */
+/*   Updated: 2026/04/23 18:47:32 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lib.h"
 
-int	main(int ac, char **av)
+void	*run_simulation(t_simulation *simulation)
 {
-	(void) ac;
-	(void) av;
+	(void) simulation;
 	return (EXIT_SUCCESS);
 }

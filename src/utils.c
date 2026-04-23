@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/23 13:01:17 by smenard           #+#    #+#             */
-/*   Updated: 2026/04/23 18:47:37 by smenard          ###   ########.fr       */
+/*   Created: 2026/04/23 13:06:38 by smenard           #+#    #+#             */
+/*   Updated: 2026/04/23 18:47:25 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lib.h"
 
-int	main(int ac, char **av)
+void	*ft_calloc(size_t nmemb, size_t size)
 {
-	(void) ac;
-	(void) av;
-	return (EXIT_SUCCESS);
+	(void) nmemb;
+	(void) size;
+	return (NULL);
 }

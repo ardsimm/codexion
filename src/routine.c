@@ -1,20 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/23 13:01:17 by smenard           #+#    #+#             */
-/*   Updated: 2026/04/23 18:47:37 by smenard          ###   ########.fr       */
+/*   Created: 2026/04/23 13:04:32 by smenard           #+#    #+#             */
+/*   Updated: 2026/04/23 18:47:35 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lib.h"
 
-int	main(int ac, char **av)
+void	*coder_routine(void *data)
 {
-	(void) ac;
-	(void) av;
+	(void) data;
 	return (EXIT_SUCCESS);
 }
