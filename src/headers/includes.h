@@ -6,7 +6,7 @@
 /*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 13:02:00 by smenard           #+#    #+#             */
-/*   Updated: 2026/04/23 13:27:30 by smenard          ###   ########.fr       */
+/*   Updated: 2026/04/23 14:30:46 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,6 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <string.h>
-# include <pthreads.h>
+# include <pthread.h>
 
 #endif
