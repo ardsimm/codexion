@@ -6,14 +6,28 @@
 /*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 14:58:53 by smenard           #+#    #+#             */
-/*   Updated: 2026/04/23 14:59:57 by smenard          ###   ########.fr       */
+/*   Updated: 2026/04/23 16:10:11 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lib.h"
 #include "defines.h"
 
-t_simulation	*parse(int ac, char **av)
+void	*parse_int_value(size_t *ptr, char *value)
+{
+	(void) ptr;
+	(void) value;
+	return (EXIT_SUCCESS);
+}
+
+void	*parse_int_value(char **ptr, char *value)
+{
+	(void) ptr;
+	(void) value;
+	return (EXIT_SUCCESS);
+}
+
+const t_simulation	*parse(int ac, char **av)
 {
 	(void) ac;
 	(void) av;

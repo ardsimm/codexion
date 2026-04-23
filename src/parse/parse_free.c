@@ -1,37 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   logging.c                                          :+:      :+:    :+:   */
+/*   parse_free.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/23 13:05:02 by smenard           #+#    #+#             */
-/*   Updated: 2026/04/23 16:15:44 by smenard          ###   ########.fr       */
+/*   Created: 2026/04/23 16:25:54 by smenard           #+#    #+#             */
+/*   Updated: 2026/04/23 16:26:47 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes.h"
+#include "defines.h"
 
-void	*ft_log(char *prefix, char *str)
+void	*free_return(t_simulation *simulation, void *value)
 {
-	(void) str;
-	return (EXIT_SUCCESS);
-}
-
-void	*ft_log_debug(char *message)
-{
-	(void) message;
-	return (NULL);
-}
-
-void	*ft_log_info(char *message)
-{
-	(void) message;
-	return (NULL);
-}
-
-void	*ft_log_error(char *message)
-{
-	(void) message;
+	(void) simulation;
+	(void) value;
 	return (NULL);
 }

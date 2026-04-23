@@ -1,37 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   logging.c                                          :+:      :+:    :+:   */
+/*   parse_validate.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/23 13:05:02 by smenard           #+#    #+#             */
-/*   Updated: 2026/04/23 16:15:44 by smenard          ###   ########.fr       */
+/*   Created: 2026/04/23 16:27:19 by smenard           #+#    #+#             */
+/*   Updated: 2026/04/23 16:28:01 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes.h"
+#include "defines.h"
 
-void	*ft_log(char *prefix, char *str)
+bool	validate_int_value(char *value)
 {
-	(void) str;
-	return (EXIT_SUCCESS);
-}
-
-void	*ft_log_debug(char *message)
-{
-	(void) message;
-	return (NULL);
-}
-
-void	*ft_log_info(char *message)
-{
-	(void) message;
-	return (NULL);
-}
-
-void	*ft_log_error(char *message)
-{
-	(void) message;
-	return (NULL);
+	(void) value;
+	return (false);
 }
