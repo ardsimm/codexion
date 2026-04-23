@@ -24,6 +24,7 @@ MAIN_FILES =			$(MAIN_DIR)/main.c \
 						$(MAIN_DIR)/routine.c \
 						$(MAIN_DIR)/simulation.c \
 						$(MAIN_DIR)/utils.c \
+						$(MAIN_DIR)/parse.c
 
 ALL_FILES =				$(MAIN_FILES)
 
