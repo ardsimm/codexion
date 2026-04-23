@@ -6,7 +6,7 @@
 /*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 13:05:02 by smenard           #+#    #+#             */
-/*   Updated: 2026/04/23 16:15:44 by smenard          ###   ########.fr       */
+/*   Updated: 2026/04/23 17:22:18 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	*ft_log(char *prefix, char *str)
 {
+	(void) prefix;
 	(void) str;
 	return (EXIT_SUCCESS);
 }
