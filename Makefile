@@ -3,35 +3,14 @@ CFLAGS = -Wall -Wextra -Werror
 
 # ========== PROGRAM ARGUMENTS ==========
 
-# ---------- MARKERS ----------
-NUMBER_OF_CODERS_MARKER =				--number_of_coders
-TIME_TO_BURNOUT_MARKER =				--time_to_burnout
-TIME_TO_COMPILE_MARKER =				--time_to_compile
-TIME_TO_DEBUG_MARKER =					--time_to_debug
-TIME_TO_REFACTOR_MARKER =				--time_to_refactor
-NUMBER_OF_COMPILES_REQUIRED_MARKER =	--number_of_compiles_required
-DONGLE_COOLDOWN_MARKER =				--dongle_cooldown
-SCHEDULER_MARKER =						--scheduler
-
-# ---------- VALUES ----------
-NUMBER_OF_CODERS_VALUE =			42
-TIME_TO_BURNOUT_VALUE =				240
-TIME_TO_COMPILE_VALUE =				30
-TIME_TO_DEBUG_VALUE =				30
-TIME_TO_REFACTOR_VALUE =			30
-NUMBER_OF_COMPILES_REQUIRED_VALUE =	12
-DONGLE_COOLDOWN_VALUE =				60
-SCHEDULER_VALUE =					FIFO
-
-# ---------- FULL ARGUMENTS ----------
-NUMBER_OF_CODERS =				$(NUMBER_OF_CODERS_MARKER) $(NUMBER_OF_CODERS_VALUE)
-TIME_TO_BURNOUT =				$(TIME_TO_BURNOUT_MARKER) $(TIME_TO_BURNOUT_VALUE)
-TIME_TO_COMPILE =				$(TIME_TO_COMPILE_MARKER) $(TIME_TO_COMPILE_VALUE)
-TIME_TO_DEBUG =					$(TIME_TO_DEBUG_MARKER) $(TIME_TO_DEBUG_VALUE)
-TIME_TO_REFACTOR =				$(TIME_TO_REFACTOR_MARKER) $(TIME_TO_REFACTOR_VALUE)
-NUMBER_OF_COMPILES_REQUIRED =	$(NUMBER_OF_COMPILES_REQUIRED_MARKER) $(NUMBER_OF_COMPILES_REQUIRED_VALUE)
-DONGLE_COOLDOWN =				$(DONGLE_COOLDOWN_MARKER) $(DONGLE_COOLDOWN_VALUE)
-SCHEDULER =						$(SCHEDULER_MARKER) $(SCHEDULER_VALUE)
+NUMBER_OF_CODERS =				8
+TIME_TO_BURNOUT =				240
+TIME_TO_COMPILE =				30
+TIME_TO_DEBUG =					30
+TIME_TO_REFACTOR =				30
+NUMBER_OF_COMPILES_REQUIRED =	12
+DONGLE_COOLDOWN =				60
+SCHEDULER =						FIFO
 
 # ---------- COMBINED ARGUMENTS ----------
 ARGUMENTS =	$(NUMBER_OF_CODERS) \
@@ -48,8 +27,6 @@ ARGUMENTS =	$(NUMBER_OF_CODERS) \
 # ---------- MAIN ----------
 
 MAIN_DIR = src
-
-PARSE_DIR = parsing
 
 # ---------- HEADERS ----------
 
@@ -69,9 +46,7 @@ MAIN_FILES =	$(MAIN_DIR)/main.c \
 				$(MAIN_DIR)/logging.c \
 				$(MAIN_DIR)/routine.c \
 				$(MAIN_DIR)/simulation.c \
-				$(MAIN_DIR)/$(PARSE_DIR)/parse.c \
-				$(MAIN_DIR)/$(PARSE_DIR)/parse_validate.c \
-				$(MAIN_DIR)/$(PARSE_DIR)/parse_free.c \
+				$(MAIN_DIR)/parse.c \
 
 ALL_FILES =		$(MAIN_FILES)
 
@@ -89,6 +64,8 @@ DFILES = $(ALL_OBJ:.o=.d)
 
 NAME_MAIN = codexion
 
+NAME_DEBUG = codexion_debug
+
 # ========== PROGRESS TRACKING ==========
 
 TOTAL_FILES := $(words $(ALL_FILES))
@@ -102,6 +79,10 @@ run: $(NAME_MAIN)
 	./codexion $(ARGUMENTS)
 
 all: reset_counter $(NAME_MAIN)
+
+debug:
+	$(CC) -g $(ALL_FILES) -o $(NAME_DEBUG) $(INCLUDES)
+	gdb $(NAME_DEBUG) --args $(NAME_DEBUG) $(ARGUMENTS)
 
 $(NAME_MAIN): $(SRCS_OBJ)
 	@echo "\033[1;32m[LINKING]\033[0m $@"
@@ -119,6 +100,8 @@ reset_counter:
 
 # ########## IMPLICIT RULES ##########
 
+# ---------- COMPILATION ----------
+
 # Rule for mandatory files
 $(MAIN_DIR)/%.o: $(MAIN_DIR)/%.c
 	@COMPILED=$$(head -n 1 $(COUNTER_FILE) 2>/dev/null || echo "0"); \
@@ -129,6 +112,8 @@ $(MAIN_DIR)/%.o: $(MAIN_DIR)/%.c
 	echo "$$COMPILED" > $(COUNTER_FILE); \
 	echo "$$TOTAL" >> $(COUNTER_FILE)
 	@$(CC) $(CFLAGS) -MMD -c $< -o $@ $(INCLUDES)
+
+# ########## UTILITIES ##########
 
 # ---------- CLEAN ----------
 
