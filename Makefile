@@ -75,10 +75,10 @@ COUNTER_FILE := .compile_counter
 
 # ========== RULES ==========
 
-run: $(NAME_MAIN)
-	./codexion $(ARGUMENTS)
-
 all: reset_counter $(NAME_MAIN)
+
+run: $(NAME_MAIN)
+	./$(NAME_MAIN) $(ARGUMENTS)
 
 debug:
 	$(CC) -g $(ALL_FILES) -o $(NAME_DEBUG) $(INCLUDES)
