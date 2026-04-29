@@ -6,29 +6,89 @@
 /*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 14:58:53 by smenard           #+#    #+#             */
-/*   Updated: 2026/04/23 18:47:43 by smenard          ###   ########.fr       */
+/*   Updated: 2026/04/29 15:23:02 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lib.h"
 
-void	*parse_int_value(size_t *ptr, char *value)
+static bool	ft_isspace(char c)
 {
-	(void) ptr;
-	(void) value;
-	return (EXIT_SUCCESS);
+	return ((c <= '\r' && c >= '\t') || c == ' ');
 }
 
-void	*parse_str_value(char **ptr, char *value)
+static bool	ft_isdigit(char c)
 {
-	(void) ptr;
-	(void) value;
-	return (EXIT_SUCCESS);
+	return (c >= '0' && c <= '9');
 }
 
-const t_simulation	*parse(int ac, char **av)
+static int	atoi_safe(char *value)
 {
-	(void) ac;
-	(void) av;
-	return (NULL);
+	size_t		i;
+	uint64_t	val;
+
+	i = 0;
+	val = 0;
+	while (ft_isspace(value[i]))
+		i++;
+	while (ft_isdigit(value[i]) || value[i] == '-')
+	{
+		if (value[i] == '-')
+			return (-1);
+		val *= 10;
+		val += value[i] - '0';
+		i++;
+	}
+	if (val > INT32_MAX || (int)val < 0)
+		return (-1);
+	return (val);
+}
+
+static void	build_simulation_ptrs_array(
+	t_typed_voidp ptrs[EXPECTED_AC],
+	t_simulation *simulation)
+{
+	ptrs[0] = (t_typed_voidp){.type = INT, .data = &simulation->coders_count};
+	ptrs[1] = (t_typed_voidp){.type = INT,
+		.data = &simulation->time_to_burnout};
+	ptrs[2] = (t_typed_voidp){.type = INT,
+		.data = &simulation->time_to_compile};
+	ptrs[3] = (t_typed_voidp){
+		.type = INT,
+		.data = &simulation->time_to_debug};
+	ptrs[4] = (t_typed_voidp){.type = INT,
+		.data = &simulation->time_to_refactor};
+	ptrs[5] = (t_typed_voidp){.type = INT,
+		.data = &simulation->number_of_compiles};
+	ptrs[6] = (t_typed_voidp){.type = INT,
+		.data = &simulation->number_of_compiles};
+	ptrs[7] = (t_typed_voidp){.type = STR, .data = &simulation->scheduler};
+}
+
+t_simulation	*parse(int ac, char **av)
+{
+	size_t			i;
+	t_simulation	*simulation;
+	t_typed_voidp	ptrs[EXPECTED_AC];
+
+	simulation = ft_calloc(1, sizeof(t_simulation));
+	if (!simulation)
+		return (NULL);
+	build_simulation_ptrs_array(ptrs, simulation);
+	i = 1;
+	if (ac < EXPECTED_AC)
+		return (free_return((void *[]){simulation->scheduler, simulation},
+			2, NULL));
+	while (i < (size_t)ac)
+	{
+		if (ptrs[i - 1].type == INT)
+			*(int *)ptrs[i - 1].data = atoi_safe(av[i]);
+		else
+			*(char **)ptrs[i - 1].data = ft_strcpy(av[i]);
+		if (!validate_value(ptrs[i - 1]))
+			return ((free_return((void *[]){simulation->scheduler, simulation},
+					2, NULL)));
+		i++;
+	}
+	return (simulation);
 }

@@ -6,7 +6,7 @@
 /*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 13:07:09 by smenard           #+#    #+#             */
-/*   Updated: 2026/04/23 18:46:21 by smenard          ###   ########.fr       */
+/*   Updated: 2026/04/29 15:01:23 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,19 @@
 # include "includes.h"
 
 /* PROGRAM ARGUMENTS */
-# define EXPECTED_AC					8
-# define NUMBER_OF_CODERS				"--number_of_coders"
-# define TIME_TO_BURNOUT				"--time_to_burnout"
-# define TIME_TO_COMPILE				"--time_to_compile"
-# define TIME_TO_DEBUG					"--time_to_debug"
-# define TIME_TO_REFACTOR				"--time_to_refactor"
-# define NUMBER_OF_COMPILES_REQUIRED	"--number_of_compiles_required"
-# define DONGLE_COOLDOWN				"--dongle_cooldown"
-# define SCHEDULER						"--scheduler"
+# define EXPECTED_AC	9
 
 # ifndef LOG_LEVEL
 #  define LOG_LEVEL 1 /* INFO */
 # endif
+
+# ifndef NUMBER_OF_CODERS
+#  define NUMBER_OF_CODERS 8
+# endif
+
+/* EXIT STATUSES */
+# define SUCCESS 0
+# define FAILURE 1
 
 typedef enum e_log_level
 {
@@ -49,6 +49,18 @@ typedef enum e_scheduler_mode
 	FIFO,
 	EDF
 }	t_scheduler_mode;
+
+typedef enum e_data_type
+{
+	INT,
+	STR
+}	t_data_type;
+
+typedef struct e_typed_voidp
+{
+	t_data_type	type;
+	void		*data;
+}	t_typed_voidp;
 
 typedef struct s_dongle
 {
@@ -98,16 +110,17 @@ typedef struct s_coder
  */
 typedef struct s_simulation
 {
-	size_t				coders_count;
-	t_dongle			*dongles;
-	t_coder				*coders;
-	size_t				time_to_burnout;
-	size_t				time_to_compile;
-	size_t				time_to_debug;
-	size_t				time_to_refactor;
-	size_t				number_of_compiles;
-	size_t				dongle_cooldown;
-	pthread_mutex_t		logging_mutex;
+	int32_t			coders_count;
+	t_dongle		dongles[NUMBER_OF_CODERS];
+	t_coder			coders[NUMBER_OF_CODERS];
+	int32_t			time_to_burnout;
+	int32_t			time_to_compile;
+	int32_t			time_to_debug;
+	int32_t			time_to_refactor;
+	int32_t			number_of_compiles;
+	int32_t			dongle_cooldown;
+	char			*scheduler;
+	pthread_mutex_t	logging_mutex;
 }	t_simulation;
 
 #endif

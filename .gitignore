@@ -56,6 +56,8 @@ dkms.conf
 
 # Project executable file
 codexion
+codexion_debug
+codexion_vg
 
 # Project compilation temp files
 .compile_counter

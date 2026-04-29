@@ -1,37 +1,25 @@
 # ========== FLAGS ==========
-CFLAGS = -Wall -Wextra -Werror
+
+# ---------- CLANG ----------
+CFLAGS =	-Wall -Wextra -Werror
+
+# ---------- VALGRIND ----------
+VGFLAGS =	--leak-check=full \
+			-s \
+			--show-mismatched-frees=yes \
+			--track-origins=yes \
+			--show-leak-kinds=all
 
 # ========== PROGRAM ARGUMENTS ==========
 
-# ---------- MARKERS ----------
-NUMBER_OF_CODERS_MARKER =				--number_of_coders
-TIME_TO_BURNOUT_MARKER =				--time_to_burnout
-TIME_TO_COMPILE_MARKER =				--time_to_compile
-TIME_TO_DEBUG_MARKER =					--time_to_debug
-TIME_TO_REFACTOR_MARKER =				--time_to_refactor
-NUMBER_OF_COMPILES_REQUIRED_MARKER =	--number_of_compiles_required
-DONGLE_COOLDOWN_MARKER =				--dongle_cooldown
-SCHEDULER_MARKER =						--scheduler
-
-# ---------- VALUES ----------
-NUMBER_OF_CODERS_VALUE =			42
-TIME_TO_BURNOUT_VALUE =				240
-TIME_TO_COMPILE_VALUE =				30
-TIME_TO_DEBUG_VALUE =				30
-TIME_TO_REFACTOR_VALUE =			30
-NUMBER_OF_COMPILES_REQUIRED_VALUE =	12
-DONGLE_COOLDOWN_VALUE =				60
-SCHEDULER_VALUE =					FIFO
-
-# ---------- FULL ARGUMENTS ----------
-NUMBER_OF_CODERS =				$(NUMBER_OF_CODERS_MARKER) $(NUMBER_OF_CODERS_VALUE)
-TIME_TO_BURNOUT =				$(TIME_TO_BURNOUT_MARKER) $(TIME_TO_BURNOUT_VALUE)
-TIME_TO_COMPILE =				$(TIME_TO_COMPILE_MARKER) $(TIME_TO_COMPILE_VALUE)
-TIME_TO_DEBUG =					$(TIME_TO_DEBUG_MARKER) $(TIME_TO_DEBUG_VALUE)
-TIME_TO_REFACTOR =				$(TIME_TO_REFACTOR_MARKER) $(TIME_TO_REFACTOR_VALUE)
-NUMBER_OF_COMPILES_REQUIRED =	$(NUMBER_OF_COMPILES_REQUIRED_MARKER) $(NUMBER_OF_COMPILES_REQUIRED_VALUE)
-DONGLE_COOLDOWN =				$(DONGLE_COOLDOWN_MARKER) $(DONGLE_COOLDOWN_VALUE)
-SCHEDULER =						$(SCHEDULER_MARKER) $(SCHEDULER_VALUE)
+NUMBER_OF_CODERS =				8
+TIME_TO_BURNOUT =				240
+TIME_TO_COMPILE =				30
+TIME_TO_DEBUG =					30
+TIME_TO_REFACTOR =				30
+NUMBER_OF_COMPILES_REQUIRED =	12
+DONGLE_COOLDOWN =				60
+SCHEDULER =						FIFO
 
 # ---------- COMBINED ARGUMENTS ----------
 ARGUMENTS =	$(NUMBER_OF_CODERS) \
@@ -41,15 +29,13 @@ ARGUMENTS =	$(NUMBER_OF_CODERS) \
 			$(TIME_TO_REFACTOR) \
 			$(NUMBER_OF_COMPILES_REQUIRED) \
 			$(DONGLE_COOLDOWN) \
-			$(SCHEDULER)
-
+			$(SCHEDULER) \
 # ========== DIRECTORIES ==========
 
 # ---------- MAIN ----------
 
 MAIN_DIR = src
-
-PARSE_DIR = parsing
+PARSING_DIR = parsing
 
 # ---------- HEADERS ----------
 
@@ -64,16 +50,15 @@ INCLUDES =	-I$(MAIN_DIR)/$(HEADERS_DIR)
 # ---------- MAIN ----------
 
 MAIN_FILES =	$(MAIN_DIR)/main.c \
+				$(MAIN_DIR)/utils.c \
 				$(MAIN_DIR)/heap_queue.c \
 				$(MAIN_DIR)/logging.c \
 				$(MAIN_DIR)/routine.c \
 				$(MAIN_DIR)/simulation.c \
-				$(MAIN_DIR)/utils.c \
-				$(MAIN_DIR)/$(PARSE_DIR)/parse.c \
-				$(MAIN_DIR)/$(PARSE_DIR)/parse_validate.c \
-				$(MAIN_DIR)/$(PARSE_DIR)/parse_free.c \
+				$(MAIN_DIR)/$(PARSING_DIR)/parse.c \
+				$(MAIN_DIR)/$(PARSING_DIR)/parse_validate.c \
 
-ALL_FILES =				$(MAIN_FILES)
+ALL_FILES =		$(MAIN_FILES)
 
 # ========== OBJ ==========
 
@@ -87,7 +72,15 @@ DFILES = $(ALL_OBJ:.o=.d)
 
 # ========== NAMES ==========
 
-NAME_MAIN = codexion
+NAME_MAIN =		codexion
+
+NAME_DEBUG =	codexion_debug
+
+NAME_VG =		codexion_vg
+
+ALL_EXES =		$(NAME_MAIN) \
+				$(NAME_DEBUG) \
+				$(NAME_VG)
 
 # ========== PROGRESS TRACKING ==========
 
@@ -98,10 +91,22 @@ COUNTER_FILE := .compile_counter
 
 # ========== RULES ==========
 
-run: $(NAME_MAIN)
-	./codexion $(ARGUMENTS)
-
 all: reset_counter $(NAME_MAIN)
+
+run: $(NAME_MAIN)
+	./$(NAME_MAIN) $(ARGUMENTS)
+
+$(NAME_DEBUG): $(ALL_FILES)
+	$(CC) -g $(ALL_FILES) -o $(NAME_DEBUG) $(INCLUDES)
+
+debug: $(NAME_DEBUG)
+	gdb $(NAME_DEBUG) --args $(NAME_DEBUG) $(ARGUMENTS)
+
+$(NAME_VG): $(ALL_FILES)
+	$(CC) -g $(ALL_FILES) -o $(NAME_VG) $(INCLUDES)
+
+vg: $(NAME_VG)
+	valgrind $(VGFLAGS) ./$(NAME_VG) $(ARGUMENTS)
 
 $(NAME_MAIN): $(SRCS_OBJ)
 	@echo "\033[1;32m[LINKING]\033[0m $@"
@@ -119,6 +124,8 @@ reset_counter:
 
 # ########## IMPLICIT RULES ##########
 
+# ---------- COMPILATION ----------
+
 # Rule for mandatory files
 $(MAIN_DIR)/%.o: $(MAIN_DIR)/%.c
 	@COMPILED=$$(head -n 1 $(COUNTER_FILE) 2>/dev/null || echo "0"); \
@@ -130,6 +137,8 @@ $(MAIN_DIR)/%.o: $(MAIN_DIR)/%.c
 	echo "$$TOTAL" >> $(COUNTER_FILE)
 	@$(CC) $(CFLAGS) -MMD -c $< -o $@ $(INCLUDES)
 
+# ########## UTILITIES ##########
+
 # ---------- CLEAN ----------
 
 clean:
@@ -140,13 +149,13 @@ clean:
 
 fclean: clean
 	@echo "\033[1;31m[FCLEAN]\033[0m Removing executables..."
-	@rm -rf $(NAME_MAIN)
+	@rm -rf $(ALL_EXES)
 	@echo "\033[1;32m[DONE]\033[0m Full clean completed!"
 
 # ---------- re ----------
 
 re: fclean all
 
-.PHONY: all clean fclean re reset_counter run
+.PHONY: all clean fclean re reset_counter run debug vg
 
 -include $(DFILES)
