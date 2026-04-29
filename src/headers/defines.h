@@ -6,7 +6,7 @@
 /*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 13:07:09 by smenard           #+#    #+#             */
-/*   Updated: 2026/04/29 15:01:23 by smenard          ###   ########.fr       */
+/*   Updated: 2026/04/29 17:54:36 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,6 @@
 
 # ifndef LOG_LEVEL
 #  define LOG_LEVEL 1 /* INFO */
-# endif
-
-# ifndef NUMBER_OF_CODERS
-#  define NUMBER_OF_CODERS 8
 # endif
 
 /* EXIT STATUSES */
@@ -67,9 +63,10 @@ typedef struct s_dongle
 	size_t				id;
 	t_heap_queue		*queue;
 	pthread_mutex_t		mutex;
-	t_scheduler_mode	scheduler_mode;
 	size_t				cooldown;
+	t_scheduler_mode	scheduler_mode;
 	size_t				last_use_timestamp;
+	bool				in_use;
 }	t_dongle;
 
 typedef struct s_coder
@@ -111,8 +108,8 @@ typedef struct s_coder
 typedef struct s_simulation
 {
 	int32_t			coders_count;
-	t_dongle		dongles[NUMBER_OF_CODERS];
-	t_coder			coders[NUMBER_OF_CODERS];
+	t_dongle		*dongles;
+	t_coder			*coders;
 	int32_t			time_to_burnout;
 	int32_t			time_to_compile;
 	int32_t			time_to_debug;
@@ -121,6 +118,7 @@ typedef struct s_simulation
 	int32_t			dongle_cooldown;
 	char			*scheduler;
 	pthread_mutex_t	logging_mutex;
+	bool			logging_blocked;
 }	t_simulation;
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 14:32:39 by smenard           #+#    #+#             */
-/*   Updated: 2026/04/23 15:01:44 by smenard          ###   ########.fr       */
+/*   Updated: 2026/04/29 17:37:35 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,5 @@ void	*heap_queue_pop(t_heap_queue *queue)
 void	*heap_queue_clear(t_heap_queue *queue)
 {
 	(void) queue;
-	return (EXIT_SUCCESS);
+	return (NULL);
 }

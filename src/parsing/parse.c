@@ -6,7 +6,7 @@
 /*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 14:58:53 by smenard           #+#    #+#             */
-/*   Updated: 2026/04/29 15:23:02 by smenard          ###   ########.fr       */
+/*   Updated: 2026/04/29 17:31:22 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,10 +85,10 @@ t_simulation	*parse(int ac, char **av)
 			*(int *)ptrs[i - 1].data = atoi_safe(av[i]);
 		else
 			*(char **)ptrs[i - 1].data = ft_strcpy(av[i]);
-		if (!validate_value(ptrs[i - 1]))
-			return ((free_return((void *[]){simulation->scheduler, simulation},
-					2, NULL)));
 		i++;
 	}
+	if (!validate_simulation(simulation))
+		return ((free_return((void *[]){simulation->scheduler, simulation},
+				2, NULL)));
 	return (simulation);
 }

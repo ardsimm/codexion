@@ -21,6 +21,12 @@ NUMBER_OF_COMPILES_REQUIRED =	12
 DONGLE_COOLDOWN =				60
 SCHEDULER =						FIFO
 
+# ========== COMPILATION_DEFINES ==========
+
+LOG_LEVEL =	1 # 0 = DEBUG, 1 = INFO, 2 = WARN, 3 = ERROR
+
+COMPILE_D =	-DLOG_LEVEL=$(LOG_LEVEL) \
+
 # ---------- COMBINED ARGUMENTS ----------
 ARGUMENTS =	$(NUMBER_OF_CODERS) \
 			$(TIME_TO_BURNOUT) \
@@ -97,20 +103,20 @@ run: $(NAME_MAIN)
 	./$(NAME_MAIN) $(ARGUMENTS)
 
 $(NAME_DEBUG): $(ALL_FILES)
-	$(CC) -g $(ALL_FILES) -o $(NAME_DEBUG) $(INCLUDES)
+	$(CC) -g $(CLFAGS) $(ALL_FILES) -o $(NAME_DEBUG) $(INCLUDES) -DLOG_LEVEL=0
 
 debug: $(NAME_DEBUG)
 	gdb $(NAME_DEBUG) --args $(NAME_DEBUG) $(ARGUMENTS)
 
 $(NAME_VG): $(ALL_FILES)
-	$(CC) -g $(ALL_FILES) -o $(NAME_VG) $(INCLUDES)
+	$(CC) -g $(CLFAGS) $(ALL_FILES) -o $(NAME_VG) $(INCLUDES) $(COMPILE_D)
 
 vg: $(NAME_VG)
 	valgrind $(VGFLAGS) ./$(NAME_VG) $(ARGUMENTS)
 
 $(NAME_MAIN): $(SRCS_OBJ)
 	@echo "\033[1;32m[LINKING]\033[0m $@"
-	@$(CC) $(CFLAGS) $(SRCS_OBJ) -o $@
+	@$(CC) $(CFLAGS) $(SRCS_OBJ) -o $@ $(COMPILE_D)
 	@echo "\033[1;32m[SUCCESS]\033[0m $(NAME_MAIN) compiled successfully!"
 	@rm -f $(COUNTER_FILE)
 
@@ -135,7 +141,7 @@ $(MAIN_DIR)/%.o: $(MAIN_DIR)/%.c
 	printf "\033[1;36m[%3d%%]\033[0m %s\n" $$PERCENT $<; \
 	echo "$$COMPILED" > $(COUNTER_FILE); \
 	echo "$$TOTAL" >> $(COUNTER_FILE)
-	@$(CC) $(CFLAGS) -MMD -c $< -o $@ $(INCLUDES)
+	@$(CC) $(CFLAGS) -MMD -c $< -o $@ $(INCLUDES) $(COMPILE_D)
 
 # ########## UTILITIES ##########
 

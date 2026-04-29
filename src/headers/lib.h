@@ -6,7 +6,7 @@
 /*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 13:07:25 by smenard           #+#    #+#             */
-/*   Updated: 2026/04/29 15:28:15 by smenard          ###   ########.fr       */
+/*   Updated: 2026/04/29 17:36:47 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,26 @@
 /**
  * Logger functions with different log levels
  */
-void			*ft_log_debug(char *message, size_t *coder_id);
-void			*ft_log_info(char *message, size_t *coder_id);
-void			*ft_log_warm(char *message, size_t *coder_id);
-void			*ft_log_error(char *message, size_t *coder_id);
+int				ft_log_debug(
+					t_simulation *simulation,
+					char *message,
+					size_t *coder_id
+					);
+int				ft_log_info(
+					t_simulation *simulation,
+					char *message,
+					size_t *coder_id
+					);
+int				ft_log_warn(
+					t_simulation *simulation,
+					char *message,
+					size_t *coder_id
+					);
+int				ft_log_error(
+					t_simulation *simulation,
+					char *message,
+					size_t *coder_id
+					);
 
 /* routine.c */
 /**
@@ -57,7 +73,7 @@ t_simulation	*parse(int ac, char **av);
 /**
  * Validation of program arguments
  */
-bool			validate_value(t_typed_voidp value);
+bool			validate_simulation(t_simulation *sim);
 
 /* utils.c */
 /**
@@ -65,6 +81,8 @@ bool			validate_value(t_typed_voidp value);
  */
 void			*ft_calloc(size_t nmemb, size_t size);
 char			*ft_strcpy(char *s1);
+void			free_all(void **ptrs, size_t ptrs_len);
 void			*free_return(void **ptrs, size_t ptrs_len, void *value);
+int				free_return_int(void **ptrs, size_t ptrs_len, int value);
 
 #endif

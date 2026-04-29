@@ -6,7 +6,7 @@
 /*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 13:06:38 by smenard           #+#    #+#             */
-/*   Updated: 2026/04/29 14:16:46 by smenard          ###   ########.fr       */
+/*   Updated: 2026/04/29 17:52:15 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,23 @@ char	*ft_strcpy(char *s1)
 	return (s2);
 }
 
-void	*free_return(void **ptrs, size_t ptrs_len, void *value)
+void	free_all(void **ptrs, size_t ptrs_len)
 {
 	size_t	i;
 
 	i = 0;
 	while (i < ptrs_len)
 		free(ptrs[i++]);
+}
+
+void	*free_return(void **ptrs, size_t ptrs_len, void *value)
+{
+	free_all(ptrs, ptrs_len);
+	return (value);
+}
+
+int	free_return_int(void **ptrs, size_t ptrs_len, int value)
+{
+	free_all(ptrs, ptrs_len);
 	return (value);
 }
