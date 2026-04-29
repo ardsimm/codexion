@@ -6,7 +6,7 @@
 /*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 13:07:09 by smenard           #+#    #+#             */
-/*   Updated: 2026/04/27 17:27:56 by smenard          ###   ########.fr       */
+/*   Updated: 2026/04/29 15:01:23 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include "includes.h"
 
 /* PROGRAM ARGUMENTS */
-# define EXPECTED_AC					8
+# define EXPECTED_AC	9
 
 # ifndef LOG_LEVEL
 #  define LOG_LEVEL 1 /* INFO */
@@ -49,6 +49,18 @@ typedef enum e_scheduler_mode
 	FIFO,
 	EDF
 }	t_scheduler_mode;
+
+typedef enum e_data_type
+{
+	INT,
+	STR
+}	t_data_type;
+
+typedef struct e_typed_voidp
+{
+	t_data_type	type;
+	void		*data;
+}	t_typed_voidp;
 
 typedef struct s_dongle
 {

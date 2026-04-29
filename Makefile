@@ -1,5 +1,14 @@
 # ========== FLAGS ==========
-CFLAGS = -Wall -Wextra -Werror
+
+# ---------- CLANG ----------
+CFLAGS =	-Wall -Wextra -Werror
+
+# ---------- VALGRIND ----------
+VGFLAGS =	--leak-check=full \
+			-s \
+			--show-mismatched-frees=yes \
+			--track-origins=yes \
+			--show-leak-kinds=all
 
 # ========== PROGRAM ARGUMENTS ==========
 
@@ -20,13 +29,13 @@ ARGUMENTS =	$(NUMBER_OF_CODERS) \
 			$(TIME_TO_REFACTOR) \
 			$(NUMBER_OF_COMPILES_REQUIRED) \
 			$(DONGLE_COOLDOWN) \
-			$(SCHEDULER)
-
+			$(SCHEDULER) \
 # ========== DIRECTORIES ==========
 
 # ---------- MAIN ----------
 
 MAIN_DIR = src
+PARSING_DIR = parsing
 
 # ---------- HEADERS ----------
 
@@ -46,7 +55,8 @@ MAIN_FILES =	$(MAIN_DIR)/main.c \
 				$(MAIN_DIR)/logging.c \
 				$(MAIN_DIR)/routine.c \
 				$(MAIN_DIR)/simulation.c \
-				$(MAIN_DIR)/parse.c \
+				$(MAIN_DIR)/$(PARSING_DIR)/parse.c \
+				$(MAIN_DIR)/$(PARSING_DIR)/parse_validate.c \
 
 ALL_FILES =		$(MAIN_FILES)
 
@@ -62,9 +72,15 @@ DFILES = $(ALL_OBJ:.o=.d)
 
 # ========== NAMES ==========
 
-NAME_MAIN = codexion
+NAME_MAIN =		codexion
 
-NAME_DEBUG = codexion_debug
+NAME_DEBUG =	codexion_debug
+
+NAME_VG =		codexion_vg
+
+ALL_EXES =		$(NAME_MAIN) \
+				$(NAME_DEBUG) \
+				$(NAME_VG)
 
 # ========== PROGRESS TRACKING ==========
 
@@ -80,9 +96,17 @@ all: reset_counter $(NAME_MAIN)
 run: $(NAME_MAIN)
 	./$(NAME_MAIN) $(ARGUMENTS)
 
-debug:
+$(NAME_DEBUG): $(ALL_FILES)
 	$(CC) -g $(ALL_FILES) -o $(NAME_DEBUG) $(INCLUDES)
+
+debug: $(NAME_DEBUG)
 	gdb $(NAME_DEBUG) --args $(NAME_DEBUG) $(ARGUMENTS)
+
+$(NAME_VG): $(ALL_FILES)
+	$(CC) -g $(ALL_FILES) -o $(NAME_VG) $(INCLUDES)
+
+vg: $(NAME_VG)
+	valgrind $(VGFLAGS) ./$(NAME_VG) $(ARGUMENTS)
 
 $(NAME_MAIN): $(SRCS_OBJ)
 	@echo "\033[1;32m[LINKING]\033[0m $@"
@@ -125,13 +149,13 @@ clean:
 
 fclean: clean
 	@echo "\033[1;31m[FCLEAN]\033[0m Removing executables..."
-	@rm -rf $(NAME_MAIN)
+	@rm -rf $(ALL_EXES)
 	@echo "\033[1;32m[DONE]\033[0m Full clean completed!"
 
 # ---------- re ----------
 
 re: fclean all
 
-.PHONY: all clean fclean re reset_counter run
+.PHONY: all clean fclean re reset_counter run debug vg
 
 -include $(DFILES)

@@ -6,7 +6,7 @@
 /*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 13:06:38 by smenard           #+#    #+#             */
-/*   Updated: 2026/04/27 17:32:45 by smenard          ###   ########.fr       */
+/*   Updated: 2026/04/29 14:16:46 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,15 @@ char	*ft_strcpy(char *s1)
 	char			*s2;
 	size_t			i;
 
-	s2 = ft_calloc(len, sizeof(char));
+	if (len == 0)
+		return (NULL);
+	s2 = ft_calloc(len + 1, sizeof(char));
 	i = 0;
 	while (s1[i])
 	{
 		s2[i] = s1[i];
 		i++;
 	}
-	s2[i] = '\0';
 	return (s2);
 }
 
