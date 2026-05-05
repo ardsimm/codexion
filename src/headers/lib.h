@@ -6,7 +6,7 @@
 /*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 13:07:25 by smenard           #+#    #+#             */
-/*   Updated: 2026/05/05 12:43:25 by smenard          ###   ########.fr       */
+/*   Updated: 2026/05/11 14:51:41 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,26 +20,14 @@
 /**
  * Logger functions with different log levels
  */
-int				ft_log_debug(
-					t_simulation *simulation,
-					char *message,
-					size_t *coder_id
-					);
-int				ft_log_info(
-					t_simulation *simulation,
-					char *message,
-					size_t *coder_id
-					);
-int				ft_log_warn(
-					t_simulation *simulation,
-					char *message,
-					size_t *coder_id
-					);
-int				ft_log_error(
-					t_simulation *simulation,
-					char *message,
-					size_t *coder_id
-					);
+int				ft_log_debug(t_simulation *simulation, char *message,
+					size_t *coder_id);
+int				ft_log_info(t_simulation *simulation, char *message,
+					size_t *coder_id);
+int				ft_log_warn(t_simulation *simulation, char *message,
+					size_t *coder_id);
+int				ft_log_error(t_simulation *simulation, char *message,
+					size_t *coder_id);
 
 /* routine.c */
 /**
@@ -58,11 +46,10 @@ void			*run_simulation(t_simulation *simulation);
  * Heap queue sources
  */
 
-t_heap_queue	*heap_queue_init(size_t initial_size, size_t el_size);
+t_heap_queue	*heap_queue_init(size_t initial_size, size_t el_size,
+					int (*get_score)(void *el));
 void			heap_queue_add(t_heap_queue *queue, void *data);
 void			*heap_queue_pop(t_heap_queue *hp);
-void			*heap_queue_peek(t_heap_queue *hp);
-void			heap_queue_clear(t_heap_queue *hp);
 
 /* parsing/parse.c */
 /**
