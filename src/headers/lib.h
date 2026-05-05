@@ -6,7 +6,7 @@
 /*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 13:07:25 by smenard           #+#    #+#             */
-/*   Updated: 2026/04/29 17:36:47 by smenard          ###   ########.fr       */
+/*   Updated: 2026/05/05 12:43:25 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,12 @@ void			*run_simulation(t_simulation *simulation);
 /**
  * Heap queue sources
  */
-t_heap_queue	*heap_queue_create(size_t initial_size, size_t el_size);
+
+t_heap_queue	*heap_queue_init(size_t initial_size, size_t el_size);
 void			heap_queue_add(t_heap_queue *queue, void *data);
-void			*heap_queue_remove(t_heap_queue *queue, void *data);
-void			*heap_queue_pop(t_heap_queue *queue);
-void			*heap_queue_clear(t_heap_queue *queue);
+void			*heap_queue_pop(t_heap_queue *hp);
+void			*heap_queue_peek(t_heap_queue *hp);
+void			heap_queue_clear(t_heap_queue *hp);
 
 /* parsing/parse.c */
 /**
