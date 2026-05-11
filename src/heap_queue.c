@@ -6,7 +6,7 @@
 /*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 14:32:39 by smenard           #+#    #+#             */
-/*   Updated: 2026/05/11 14:51:09 by smenard          ###   ########.fr       */
+/*   Updated: 2026/05/12 17:05:30 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void	heap_queue_align_up(t_heap_queue *hq, int idx)
 	void	*temp;
 
 	if (idx && hq->get_score(hq->data[(idx - 1)
-			/ 2]) > hq->get_score(hq->data[idx]))
+				/ 2]) > hq->get_score(hq->data[idx]))
 	{
 		temp = hq->data[idx];
 		hq->data[idx] = hq->data[(idx - 1) / 2];
@@ -62,7 +62,7 @@ t_heap_queue	*heap_queue_init(size_t initial_size, size_t el_size,
 	hq->max_size = initial_size;
 	hq->size = 0;
 	hq->data = ft_calloc(initial_size, el_size);
-	hq->get_score =  get_score;
+	hq->get_score = get_score;
 	return (hq);
 }
 

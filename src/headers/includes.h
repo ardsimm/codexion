@@ -6,7 +6,7 @@
 /*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 13:02:00 by smenard           #+#    #+#             */
-/*   Updated: 2026/04/29 16:19:38 by smenard          ###   ########.fr       */
+/*   Updated: 2026/05/12 17:01:11 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,5 +20,6 @@
 # include <stdint.h>
 # include <stdbool.h>
 # include <sys/time.h>
+# include <unistd.h>
 
 #endif

@@ -6,37 +6,48 @@
 /*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 13:01:17 by smenard           #+#    #+#             */
-/*   Updated: 2026/05/11 14:56:45 by smenard          ###   ########.fr       */
+/*   Updated: 2026/05/12 17:14:18 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lib.h"
 
-static void	init_coder(int32_t i, t_simulation *sim)
+int	get_score(void *el);
+
+static void	init_coder(uint32_t i, t_simulation *sim)
 {
+	size_t	dongle_left_idx;
+	size_t	dongle_right_idx;
+
+	dongle_left_idx = i - 1;
+	if (i < 0)
+		dongle_left_idx = sim->coders_count - 1;
+	dongle_right_idx = i + 1;
+	if (dongle_right_idx > sim->coders_count - 1)
+		dongle_left_idx = 0;
 	sim->coders[i].id = i;
 	sim->coders[i].time_to_burnout = sim->time_to_burnout;
 	sim->coders[i].time_to_compile = sim->time_to_compile;
 	sim->coders[i].time_to_debug = sim->time_to_debug;
 	sim->coders[i].time_to_refactor = sim->time_to_refactor;
 	sim->coders[i].time_to_refactor = sim->time_to_refactor;
+	sim->coders[i].logging_mutex = &sim->logging_mutex;
+	sim->coders[i].logging_blocked = &sim->logging_blocked;
+	sim->coders[i].dongle_left = &sim->dongles[dongle_left_idx];
+	sim->coders[i].dongle_right = &sim->dongles[dongle_right_idx];
 }
 
-static void	init_dongle(int32_t i, t_simulation *sim)
+static void	init_dongle(uint32_t i, t_simulation *sim)
 {
 	sim->dongles[i].id = i;
-	sim->dongles[i].queue = NULL; // TODO: implement heap queue
-	pthread_mutex_init(&sim->dongles[i].mutex, NULL);
+	sim->dongles[i].queue = heap_queue_init(2, sizeof(t_coder), get_score);
+	pthread_mutex_init(&sim->dongles[i].in_use_mutex, NULL);
 	sim->dongles[i].cooldown = sim->dongle_cooldown;
-	if (!strcmp(sim->scheduler, "FIFO"))
-		sim->dongles[i].scheduler_mode = FIFO;
-	else
-		sim->dongles[i].scheduler_mode = EDF;
 }
 
 static int	init(t_simulation *sim)
 {
-	int32_t	i;
+	uint32_t	i;
 
 	i = 0;
 	pthread_mutex_init(&sim->logging_mutex, NULL);
@@ -62,32 +73,6 @@ void	print_hq(t_heap_queue *hq)
 		printf("hq[%zu]: %d\n", i, *(int*)hq->data[i]);
 }
 
-void test_hq(t_heap_queue *hq)
-{
-	int	n1 = 4;
-	int	n2 = 3;
-	int	n3 = 2;
-	int n4 = 1;
-
-	heap_queue_add(hq, &n3);
-	heap_queue_add(hq, &n4);
-	heap_queue_add(hq, &n1);
-	heap_queue_add(hq, &n2);
-	print_hq(hq);
-	printf("Popping...\n");
-	heap_queue_pop(hq);
-	print_hq(hq);
-	printf("Popping...\n");
-	heap_queue_pop(hq);
-	print_hq(hq);
-	printf("Popping...\n");
-	heap_queue_pop(hq);
-	print_hq(hq);
-	printf("Popping...\n");
-	heap_queue_pop(hq);
-	print_hq(hq);
-}
-
 int	get_score(void *el)
 {
 	return (*(int*)el);
@@ -100,17 +85,17 @@ int	main(int ac, char **av)
 	sim = parse(ac, av);
 	if (!sim)
 	{
-		ft_log_error(sim, "Parsing error", NULL);
+		ft_log_error(NULL, "Parsing error", NULL);
 		return (FAILURE);
 	}
 	if (init(sim) == FAILURE)
 	{
-		ft_log_error(sim, "Initialization error", NULL);
+		ft_log_error(NULL, "Initialization error", NULL);
 		return ((int)free_return_int((void *[]){sim->scheduler, sim}, 2,
 			EXIT_FAILURE));
 	}
-	ft_log_debug(sim, "Parsing successful", NULL);
-	test_hq(heap_queue_init(32, sizeof(int), get_score));
+	ft_log_debug(NULL, "Parsing successful", NULL);
+	monitor_simulation(sim);
 	free_all((void *[]){sim->scheduler, sim->dongles, sim->coders, sim}, 4);
 	return (EXIT_SUCCESS);
 }

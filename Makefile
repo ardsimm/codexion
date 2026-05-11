@@ -1,7 +1,7 @@
 # ========== FLAGS ==========
 
 # ---------- CLANG ----------
-CFLAGS =	-Wall -Wextra -Werror
+CFLAGS =	-Wall -Wextra -Werror -fsanitize=thread
 
 # ---------- VALGRIND ----------
 VGFLAGS =	--leak-check=full \
@@ -23,7 +23,7 @@ SCHEDULER =						FIFO
 
 # ========== COMPILATION_DEFINES ==========
 
-LOG_LEVEL =	1 # 0 = DEBUG, 1 = INFO, 2 = WARN, 3 = ERROR
+LOG_LEVEL =	0 # 0 = DEBUG, 1 = INFO, 2 = WARN, 3 = ERROR
 
 COMPILE_D =	-DLOG_LEVEL=$(LOG_LEVEL) \
 
@@ -60,7 +60,7 @@ MAIN_FILES =	$(MAIN_DIR)/main.c \
 				$(MAIN_DIR)/heap_queue.c \
 				$(MAIN_DIR)/logging.c \
 				$(MAIN_DIR)/routine.c \
-				$(MAIN_DIR)/simulation.c \
+				$(MAIN_DIR)/monitor.c \
 				$(MAIN_DIR)/$(PARSING_DIR)/parse.c \
 				$(MAIN_DIR)/$(PARSING_DIR)/parse_validate.c \
 

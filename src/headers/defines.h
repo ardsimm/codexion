@@ -6,7 +6,7 @@
 /*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 13:07:09 by smenard           #+#    #+#             */
-/*   Updated: 2026/05/05 14:40:11 by smenard          ###   ########.fr       */
+/*   Updated: 2026/05/12 17:08:13 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,22 +64,26 @@ typedef struct s_dongle
 {
 	size_t				id;
 	t_heap_queue		*queue;
-	pthread_mutex_t		mutex;
 	size_t				cooldown;
-	t_scheduler_mode	scheduler_mode;
 	size_t				last_use_timestamp;
+	pthread_mutex_t		in_use_mutex;
 	bool				in_use;
 }	t_dongle;
 
 typedef struct s_coder
 {
-	size_t				id;
-	size_t				last_task_end_timestamp;
-	size_t				compilation_count;
-	size_t				time_to_burnout;
-	size_t				time_to_compile;
-	size_t				time_to_debug;
-	size_t				time_to_refactor;
+	size_t			id;
+	size_t			last_task_end_timestamp;
+	size_t			compilation_count;
+	size_t			time_to_burnout;
+	size_t			time_to_compile;
+	size_t			time_to_debug;
+	size_t			time_to_refactor;
+	bool			done;
+	t_dongle		*dongle_left;
+	t_dongle		*dongle_right;
+	pthread_mutex_t	*logging_mutex;
+	bool			*logging_blocked;
 }	t_coder;
 
 /**
@@ -109,15 +113,15 @@ typedef struct s_coder
  */
 typedef struct s_simulation
 {
-	int32_t			coders_count;
+	uint32_t		coders_count;
 	t_dongle		*dongles;
 	t_coder			*coders;
-	int32_t			time_to_burnout;
-	int32_t			time_to_compile;
-	int32_t			time_to_debug;
-	int32_t			time_to_refactor;
-	int32_t			number_of_compiles;
-	int32_t			dongle_cooldown;
+	uint32_t		time_to_burnout;
+	uint32_t		time_to_compile;
+	uint32_t		time_to_debug;
+	uint32_t		time_to_refactor;
+	uint32_t		number_of_compiles;
+	uint32_t		dongle_cooldown;
 	char			*scheduler;
 	pthread_mutex_t	logging_mutex;
 	bool			logging_blocked;

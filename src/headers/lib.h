@@ -6,7 +6,7 @@
 /*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 13:07:25 by smenard           #+#    #+#             */
-/*   Updated: 2026/05/11 14:51:41 by smenard          ###   ########.fr       */
+/*   Updated: 2026/05/12 17:05:08 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@
 /**
  * Logger functions with different log levels
  */
-int				ft_log_debug(t_simulation *simulation, char *message,
+int				ft_log_debug(pthread_mutex_t *logging_mutex, char *message,
 					size_t *coder_id);
-int				ft_log_info(t_simulation *simulation, char *message,
+int				ft_log_info(pthread_mutex_t *logging_mutex, char *message,
 					size_t *coder_id);
-int				ft_log_warn(t_simulation *simulation, char *message,
+int				ft_log_warn(pthread_mutex_t *logging_mutex, char *message,
 					size_t *coder_id);
-int				ft_log_error(t_simulation *simulation, char *message,
+int				ft_log_error(pthread_mutex_t *logging_mutex, char *message,
 					size_t *coder_id);
 
 /* routine.c */
@@ -39,7 +39,7 @@ void			*coder_routine(void *data);
 /**
  * Main simulation loop
  */
-void			*run_simulation(t_simulation *simulation);
+void			*monitor_simulation(t_simulation *simulation);
 
 /* heap_queue.c */
 /**
