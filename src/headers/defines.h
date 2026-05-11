@@ -6,7 +6,7 @@
 /*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 13:07:09 by smenard           #+#    #+#             */
-/*   Updated: 2026/04/29 17:54:36 by smenard          ###   ########.fr       */
+/*   Updated: 2026/05/05 14:40:11 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,9 @@ typedef enum e_log_level
 typedef struct s_heap_queue
 {
 	size_t	size;
-	void	*data;
+	size_t	max_size;
+	void	**data;
+	int		(*get_score)(void	*el);
 }	t_heap_queue;
 
 typedef enum e_scheduler_mode

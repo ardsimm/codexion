@@ -6,7 +6,7 @@
 /*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 13:01:17 by smenard           #+#    #+#             */
-/*   Updated: 2026/04/29 17:52:54 by smenard          ###   ########.fr       */
+/*   Updated: 2026/05/11 14:56:45 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,44 @@ static int	init(t_simulation *sim)
 	return (SUCCESS);
 }
 
+void	print_hq(t_heap_queue *hq)
+{
+	printf("Heap queue size: %zu	\n", hq->size);
+	for (size_t i = 0; i < hq->size; i++)
+		printf("hq[%zu]: %d\n", i, *(int*)hq->data[i]);
+}
+
+void test_hq(t_heap_queue *hq)
+{
+	int	n1 = 4;
+	int	n2 = 3;
+	int	n3 = 2;
+	int n4 = 1;
+
+	heap_queue_add(hq, &n3);
+	heap_queue_add(hq, &n4);
+	heap_queue_add(hq, &n1);
+	heap_queue_add(hq, &n2);
+	print_hq(hq);
+	printf("Popping...\n");
+	heap_queue_pop(hq);
+	print_hq(hq);
+	printf("Popping...\n");
+	heap_queue_pop(hq);
+	print_hq(hq);
+	printf("Popping...\n");
+	heap_queue_pop(hq);
+	print_hq(hq);
+	printf("Popping...\n");
+	heap_queue_pop(hq);
+	print_hq(hq);
+}
+
+int	get_score(void *el)
+{
+	return (*(int*)el);
+}
+
 int	main(int ac, char **av)
 {
 	t_simulation	*sim;
@@ -71,19 +109,8 @@ int	main(int ac, char **av)
 		return ((int)free_return_int((void *[]){sim->scheduler, sim}, 2,
 			EXIT_FAILURE));
 	}
-	else
-	{
-		ft_log_debug(sim, "Parsing successful", NULL);
-		printf("PARSE RESULT:\n");
-		printf("coders_count: %d\n", sim->coders_count);
-		printf("time_to_burnout: %d\n", sim->time_to_burnout);
-		printf("time_to_compile: %d\n", sim->time_to_compile);
-		printf("time_to_debug: %d\n", sim->time_to_debug);
-		printf("time_to_refactor: %d\n", sim->time_to_refactor);
-		printf("number_of_compiles: %d\n", sim->number_of_compiles);
-		printf("dongle_cooldown: %d\n", sim->dongle_cooldown);
-		printf("scheduler: %s\n", sim->scheduler);
-	}
+	ft_log_debug(sim, "Parsing successful", NULL);
+	test_hq(heap_queue_init(32, sizeof(int), get_score));
 	free_all((void *[]){sim->scheduler, sim->dongles, sim->coders, sim}, 4);
 	return (EXIT_SUCCESS);
 }
