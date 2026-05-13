@@ -6,13 +6,13 @@
 /*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 13:05:02 by smenard           #+#    #+#             */
-/*   Updated: 2026/05/12 17:23:35 by smenard          ###   ########.fr       */
+/*   Updated: 2026/05/13 11:57:41 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lib.h"
+#include "headers/lib.h"
 
-int	ft_log(
+static int	ft_log(
 	pthread_mutex_t *logging_mutex,
 	t_log_level log_level,
 	size_t *coder_id,

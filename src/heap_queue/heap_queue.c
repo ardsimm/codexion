@@ -6,11 +6,11 @@
 /*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 14:32:39 by smenard           #+#    #+#             */
-/*   Updated: 2026/05/12 17:05:30 by smenard          ###   ########.fr       */
+/*   Updated: 2026/05/13 12:03:48 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lib.h"
+#include "headers/lib.h"
 
 static void	heap_queue_align_up(t_heap_queue *hq, int idx)
 {
@@ -53,7 +53,7 @@ static void	heap_queue_align_down(t_heap_queue *hq, size_t idx)
 	}
 }
 
-t_heap_queue	*heap_queue_init(size_t initial_size, size_t el_size,
+t_heap_queue	*hq_init(size_t initial_size, size_t el_size,
 		int (*get_score)(void *el))
 {
 	t_heap_queue	*hq;
@@ -66,7 +66,7 @@ t_heap_queue	*heap_queue_init(size_t initial_size, size_t el_size,
 	return (hq);
 }
 
-void	heap_queue_add(t_heap_queue *hq, void *data)
+void	hq_add(t_heap_queue *hq, void *data)
 {
 	if (hq->size >= hq->max_size)
 		return ;
@@ -74,7 +74,7 @@ void	heap_queue_add(t_heap_queue *hq, void *data)
 	heap_queue_align_up(hq, hq->size - 1);
 }
 
-void	*heap_queue_pop(t_heap_queue *hq)
+void	*hq_pop(t_heap_queue *hq)
 {
 	void	*item;
 

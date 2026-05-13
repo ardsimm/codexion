@@ -1,26 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lib.h                                              :+:      :+:    :+:   */
+/*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/23 13:07:25 by smenard           #+#    #+#             */
-/*   Updated: 2026/05/13 12:03:08 by smenard          ###   ########.fr       */
+/*   Created: 2026/04/23 13:04:32 by smenard           #+#    #+#             */
+/*   Updated: 2026/05/13 11:46:56 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIB_H
-# define LIB_H
+#include "headers/lib.h"
 
-# include "headers/defines.h"
-# include "headers/includes.h"
-
-# include "heap_queue/headers/heap_queue.h"
-# include "logging/headers/logging.h"
-# include "monitor/headers/monitor.h"
-# include "parsing/headers/parsing.h"
-# include "simulation/headers/simulation.h"
-# include "utils/headers/utils.h"
-
-#endif
+void	*coder_routine(void *data)
+{
+	(void) data;
+	return (NULL);
+}

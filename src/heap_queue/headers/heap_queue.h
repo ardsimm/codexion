@@ -1,26 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lib.h                                              :+:      :+:    :+:   */
+/*   heap_queue.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/23 13:07:25 by smenard           #+#    #+#             */
-/*   Updated: 2026/05/13 12:03:08 by smenard          ###   ########.fr       */
+/*   Created: 2026/05/13 11:53:00 by smenard           #+#    #+#             */
+/*   Updated: 2026/05/13 12:03:48 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIB_H
-# define LIB_H
+#ifndef HEAP_QUEUE_H
+# define HEAP_QUEUE_H
 
-# include "headers/defines.h"
-# include "headers/includes.h"
+ t_heap_queue	*hq_init(size_t initial_size, size_t el_size,
+		int (*get_score)(void *el));
 
-# include "heap_queue/headers/heap_queue.h"
-# include "logging/headers/logging.h"
-# include "monitor/headers/monitor.h"
-# include "parsing/headers/parsing.h"
-# include "simulation/headers/simulation.h"
-# include "utils/headers/utils.h"
+void	hq_add(t_heap_queue *hq, void *data);
+
+void	*hq_pop(t_heap_queue *hq);
 
 #endif

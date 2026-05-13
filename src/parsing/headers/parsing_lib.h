@@ -1,26 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lib.h                                              :+:      :+:    :+:   */
+/*   parsing_lib.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/23 13:07:25 by smenard           #+#    #+#             */
-/*   Updated: 2026/05/13 12:03:08 by smenard          ###   ########.fr       */
+/*   Created: 2026/05/13 11:59:17 by smenard           #+#    #+#             */
+/*   Updated: 2026/05/13 12:00:53 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIB_H
-# define LIB_H
+#ifndef PARSING_LIB
+# define PARSING_LIB
 
-# include "headers/defines.h"
-# include "headers/includes.h"
+# include "headers/lib.h"
 
-# include "heap_queue/headers/heap_queue.h"
-# include "logging/headers/logging.h"
-# include "monitor/headers/monitor.h"
-# include "parsing/headers/parsing.h"
-# include "simulation/headers/simulation.h"
-# include "utils/headers/utils.h"
+bool	validate_simulation(t_simulation *sim);
 
 #endif

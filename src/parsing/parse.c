@@ -6,11 +6,11 @@
 /*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 14:58:53 by smenard           #+#    #+#             */
-/*   Updated: 2026/04/29 17:31:22 by smenard          ###   ########.fr       */
+/*   Updated: 2026/05/13 11:46:56 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lib.h"
+#include "headers/lib.h"
 
 static bool	ft_isspace(char c)
 {

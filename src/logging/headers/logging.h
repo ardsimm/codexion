@@ -1,20 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   simulation.c                                       :+:      :+:    :+:   */
+/*   logging.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/23 13:03:38 by smenard           #+#    #+#             */
-/*   Updated: 2026/05/11 18:46:57 by smenard          ###   ########.fr       */
+/*   Created: 2026/05/13 11:53:16 by smenard           #+#    #+#             */
+/*   Updated: 2026/05/13 11:58:18 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lib.h"
+#ifndef LOGGING_H
+# define LOGGING_H
 
-void	*monitor_simulation(t_simulation *sim)
-{
-	(void) sim;
-	printf("Miam le caca\n");
-	return (NULL);
-}
+int	ft_log_debug(
+	pthread_mutex_t *logging_mutex,
+	char *message,
+	size_t *coder_id
+);
+
+int	ft_log_info(
+	pthread_mutex_t *logging_mutex,
+	char *message,
+	size_t *coder_id
+);
+
+int	ft_log_warn(
+	pthread_mutex_t *logging_mutex,
+	char *message,
+	size_t *coder_id
+);
+
+int	ft_log_error(
+	pthread_mutex_t *logging_mutex,
+	char *message,
+	size_t *coder_id
+);
+
+
+#endif

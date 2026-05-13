@@ -6,11 +6,11 @@
 /*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/29 13:50:32 by smenard           #+#    #+#             */
-/*   Updated: 2026/04/29 17:38:04 by smenard          ###   ########.fr       */
+/*   Updated: 2026/05/13 11:46:56 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lib.h"
+#include "headers/lib.h"
 
 static bool	validate_scheduler(char *value)
 {

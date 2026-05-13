@@ -6,14 +6,14 @@
 /*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 13:07:09 by smenard           #+#    #+#             */
-/*   Updated: 2026/05/12 17:08:13 by smenard          ###   ########.fr       */
+/*   Updated: 2026/05/13 11:52:50 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DEFINES_H
 # define DEFINES_H
 
-# include "includes.h"
+# include "headers/includes.h"
 
 /* PROGRAM ARGUMENTS */
 # define EXPECTED_AC	9

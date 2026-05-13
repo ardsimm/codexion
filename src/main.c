@@ -6,11 +6,11 @@
 /*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 13:01:17 by smenard           #+#    #+#             */
-/*   Updated: 2026/05/12 17:14:18 by smenard          ###   ########.fr       */
+/*   Updated: 2026/05/13 12:03:38 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lib.h"
+#include "headers/lib.h"
 
 int	get_score(void *el);
 
@@ -40,7 +40,7 @@ static void	init_coder(uint32_t i, t_simulation *sim)
 static void	init_dongle(uint32_t i, t_simulation *sim)
 {
 	sim->dongles[i].id = i;
-	sim->dongles[i].queue = heap_queue_init(2, sizeof(t_coder), get_score);
+	sim->dongles[i].queue = hq_init(2, sizeof(t_coder), get_score);
 	pthread_mutex_init(&sim->dongles[i].in_use_mutex, NULL);
 	sim->dongles[i].cooldown = sim->dongle_cooldown;
 }

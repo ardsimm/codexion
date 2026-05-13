@@ -40,35 +40,49 @@ ARGUMENTS =	$(NUMBER_OF_CODERS) \
 
 # ---------- MAIN ----------
 
-MAIN_DIR = src
-PARSING_DIR = parsing
+MAIN_DIR =			src
+HEAP_QUEUE_DIR =	heap_queue
+LOGGING_DIR =		logging
+MONITOR_DIR =		monitor
+PARSING_DIR =		parsing
+SIMULATION_DIR =	simulation
+ROUTINE_DIR =		routine
+UTILS_DIR =			utils
 
 # ---------- HEADERS ----------
 
-HEADERS_DIR = headers
-
 # ========== INCLUDES ==========
 
-INCLUDES =	-I$(MAIN_DIR)/$(HEADERS_DIR)
+INCLUDES = -I$(MAIN_DIR)
 
 # ========== FILES ==========
 
-# ---------- MAIN ----------
+MAIN_FILES =		$(MAIN_DIR)/main.c \
 
-MAIN_FILES =	$(MAIN_DIR)/main.c \
-				$(MAIN_DIR)/utils.c \
-				$(MAIN_DIR)/heap_queue.c \
-				$(MAIN_DIR)/logging.c \
-				$(MAIN_DIR)/routine.c \
-				$(MAIN_DIR)/monitor.c \
-				$(MAIN_DIR)/$(PARSING_DIR)/parse.c \
-				$(MAIN_DIR)/$(PARSING_DIR)/parse_validate.c \
+HEAP_QUEUE_FILES =	$(MAIN_DIR)/$(HEAP_QUEUE_DIR)/heap_queue.c \
 
-ALL_FILES =		$(MAIN_FILES)
+LOGGING_FILES =		$(MAIN_DIR)/$(LOGGING_DIR)/logging.c \
+
+ROUTINE_FILES =		$(MAIN_DIR)/$(ROUTINE_DIR)/routine.c \
+
+MONITOR_FILES =		$(MAIN_DIR)/$(MONITOR_DIR)/monitor.c \
+
+PARSING_FILES =		$(MAIN_DIR)/$(PARSING_DIR)/parse.c \
+					$(MAIN_DIR)/$(PARSING_DIR)/parse_validate.c \
+
+UTILS_FILES =		$(MAIN_DIR)/$(UTILS_DIR)/utils.c \
+
+ALL_FILES =			$(HEAP_QUEUE_FILES) \
+					$(LOGGING_FILES) \
+					$(ROUTINE_FILES) \
+					$(MONITOR_FILES) \
+					$(PARSING_FILES) \
+					$(UTILS_FILES) \
+					$(MAIN_FILES) \
 
 # ========== OBJ ==========
 
-SRCS_OBJ = $(MAIN_FILES:.c=.o)
+SRCS_OBJ = $(ALL_FILES:.c=.o)
 
 ALL_OBJ = $(SRCS_OBJ)
 
@@ -109,14 +123,14 @@ debug: $(NAME_DEBUG)
 	gdb $(NAME_DEBUG) --args $(NAME_DEBUG) $(ARGUMENTS)
 
 $(NAME_VG): $(ALL_FILES)
-	$(CC) -g $(CLFAGS) $(ALL_FILES) -o $(NAME_VG) $(INCLUDES) $(COMPILE_D)
+	$(CC) -g $(CLFAGS) $(ALL_FILES) -o $(NAME_VG) $(COMPILE_D)
 
 vg: $(NAME_VG)
 	valgrind $(VGFLAGS) ./$(NAME_VG) $(ARGUMENTS)
 
 $(NAME_MAIN): $(SRCS_OBJ)
 	@echo "\033[1;32m[LINKING]\033[0m $@"
-	@$(CC) $(CFLAGS) $(SRCS_OBJ) -o $@ $(COMPILE_D)
+	$(CC) $(CFLAGS) $(SRCS_OBJ) -o $@ $(INCLUDES) $(COMPILE_D)
 	@echo "\033[1;32m[SUCCESS]\033[0m $(NAME_MAIN) compiled successfully!"
 	@rm -f $(COUNTER_FILE)
 
@@ -133,7 +147,7 @@ reset_counter:
 # ---------- COMPILATION ----------
 
 # Rule for mandatory files
-$(MAIN_DIR)/%.o: $(MAIN_DIR)/%.c
+%.o: %.c
 	@COMPILED=$$(head -n 1 $(COUNTER_FILE) 2>/dev/null || echo "0"); \
 	TOTAL=$$(tail -n 1 $(COUNTER_FILE) 2>/dev/null || echo "$(TOTAL_FILES)"); \
 	COMPILED=$$((COMPILED + 1)); \
@@ -141,7 +155,7 @@ $(MAIN_DIR)/%.o: $(MAIN_DIR)/%.c
 	printf "\033[1;36m[%3d%%]\033[0m %s\n" $$PERCENT $<; \
 	echo "$$COMPILED" > $(COUNTER_FILE); \
 	echo "$$TOTAL" >> $(COUNTER_FILE)
-	@$(CC) $(CFLAGS) -MMD -c $< -o $@ $(INCLUDES) $(COMPILE_D)
+	$(CC) $(CFLAGS) -MMD -c $< -o $@ $(INCLUDES) $(COMPILE_D)
 
 # ########## UTILITIES ##########
 

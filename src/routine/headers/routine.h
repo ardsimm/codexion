@@ -1,19 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   routine.c                                          :+:      :+:    :+:   */
+/*   routine.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/23 13:04:32 by smenard           #+#    #+#             */
-/*   Updated: 2026/04/29 17:37:41 by smenard          ###   ########.fr       */
+/*   Created: 2026/05/13 11:59:51 by smenard           #+#    #+#             */
+/*   Updated: 2026/05/13 12:00:07 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lib.h"
+#ifndef ROUTINE_H
+# define ROUTINE_H
 
-void	*coder_routine(void *data)
-{
-	(void) data;
-	return (NULL);
-}
+void	*coder_routine(void *data);
+
+#endif
