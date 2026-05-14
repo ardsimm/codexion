@@ -6,7 +6,7 @@
 /*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/29 13:50:32 by smenard           #+#    #+#             */
-/*   Updated: 2026/05/13 11:46:56 by smenard          ###   ########.fr       */
+/*   Updated: 2026/05/13 12:44:37 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,18 @@ static bool	validate_int_value(int value)
 	return (value >= 0);
 }
 
-bool	validate_simulation(t_simulation *sim)
+bool	validate_ctx(t_ctx *ctx)
 {
 	bool	valid;
 
 	valid = true;
-	valid &= validate_int_value(sim->coders_count);
-	valid &= validate_int_value(sim->time_to_burnout);
-	valid &= validate_int_value(sim->time_to_compile);
-	valid &= validate_int_value(sim->time_to_debug);
-	valid &= validate_int_value(sim->time_to_refactor);
-	valid &= validate_int_value(sim->number_of_compiles);
-	valid &= validate_int_value(sim->dongle_cooldown);
-	valid &= validate_scheduler(sim->scheduler);
+	valid &= validate_int_value(ctx->coders_count);
+	valid &= validate_int_value(ctx->shared.time_to_burnout);
+	valid &= validate_int_value(ctx->shared.time_to_compile);
+	valid &= validate_int_value(ctx->shared.time_to_debug);
+	valid &= validate_int_value(ctx->shared.time_to_refactor);
+	valid &= validate_int_value(ctx->shared.number_of_compiles);
+	valid &= validate_int_value(ctx->shared.dongle_cooldown);
+	valid &= validate_scheduler(ctx->scheduler);
 	return (valid);
 }

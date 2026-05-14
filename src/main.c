@@ -6,63 +6,61 @@
 /*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 13:01:17 by smenard           #+#    #+#             */
-/*   Updated: 2026/05/13 12:03:38 by smenard          ###   ########.fr       */
+/*   Updated: 2026/05/14 16:47:00 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "headers/lib.h"
 
-int	get_score(void *el);
+size_t	get_key(t_shared_ctx *ctx, void *el)
+{
+	(void) ctx;
+	return *(size_t *)el;
+}
 
-static void	init_coder(uint32_t i, t_simulation *sim)
+static void	init_coder(uint32_t i, t_ctx *ctx)
 {
 	size_t	dongle_left_idx;
 	size_t	dongle_right_idx;
 
 	dongle_left_idx = i - 1;
 	if (i < 0)
-		dongle_left_idx = sim->coders_count - 1;
+		dongle_left_idx = ctx->coders_count - 1;
 	dongle_right_idx = i + 1;
-	if (dongle_right_idx > sim->coders_count - 1)
+	if (dongle_right_idx > ctx->coders_count - 1)
 		dongle_left_idx = 0;
-	sim->coders[i].id = i;
-	sim->coders[i].time_to_burnout = sim->time_to_burnout;
-	sim->coders[i].time_to_compile = sim->time_to_compile;
-	sim->coders[i].time_to_debug = sim->time_to_debug;
-	sim->coders[i].time_to_refactor = sim->time_to_refactor;
-	sim->coders[i].time_to_refactor = sim->time_to_refactor;
-	sim->coders[i].logging_mutex = &sim->logging_mutex;
-	sim->coders[i].logging_blocked = &sim->logging_blocked;
-	sim->coders[i].dongle_left = &sim->dongles[dongle_left_idx];
-	sim->coders[i].dongle_right = &sim->dongles[dongle_right_idx];
+	ctx->coders[i].id = i;
+	ctx->coders[i].shared = ctx->shared;
+	ctx->coders[i].dongle_left = &ctx->dongles[dongle_left_idx];
+	ctx->coders[i].dongle_right = &ctx->dongles[dongle_right_idx];
 }
 
-static void	init_dongle(uint32_t i, t_simulation *sim)
+static void	init_dongle(uint32_t i, t_ctx *ctx)
 {
-	sim->dongles[i].id = i;
-	sim->dongles[i].queue = hq_init(2, sizeof(t_coder), get_score);
-	pthread_mutex_init(&sim->dongles[i].in_use_mutex, NULL);
-	sim->dongles[i].cooldown = sim->dongle_cooldown;
+	ctx->dongles[i].id = i;
+	ctx->dongles[i].hq = hq_init(2, sizeof(t_coder), get_key);
+	pthread_mutex_init(&ctx->dongles[i].in_use_mutex, NULL);
+	ctx->dongles[i].cooldown = ctx->shared.dongle_cooldown;
 }
 
-static int	init(t_simulation *sim)
+static int	init(t_ctx *ctx)
 {
 	uint32_t	i;
 
 	i = 0;
-	pthread_mutex_init(&sim->logging_mutex, NULL);
-	sim->coders = ft_calloc(sim->coders_count, sizeof(t_coder));
-	if (!sim->coders)
+	pthread_mutex_init(&ctx->shared.logging_mutex, NULL);
+	ctx->coders = ft_calloc(ctx->coders_count, sizeof(t_coder));
+	if (!ctx->coders)
 		return (FAILURE);
-	while (i < sim->coders_count)
-		init_coder(i++, sim);
+	while (i < ctx->coders_count)
+		init_coder(i++, ctx);
 	i = 0;
-	sim->dongles = ft_calloc(sim->coders_count, sizeof(t_dongle));
-	if (!sim->dongles)
-		return (free_return_int((void *[]){sim->dongles}, 1,
+	ctx->dongles = ft_calloc(ctx->coders_count, sizeof(t_dongle));
+	if (!ctx->dongles)
+		return (free_return_int((void *[]){ctx->dongles}, 1,
 			FAILURE));
-	while (i < sim->coders_count)
-		init_dongle(i++, sim);
+	while (i < ctx->coders_count)
+		init_dongle(i++, ctx);
 	return (SUCCESS);
 }
 
@@ -70,32 +68,27 @@ void	print_hq(t_heap_queue *hq)
 {
 	printf("Heap queue size: %zu	\n", hq->size);
 	for (size_t i = 0; i < hq->size; i++)
-		printf("hq[%zu]: %d\n", i, *(int*)hq->data[i]);
-}
-
-int	get_score(void *el)
-{
-	return (*(int*)el);
+		printf("hq[%zu]: %d\n", i, *(int*)hq->data[i].data);
 }
 
 int	main(int ac, char **av)
 {
-	t_simulation	*sim;
+	t_ctx	*ctx;
 
-	sim = parse(ac, av);
-	if (!sim)
+	ctx = parse(ac, av);
+	if (!ctx)
 	{
-		ft_log_error(NULL, "Parsing error", NULL);
+		ft_log_error(&ctx->shared, "Parsing error", NULL);
 		return (FAILURE);
 	}
-	if (init(sim) == FAILURE)
+	if (init(ctx) == FAILURE)
 	{
-		ft_log_error(NULL, "Initialization error", NULL);
-		return ((int)free_return_int((void *[]){sim->scheduler, sim}, 2,
+		ft_log_error(&ctx->shared, "Initialization error", NULL);
+		return ((int)free_return_int((void *[]){ctx->scheduler, ctx}, 2,
 			EXIT_FAILURE));
 	}
-	ft_log_debug(NULL, "Parsing successful", NULL);
-	monitor_simulation(sim);
-	free_all((void *[]){sim->scheduler, sim->dongles, sim->coders, sim}, 4);
+	ft_log_debug(&ctx->shared, "Parsing successful", NULL);
+	monitor_simulation(ctx);
+	free_all((void *[]){ctx->scheduler, ctx->dongles, ctx->coders, ctx}, 4);
 	return (EXIT_SUCCESS);
 }

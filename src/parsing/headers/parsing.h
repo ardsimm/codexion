@@ -6,15 +6,15 @@
 /*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/13 11:53:55 by smenard           #+#    #+#             */
-/*   Updated: 2026/05/13 12:08:30 by smenard          ###   ########.fr       */
+/*   Updated: 2026/05/13 12:44:17 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSING_H
 # define PARSING_H
 
-t_simulation	*parse(int ac, char **av);
+t_ctx	*parse(int ac, char **av);
 
-bool	validate_simulation(t_simulation *sim);
+bool	validate_ctx(t_ctx *sim);
 
 #endif

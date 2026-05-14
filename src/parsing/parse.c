@@ -6,21 +6,12 @@
 /*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 14:58:53 by smenard           #+#    #+#             */
-/*   Updated: 2026/05/13 11:46:56 by smenard          ###   ########.fr       */
+/*   Updated: 2026/05/14 16:29:55 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "headers/lib.h"
-
-static bool	ft_isspace(char c)
-{
-	return ((c <= '\r' && c >= '\t') || c == ' ');
-}
-
-static bool	ft_isdigit(char c)
-{
-	return (c >= '0' && c <= '9');
-}
+#include "./headers/parsing_lib.h"
 
 static int	atoi_safe(char *value)
 {
@@ -46,38 +37,44 @@ static int	atoi_safe(char *value)
 
 static void	build_simulation_ptrs_array(
 	t_typed_voidp ptrs[EXPECTED_AC],
-	t_simulation *simulation)
+	t_ctx *ctx)
 {
-	ptrs[0] = (t_typed_voidp){.type = INT, .data = &simulation->coders_count};
+	ptrs[0] = (t_typed_voidp){.type = INT, .data = &ctx->coders_count};
 	ptrs[1] = (t_typed_voidp){.type = INT,
-		.data = &simulation->time_to_burnout};
+		.data = &ctx->shared.time_to_burnout};
 	ptrs[2] = (t_typed_voidp){.type = INT,
-		.data = &simulation->time_to_compile};
+		.data = &ctx->shared.time_to_compile};
 	ptrs[3] = (t_typed_voidp){
 		.type = INT,
-		.data = &simulation->time_to_debug};
+		.data = &ctx->shared.time_to_debug};
 	ptrs[4] = (t_typed_voidp){.type = INT,
-		.data = &simulation->time_to_refactor};
+		.data = &ctx->shared.time_to_refactor};
 	ptrs[5] = (t_typed_voidp){.type = INT,
-		.data = &simulation->number_of_compiles};
+		.data = &ctx->shared.number_of_compiles};
 	ptrs[6] = (t_typed_voidp){.type = INT,
-		.data = &simulation->number_of_compiles};
-	ptrs[7] = (t_typed_voidp){.type = STR, .data = &simulation->scheduler};
+		.data = &ctx->shared.number_of_compiles};
+	ptrs[7] = (t_typed_voidp){.type = STR, .data = &ctx->scheduler};
 }
 
-t_simulation	*parse(int ac, char **av)
+static void	init_tv(t_ctx *ctx)
+{
+	gettimeofday(&ctx->shared.tv, NULL);
+	ctx->shared.timestamp_start = ctx->shared.tv.tv_usec;
+}
+
+t_ctx	*parse(int ac, char **av)
 {
 	size_t			i;
-	t_simulation	*simulation;
+	t_ctx			*ctx;
 	t_typed_voidp	ptrs[EXPECTED_AC];
 
-	simulation = ft_calloc(1, sizeof(t_simulation));
-	if (!simulation)
+	ctx = ft_calloc(1, sizeof(t_ctx));
+	if (!ctx)
 		return (NULL);
-	build_simulation_ptrs_array(ptrs, simulation);
+	build_simulation_ptrs_array(ptrs, ctx);
 	i = 1;
 	if (ac < EXPECTED_AC)
-		return (free_return((void *[]){simulation->scheduler, simulation},
+		return (free_return((void *[]){ctx->scheduler, ctx},
 			2, NULL));
 	while (i < (size_t)ac)
 	{
@@ -87,8 +84,8 @@ t_simulation	*parse(int ac, char **av)
 			*(char **)ptrs[i - 1].data = ft_strcpy(av[i]);
 		i++;
 	}
-	if (!validate_simulation(simulation))
-		return ((free_return((void *[]){simulation->scheduler, simulation},
-				2, NULL)));
-	return (simulation);
+	if (!validate_ctx(ctx))
+		return ((free_return((void *[]){ctx->scheduler, ctx}, 2, NULL)));
+	init_tv(ctx);
+	return (ctx);
 }

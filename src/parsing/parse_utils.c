@@ -1,20 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   simulation.c                                       :+:      :+:    :+:   */
+/*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/23 13:03:38 by smenard           #+#    #+#             */
-/*   Updated: 2026/05/13 11:46:56 by smenard          ###   ########.fr       */
+/*   Created: 2026/05/13 16:36:34 by smenard           #+#    #+#             */
+/*   Updated: 2026/05/13 16:58:17 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "headers/lib.h"
 
-void	*monitor_simulation(t_simulation *sim)
+bool	ft_isspace(char c)
 {
-	(void) sim;
-	printf("Miam le caca\n");
-	return (NULL);
+	return ((c <= '\r' && c >= '\t') || c == ' ');
+}
+
+bool	ft_isdigit(char c)
+{
+	return (c >= '0' && c <= '9');
 }

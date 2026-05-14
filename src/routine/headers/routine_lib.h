@@ -1,20 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   simulation.h                                       :+:      :+:    :+:   */
+/*   routine_lib.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/05/13 11:54:07 by smenard           #+#    #+#             */
-/*   Updated: 2026/05/13 12:02:47 by smenard          ###   ########.fr       */
+/*   Created: 2026/05/13 13:18:35 by smenard           #+#    #+#             */
+/*   Updated: 2026/05/14 15:39:29 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SIMULATION_H
-# define SIMULATION_H
+#ifndef ROUTINE_LIB_H
+# define ROUTINE_LIB_H
 
 # include "headers/defines.h"
 
-void	*monitor_simulation(t_simulation *sim);
+void	compile(const t_coder *self);
+void	debug(const t_coder *self);
+void	refactor(const t_coder *self);
 
 #endif

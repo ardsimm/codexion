@@ -6,7 +6,7 @@
 /*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 13:03:38 by smenard           #+#    #+#             */
-/*   Updated: 2026/05/13 11:46:56 by smenard          ###   ########.fr       */
+/*   Updated: 2026/05/14 16:48:23 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,25 +15,28 @@
 void	*routine_de_con(void *param)
 {
 	t_coder	*self;
+	size_t	i;
 
-	self = (t_coder*) param;
-	for (int i = 0; i < 12; i++)
+	self = (t_coder *)param;
+	i = 0;
+	while (i < 12)
 	{
-		ft_log_debug(self->logging_mutex, "dummy routine", &self->id);
-		usleep(50);
+		ft_log_debug(&self->shared, "dummy routine", &self->id);
+		usleep(500);
+		i++;
 	}
 	self->done = true;
 	return (NULL);
 }
 
-void	*monitor_simulation(t_simulation *sim)
+void	*monitor_simulation(t_ctx *sim)
 {
 	pthread_t	*threads;
 	void		**ret;
 	bool		done;
 	size_t		i;
 
-	ret = ft_calloc(1, sizeof(void*));
+	ret = ft_calloc(1, sizeof(void *));
 	threads = ft_calloc(sim->coders_count, sizeof(pthread_t));
 	done = false;
 	i = 0;
@@ -56,5 +59,6 @@ void	*monitor_simulation(t_simulation *sim)
 			usleep(10);
 		}
 	}
+	free(ret);
 	return (NULL);
 }

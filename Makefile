@@ -45,7 +45,6 @@ HEAP_QUEUE_DIR =	heap_queue
 LOGGING_DIR =		logging
 MONITOR_DIR =		monitor
 PARSING_DIR =		parsing
-SIMULATION_DIR =	simulation
 ROUTINE_DIR =		routine
 UTILS_DIR =			utils
 
@@ -69,6 +68,7 @@ MONITOR_FILES =		$(MAIN_DIR)/$(MONITOR_DIR)/monitor.c \
 
 PARSING_FILES =		$(MAIN_DIR)/$(PARSING_DIR)/parse.c \
 					$(MAIN_DIR)/$(PARSING_DIR)/parse_validate.c \
+					$(MAIN_DIR)/$(PARSING_DIR)/parse_utils.c \
 
 UTILS_FILES =		$(MAIN_DIR)/$(UTILS_DIR)/utils.c \
 
@@ -123,7 +123,7 @@ debug: $(NAME_DEBUG)
 	gdb $(NAME_DEBUG) --args $(NAME_DEBUG) $(ARGUMENTS)
 
 $(NAME_VG): $(ALL_FILES)
-	$(CC) -g $(CLFAGS) $(ALL_FILES) -o $(NAME_VG) $(COMPILE_D)
+	$(CC) -g $(CLFAGS) $(ALL_FILES) -o $(NAME_VG) $(COMPILE_D) $(INCLUDES) -DLOG_LEVEL=0
 
 vg: $(NAME_VG)
 	valgrind $(VGFLAGS) ./$(NAME_VG) $(ARGUMENTS)

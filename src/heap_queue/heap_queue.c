@@ -6,7 +6,7 @@
 /*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 14:32:39 by smenard           #+#    #+#             */
-/*   Updated: 2026/05/13 12:03:48 by smenard          ###   ########.fr       */
+/*   Updated: 2026/05/14 15:32:27 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,9 @@
 
 static void	heap_queue_align_up(t_heap_queue *hq, int idx)
 {
-	void	*temp;
+	t_heap_queue_item	temp;
 
-	if (idx && hq->get_score(hq->data[(idx - 1)
-				/ 2]) > hq->get_score(hq->data[idx]))
+	if (idx && hq->data[(idx - 1) / 2].key > hq->data[idx].key)
 	{
 		temp = hq->data[idx];
 		hq->data[idx] = hq->data[(idx - 1) / 2];
@@ -28,21 +27,19 @@ static void	heap_queue_align_up(t_heap_queue *hq, int idx)
 
 static void	heap_queue_align_down(t_heap_queue *hq, size_t idx)
 {
-	void	*temp;
-	size_t	smallest;
-	size_t	right;
-	size_t	left;
+	t_heap_queue_item	temp;
+	size_t				smallest;
+	size_t				right;
+	size_t				left;
 
 	if (idx >= hq->size)
 		return ;
 	smallest = idx;
 	right = 2 * idx + 1;
 	left = 2 * idx + 2;
-	if (right < hq->size
-		&& hq->get_score(hq->data[right]) < hq->get_score(hq->data[smallest]))
+	if (right < hq->size && hq->data[right].key < hq->data[smallest].key)
 		smallest = right;
-	if (left < hq->size
-		&& hq->get_score(hq->data[left]) < hq->get_score(hq->data[smallest]))
+	if (left < hq->size && hq->data[left].key < hq->data[smallest].key)
 		smallest = left;
 	if (smallest != idx)
 	{
@@ -54,7 +51,7 @@ static void	heap_queue_align_down(t_heap_queue *hq, size_t idx)
 }
 
 t_heap_queue	*hq_init(size_t initial_size, size_t el_size,
-		int (*get_score)(void *el))
+		size_t (*get_key)(t_shared_ctx *ctx, void *el))
 {
 	t_heap_queue	*hq;
 
@@ -62,26 +59,27 @@ t_heap_queue	*hq_init(size_t initial_size, size_t el_size,
 	hq->max_size = initial_size;
 	hq->size = 0;
 	hq->data = ft_calloc(initial_size, el_size);
-	hq->get_score = get_score;
+	hq->get_key = get_key;
 	return (hq);
 }
 
-void	hq_add(t_heap_queue *hq, void *data)
+void	hq_add(t_heap_queue *hq, t_shared_ctx *ctx, void *data)
 {
 	if (hq->size >= hq->max_size)
 		return ;
-	hq->data[hq->size++] = data;
+	hq->data[hq->size++] = (t_heap_queue_item){.key = hq->get_key(ctx, data),
+		.data = data};
 	heap_queue_align_up(hq, hq->size - 1);
 }
 
 void	*hq_pop(t_heap_queue *hq)
 {
-	void	*item;
+	t_heap_queue_item	*item;
 
 	if (!hq->size)
 		return (NULL);
-	item = hq->data[0];
+	item = &hq->data[0];
 	hq->data[0] = hq->data[--hq->size];
 	heap_queue_align_down(hq, 0);
-	return (item);
+	return (item->data);
 }

@@ -5,16 +5,16 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/05/13 11:59:17 by smenard           #+#    #+#             */
-/*   Updated: 2026/05/13 12:00:53 by smenard          ###   ########.fr       */
+/*   Created: 2026/05/13 16:37:32 by smenard           #+#    #+#             */
+/*   Updated: 2026/05/13 16:38:04 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSING_LIB
-# define PARSING_LIB
+#ifndef PARSING_LIB_H
+# define PARSING_LIB_H
 
-# include "headers/lib.h"
+bool	ft_isspace(char c);
 
-bool	validate_simulation(t_simulation *sim);
+bool	ft_isdigit(char c);
 
 #endif
