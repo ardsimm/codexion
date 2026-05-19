@@ -1,22 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.h                                          :+:      :+:    :+:   */
+/*   debug.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
+/*   By: smenard <smenard@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/05/13 11:53:55 by smenard           #+#    #+#             */
-/*   Updated: 2026/05/20 16:12:17 by smenard          ###   ########.fr       */
+/*   Created: 2026/05/20 15:48:31 by smenard           #+#    #+#             */
+/*   Updated: 2026/05/20 16:02:02 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#ifndef DEBUG_H
+# define DEBUG_H
 
-#ifndef PARSING_H
-# define PARSING_H
+# include "headers/lib.h"
 
-# include "headers/defines.h"
-
-t_ctx	*parse(int ac, char **av);
-
-bool	validate_ctx(t_ctx *sim);
+void	print_ctx(t_ctx *ctx);
 
 #endif

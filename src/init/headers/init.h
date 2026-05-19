@@ -1,22 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.h                                          :+:      :+:    :+:   */
+/*   init.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
+/*   By: smenard <smenard@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/05/13 11:53:55 by smenard           #+#    #+#             */
-/*   Updated: 2026/05/20 16:12:17 by smenard          ###   ########.fr       */
+/*   Created: 2026/05/20 15:19:20 by smenard           #+#    #+#             */
+/*   Updated: 2026/05/20 15:26:11 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSING_H
-# define PARSING_H
-
+#ifndef INIT_H
+# define INIT_H
 # include "headers/defines.h"
 
-t_ctx	*parse(int ac, char **av);
-
-bool	validate_ctx(t_ctx *sim);
+int		init(t_ctx *ctx);
 
 #endif

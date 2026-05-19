@@ -13,11 +13,15 @@
 #ifndef HEAP_QUEUE_H
 # define HEAP_QUEUE_H
 
-t_heap_queue		*hq_init(size_t initial_size, size_t el_size,
-						size_t (*get_key)(t_shared_ctx *ctx, void *el));
+# include "headers/defines.h"
 
-void				hq_add(t_heap_queue *hq, t_shared_ctx *ctx, void *data);
+t_heap_queue		*hq_init(size_t initial_size, size_t el_size,
+						size_t (*get_key)(void *el), size_t (*update_key)(t_heap_queue_item *item));
+
+void				hq_add(t_heap_queue *hq, void *data);
 
 void				*hq_pop(t_heap_queue *hq);
+
+void				hq_update_keys(t_heap_queue *hq);
 
 #endif

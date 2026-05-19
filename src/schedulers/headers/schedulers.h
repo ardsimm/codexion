@@ -1,22 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.h                                          :+:      :+:    :+:   */
+/*   schedulers.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
+/*   By: smenard <smenard@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/05/13 11:53:55 by smenard           #+#    #+#             */
-/*   Updated: 2026/05/20 16:12:17 by smenard          ###   ########.fr       */
+/*   Created: 2026/05/20 15:21:38 by smenard           #+#    #+#             */
+/*   Updated: 2026/05/20 15:23:16 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSING_H
-# define PARSING_H
+#ifndef SCHEDULERS_H
+# define SCHEDULERS_H
 
 # include "headers/defines.h"
 
-t_ctx	*parse(int ac, char **av);
+size_t	get_key_fifo(void *el);
 
-bool	validate_ctx(t_ctx *sim);
+size_t	update_key_fifo(t_heap_queue_item *item);
 
 #endif
+

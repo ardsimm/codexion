@@ -1,22 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.h                                          :+:      :+:    :+:   */
+/*   routine_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
+/*   By: smenard <smenard@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/05/13 11:53:55 by smenard           #+#    #+#             */
-/*   Updated: 2026/05/20 16:12:17 by smenard          ###   ########.fr       */
+/*   Created: 2026/05/20 15:37:00 by smenard           #+#    #+#             */
+/*   Updated: 2026/05/20 15:38:21 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSING_H
-# define PARSING_H
+#include "headers/lib.h"
 
-# include "headers/defines.h"
+bool	should_keep_running(t_shared_ctx shared)
+{
+	bool	run;
 
-t_ctx	*parse(int ac, char **av);
-
-bool	validate_ctx(t_ctx *sim);
-
-#endif
+	pthread_mutex_lock(&shared.run_mutex);
+	run = shared.run;
+	pthread_mutex_unlock(&shared.run_mutex);
+	return (run);
+}

@@ -6,7 +6,7 @@
 /*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 13:07:09 by smenard           #+#    #+#             */
-/*   Updated: 2026/05/14 15:34:07 by smenard          ###   ########.fr       */
+/*   Updated: 2026/05/20 16:11:48 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ typedef struct s_shared_ctx
 	uint32_t				dongle_cooldown;
 	pthread_mutex_t			logging_mutex;
 	size_t					timestamp_start;
-	struct timeval			tv;
+	pthread_mutex_t			run_mutex;
+	bool					run;
 }							t_shared_ctx;
 
 typedef struct s_heap_queue
@@ -58,13 +59,15 @@ typedef struct s_heap_queue
 	size_t					size;
 	size_t					max_size;
 	t_heap_queue_item		*data;
-	size_t					(*get_key)(t_shared_ctx *ctx, void *el);
+	size_t					(*get_key)(void *el);
+	size_t					(*update_key)(t_heap_queue_item *item);
 }							t_heap_queue;
 
 typedef enum e_scheduler_mode
 {
 	FIFO,
-	EDF
+	EDF,
+	INVALID
 }							t_scheduler_mode;
 
 typedef enum e_data_type
@@ -92,8 +95,7 @@ typedef struct s_dongle
 typedef struct s_coder
 {
 	size_t					id;
-	size_t					last_task_end_timestamp;
-	size_t					compilation_count;
+	size_t					last_compile_timestamp;
 	bool					done;
 	t_dongle				*dongle_left;
 	t_dongle				*dongle_right;
@@ -133,7 +135,7 @@ typedef struct s_ctx
 	uint32_t				coders_count;
 	t_dongle				*dongles;
 	t_coder					*coders;
-	char					*scheduler;
+	t_scheduler_mode		scheduler;
 	t_shared_ctx			shared;
 }							t_ctx;
 

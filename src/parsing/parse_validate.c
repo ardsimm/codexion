@@ -12,17 +12,6 @@
 
 #include "headers/lib.h"
 
-static bool	validate_scheduler(char *value)
-{
-	return (
-		value != NULL
-		&& (
-			!strcmp(value, "EDF")
-			|| !strcmp(value, "FIFO")
-		)
-	);
-}
-
 static bool	validate_int_value(int value)
 {
 	return (value >= 0);
@@ -40,6 +29,6 @@ bool	validate_ctx(t_ctx *ctx)
 	valid &= validate_int_value(ctx->shared.time_to_refactor);
 	valid &= validate_int_value(ctx->shared.number_of_compiles);
 	valid &= validate_int_value(ctx->shared.dongle_cooldown);
-	valid &= validate_scheduler(ctx->scheduler);
+	valid &= ctx->scheduler == FIFO || ctx->scheduler == EDF;
 	return (valid);
 }

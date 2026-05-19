@@ -50,8 +50,26 @@ static void	heap_queue_align_down(t_heap_queue *hq, size_t idx)
 	}
 }
 
+void	hq_update_keys(t_heap_queue *hq)
+{
+	size_t				i;
+	t_heap_queue_item	temp;
+
+	i = 0;
+	while (i < hq->size)
+	{
+		hq->data[i].key = hq->update_key(&hq->data[i]);
+		i++;
+	}
+	temp = hq->data[0];
+	hq->data[0] = hq->data[hq->size - 1];
+	hq->data[hq->size - 1] = temp;
+	heap_queue_align_down(hq, 0);
+}
+
 t_heap_queue	*hq_init(size_t initial_size, size_t el_size,
-		size_t (*get_key)(t_shared_ctx *ctx, void *el))
+		size_t (*get_key)(void *el),
+		size_t (*update_key)(t_heap_queue_item *item))
 {
 	t_heap_queue	*hq;
 
@@ -60,14 +78,15 @@ t_heap_queue	*hq_init(size_t initial_size, size_t el_size,
 	hq->size = 0;
 	hq->data = ft_calloc(initial_size, el_size);
 	hq->get_key = get_key;
+	hq->update_key = update_key;
 	return (hq);
 }
 
-void	hq_add(t_heap_queue *hq, t_shared_ctx *ctx, void *data)
+void	hq_add(t_heap_queue *hq, void *data)
 {
 	if (hq->size >= hq->max_size)
 		return ;
-	hq->data[hq->size++] = (t_heap_queue_item){.key = hq->get_key(ctx, data),
+	hq->data[hq->size++] = (t_heap_queue_item){.key = hq->get_key(data),
 		.data = data};
 	heap_queue_align_up(hq, hq->size - 1);
 }

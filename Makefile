@@ -1,7 +1,7 @@
 # ========== FLAGS ==========
 
 # ---------- CLANG ----------
-CFLAGS =	-Wall -Wextra -Werror -fsanitize=thread
+CFLAGS =	-Wall -Wextra -Werror
 
 # ---------- VALGRIND ----------
 VGFLAGS =	--leak-check=full \
@@ -41,12 +41,15 @@ ARGUMENTS =	$(NUMBER_OF_CODERS) \
 # ---------- MAIN ----------
 
 MAIN_DIR =			src
+DONGLES_DIR =		dongles
 HEAP_QUEUE_DIR =	heap_queue
+INIT_DIR =			init
 LOGGING_DIR =		logging
 MONITOR_DIR =		monitor
 PARSING_DIR =		parsing
 ROUTINE_DIR =		routine
 UTILS_DIR =			utils
+SCHEDULERS_DIR =	schedulers
 
 # ---------- HEADERS ----------
 
@@ -58,11 +61,18 @@ INCLUDES = -I$(MAIN_DIR)
 
 MAIN_FILES =		$(MAIN_DIR)/main.c \
 
+DONGLES_FILES =		$(MAIN_DIR)/$(DONGLES_DIR)/dongle_utils.c \
+
 HEAP_QUEUE_FILES =	$(MAIN_DIR)/$(HEAP_QUEUE_DIR)/heap_queue.c \
+
+INIT_FILES =		$(MAIN_DIR)/$(INIT_DIR)/init.c \
 
 LOGGING_FILES =		$(MAIN_DIR)/$(LOGGING_DIR)/logging.c \
 
 ROUTINE_FILES =		$(MAIN_DIR)/$(ROUTINE_DIR)/routine.c \
+					$(MAIN_DIR)/$(ROUTINE_DIR)/tasks.c \
+					$(MAIN_DIR)/$(ROUTINE_DIR)/routine_utils.c \
+
 
 MONITOR_FILES =		$(MAIN_DIR)/$(MONITOR_DIR)/monitor.c \
 
@@ -70,14 +80,19 @@ PARSING_FILES =		$(MAIN_DIR)/$(PARSING_DIR)/parse.c \
 					$(MAIN_DIR)/$(PARSING_DIR)/parse_validate.c \
 					$(MAIN_DIR)/$(PARSING_DIR)/parse_utils.c \
 
+SCHEDULERS_FILES =	$(MAIN_DIR)/$(SCHEDULERS_DIR)/schedulers.c\
+
 UTILS_FILES =		$(MAIN_DIR)/$(UTILS_DIR)/utils.c \
 
-ALL_FILES =			$(HEAP_QUEUE_FILES) \
+ALL_FILES =			$(DONGLES_FILES) \
+					$(HEAP_QUEUE_FILES) \
 					$(LOGGING_FILES) \
 					$(ROUTINE_FILES) \
 					$(MONITOR_FILES) \
 					$(PARSING_FILES) \
 					$(UTILS_FILES) \
+					$(INIT_FILES) \
+					$(SCHEDULERS_FILES) \
 					$(MAIN_FILES) \
 
 # ========== OBJ ==========
@@ -137,6 +152,9 @@ $(NAME_MAIN): $(SRCS_OBJ)
 reset_counter:
 	@echo "0" > $(COUNTER_FILE)
 	@echo "$(TOTAL_FILES)" >> $(COUNTER_FILE)
+
+format:
+	python3 -m c_formatter_42 $(ALL_FILES)
 
 # ========================================
 #           COMMON RULES
