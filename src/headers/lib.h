@@ -6,7 +6,7 @@
 /*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 13:07:25 by smenard           #+#    #+#             */
-/*   Updated: 2026/05/20 19:16:15 by smenard          ###   ########.fr       */
+/*   Updated: 2026/05/21 16:29:08 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,6 @@
 # include "init/headers/init.h"
 # include "schedulers/headers/schedulers.h"
 # include "debug/headers/debug.h"
+# include "mutex/headers/mutex.h"
 
 #endif

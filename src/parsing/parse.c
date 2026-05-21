@@ -71,11 +71,11 @@ t_ctx	*parse(int ac, char **av)
 	{
 		if (ptrs[i - 1].type == INT)
 			*(int *)ptrs[i - 1].data = atoi_safe(av[i]);
-		else if (ptrs[i-1].type == STR && !strcmp(av[i], "FIFO"))
+		else if (ptrs[i - 1].type == STR && !strcmp(av[i], "FIFO"))
 			*(t_scheduler_mode *)ptrs[i - 1].data = FIFO;
-		else if (ptrs[i-1].type == STR && !strcmp(av[i], "EDF"))
+		else if (ptrs[i - 1].type == STR && !strcmp(av[i], "EDF"))
 			*(t_scheduler_mode *)ptrs[i - 1].data = EDF;
-		else if (ptrs[i-1].type == STR)
+		else if (ptrs[i - 1].type == STR)
 			*(t_scheduler_mode *)ptrs[i - 1].data = INVALID;
 		else
 			return ((free_return((void *[]){ctx}, 2, NULL)));

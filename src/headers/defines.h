@@ -6,7 +6,7 @@
 /*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 13:07:09 by smenard           #+#    #+#             */
-/*   Updated: 2026/05/20 22:27:37 by smenard          ###   ########.fr       */
+/*   Updated: 2026/05/21 16:29:49 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,15 @@ typedef enum e_data_type
 	STR,
 }							t_data_type;
 
+typedef struct s_heap_queue
+{
+	size_t					size;
+	size_t					max_size;
+	t_heap_queue_item		*data;
+	size_t					(*get_key)(void *el);
+	size_t					(*update_key)(t_heap_queue_item *item);
+}							t_heap_queue;
+
 typedef struct e_typed_voidp
 {
 	t_data_type				type;
@@ -78,6 +87,18 @@ typedef struct s_bool_mutex
 	bool					data;
 }							t_bool_mutex;
 
+typedef struct s_size_t_mutex
+{
+	pthread_mutex_t			mutex;
+	size_t					data;
+}							t_size_t_mutex;
+
+typedef struct s_heap_queue_mutex
+{
+	pthread_mutex_t			mutex;
+	t_heap_queue			*data;
+}							t_heap_queue_mutex;
+
 typedef struct s_shared_ctx
 {
 	uint32_t				time_to_burnout;
@@ -92,15 +113,6 @@ typedef struct s_shared_ctx
 	t_int_cond				start_condition;
 }							t_shared_ctx;
 
-typedef struct s_heap_queue
-{
-	size_t					size;
-	size_t					max_size;
-	t_heap_queue_item		*data;
-	size_t					(*get_key)(void *el);
-	size_t					(*update_key)(t_heap_queue_item *item);
-}							t_heap_queue;
-
 typedef enum e_scheduler_mode
 {
 	FIFO,
@@ -113,15 +125,15 @@ typedef struct s_dongle
 	size_t					id;
 	t_heap_queue			*hq;
 	size_t					cooldown;
-	size_t					last_use_timestamp;
+	t_size_t_mutex			last_use_timestamp;
 	t_bool_mutex			in_use;
 }							t_dongle;
 
 typedef struct s_coder
 {
 	size_t					id;
-	size_t					last_compile_timestamp;
-	bool					done;
+	t_size_t_mutex			last_compile_timestamp;
+	t_bool_mutex			done;
 	t_dongle				*dongle_left;
 	t_dongle				*dongle_right;
 	t_shared_ctx			shared;

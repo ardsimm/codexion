@@ -6,7 +6,7 @@
 /*   By: smenard <smenard@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/20 17:20:34 by smenard           #+#    #+#             */
-/*   Updated: 2026/05/20 18:21:58 by smenard          ###   ########.fr       */
+/*   Updated: 2026/05/21 16:40:31 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,4 @@ void	init_coder(int32_t i, t_ctx *ctx)
 	ctx->coders[i].shared = ctx->shared;
 	ctx->coders[i].dongle_left = &ctx->dongles[dongle_left_idx];
 	ctx->coders[i].dongle_right = &ctx->dongles[dongle_right_idx];
-	hq_add(ctx->coders[i].dongle_left->hq, &ctx->coders[i]);
-	hq_add(ctx->coders[i].dongle_right->hq, &ctx->coders[i]);
 }

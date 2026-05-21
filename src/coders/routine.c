@@ -30,6 +30,8 @@ void	*coder_routine(void *data)
 
 	i = 0;
 	self = (t_coder *)data;
+	if (self->id % 2)
+		usleep(50);
 	// pthread_cond_timedwait(
 	// 		pthread_cond_t *restrict cond,
 	// 		pthread_mutex_t *restrict mutex,
@@ -40,8 +42,8 @@ void	*coder_routine(void *data)
 	while (should_continue(&self->shared))
 	{
 		compile(self);
-		refactor(self);
 		debug(self);
+		refactor(self);
 		i++;
 		if (i == self->shared.number_of_compiles)
 		{

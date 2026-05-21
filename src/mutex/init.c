@@ -1,26 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   dongles.c                                          :+:      :+:    :+:   */
+/*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smenard <smenard@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/05/20 17:23:14 by smenard           #+#    #+#             */
-/*   Updated: 2026/05/21 16:47:31 by smenard          ###   ########.fr       */
+/*   Created: 2026/05/21 16:30:50 by smenard           #+#    #+#             */
+/*   Updated: 2026/05/21 16:45:05 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "headers/defines.h"
 #include "headers/lib.h"
 
-int	init_dongle(uint32_t i, t_ctx *ctx)
+void	init_voidp_mutex(t_voidp_mutex mutex, t_typed_voidp value)
 {
-	ctx->dongles[i].id = i;
-	ctx->dongles[i].hq = hq_init(2, sizeof(t_coder), get_key_fifo,
-			update_key_fifo);
-	if (!ctx->dongles[i].hq)
-		return (FAILURE);
-	init_bool_mutex(ctx->dongles[i].in_use, false);
-	ctx->dongles[i].cooldown = ctx->shared.dongle_cooldown;
-	return (SUCCESS);
+	pthread_mutex_init(&mutex.mutex, NULL);
+	mutex.data = value;
+}
+
+void	init_size_t_mutex(t_size_t_mutex mutex, size_t value)
+{
+	pthread_mutex_init(&mutex.mutex, NULL);
+	mutex.data = value;
+}
+
+void	init_bool_mutex(t_bool_mutex mutex, bool value)
+{
+	pthread_mutex_init(&mutex.mutex, NULL);
+	mutex.data = value;
 }

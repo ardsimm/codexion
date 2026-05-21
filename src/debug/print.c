@@ -79,8 +79,7 @@ static void	print_coder(t_coder *c)
 	printf("      \"last_compile_timestamp\": %zu,\n",
 		c->last_compile_timestamp);
 	printf("      \"done\": %s,\n", c->done ? "true" : "false");
-	printf("      \"dongle_left\": %s,\n",
-		c->dongle_left ? "{ ... }" : "null");
+	printf("      \"dongle_left\": %s,\n", c->dongle_left ? "{ ... }" : "null");
 	printf("      \"dongle_right\": %s,\n",
 		c->dongle_right ? "{ ... }" : "null");
 	printf("      \"shared\": ");
@@ -94,7 +93,8 @@ void	print_ctx(t_ctx *ctx)
 
 	printf("{\n");
 	printf("  \"coders_count\": %u,\n", ctx->coders_count);
-	printf("  \"scheduler_mode\": %s\n", ctx->scheduler == FIFO ? "FIFO" : "EDF");
+	printf("  \"scheduler_mode\": %s\n",
+		ctx->scheduler == FIFO ? "FIFO" : "EDF");
 	printf("  \"dongles\": [\n");
 	i = 0;
 	while (i < ctx->coders_count)

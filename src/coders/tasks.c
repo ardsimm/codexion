@@ -10,29 +10,26 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "dongles/headers/dongles.h"
 #include "headers/lib.h"
 #include "utils/headers/utils.h"
 
 static int	take_dongles(t_coder *self)
 {
-	int	dongle_left_result;
-	int	dongle_right_result;
-
-	dongle_left_result = take_dongle(self, self->dongle_left);
-	dongle_right_result = take_dongle(self, self->dongle_right);
-	if (dongle_left_result == FAILURE || dongle_right_result == FAILURE)
-	{
-		if (dongle_left_result == SUCCESS)
-			release_dongle(self->dongle_right);
-		else if (dongle_right_result == SUCCESS)
-			release_dongle(self->dongle_right);
+	if (!can_take_dongle(self, self->dongle_left) || !can_take_dongle(self,
+			self->dongle_left))
 		return (FAILURE);
-	}
+	hq_add(self->dongle_left->hq, self);
+	hq_add(self->dongle_right->hq, self);
+	take_dongle(self, self->dongle_left);
+	take_dongle(self, self->dongle_right);
 	return (SUCCESS);
 }
 
 static void	release_dongles(t_coder *self)
 {
+	hq_pop(self->dongle_left->hq);
+	hq_pop(self->dongle_right->hq);
 	release_dongle(self->dongle_left);
 	release_dongle(self->dongle_right);
 }
