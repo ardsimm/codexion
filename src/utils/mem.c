@@ -1,29 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   schedulers.c                                       :+:      :+:    :+:   */
+/*   mem.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smenard <smenard@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/05/20 15:22:23 by smenard           #+#    #+#             */
-/*   Updated: 2026/05/20 18:22:32 by smenard          ###   ########.fr       */
+/*   Created: 2026/05/20 18:00:04 by smenard           #+#    #+#             */
+/*   Updated: 2026/05/20 18:00:26 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "headers/lib.h"
-#include "utils/headers/utils.h"
 
-size_t	get_key_fifo(void *el)
+void	*ft_calloc(size_t nmemb, size_t size)
 {
-	t_heap_queue_item	*item;
+	void	*ptr;
 
-	item = (t_heap_queue_item *)el;
-	if (item->key)
-		return (item->key);
-	return (get_time_ms());
-}
-
-size_t	update_key_fifo(t_heap_queue_item *item)
-{
-	return (item->key);
+	if (nmemb != 0 && size > SIZE_MAX / nmemb)
+		return (NULL);
+	ptr = malloc(size * nmemb);
+	if (!ptr)
+		return (NULL);
+	memset(ptr, 0, size * nmemb);
+	return (ptr);
 }

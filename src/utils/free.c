@@ -1,47 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
+/*   By: smenard <smenard@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/23 13:06:38 by smenard           #+#    #+#             */
-/*   Updated: 2026/05/13 11:46:56 by smenard          ###   ########.fr       */
+/*   Created: 2026/05/20 18:01:52 by smenard           #+#    #+#             */
+/*   Updated: 2026/05/20 18:02:02 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "headers/lib.h"
-
-void	*ft_calloc(size_t nmemb, size_t size)
-{
-	void	*ptr;
-
-	if (nmemb != 0 && size > SIZE_MAX / nmemb)
-		return (NULL);
-	ptr = malloc(size * nmemb);
-	if (!ptr)
-		return (NULL);
-	memset(ptr, 0, size * nmemb);
-	return (ptr);
-}
-
-char	*ft_strcpy(char *s1)
-{
-	const size_t	len = strlen(s1);
-	char			*s2;
-	size_t			i;
-
-	if (len == 0)
-		return (NULL);
-	s2 = ft_calloc(len + 1, sizeof(char));
-	i = 0;
-	while (s1[i])
-	{
-		s2[i] = s1[i];
-		i++;
-	}
-	return (s2);
-}
 
 void	free_all(void **ptrs, size_t ptrs_len)
 {

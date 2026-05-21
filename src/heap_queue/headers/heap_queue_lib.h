@@ -1,29 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   schedulers.c                                       :+:      :+:    :+:   */
+/*   heap_queue_lib.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smenard <smenard@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/05/20 15:22:23 by smenard           #+#    #+#             */
-/*   Updated: 2026/05/20 18:22:32 by smenard          ###   ########.fr       */
+/*   Created: 2026/05/20 16:56:55 by smenard           #+#    #+#             */
+/*   Updated: 2026/05/20 16:59:45 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "headers/lib.h"
-#include "utils/headers/utils.h"
+#ifndef HEAP_QUEUE_LIB_H
+# define HEAP_QUEUE_LIB_H
 
-size_t	get_key_fifo(void *el)
-{
-	t_heap_queue_item	*item;
+# include "headers/defines.h"
 
-	item = (t_heap_queue_item *)el;
-	if (item->key)
-		return (item->key);
-	return (get_time_ms());
-}
 
-size_t	update_key_fifo(t_heap_queue_item *item)
-{
-	return (item->key);
-}
+/* align.c */
+void	heap_queue_align_up(t_heap_queue *hq, int idx);
+void	heap_queue_align_down(t_heap_queue *hq, size_t idx);
+
+/* init.c */
+
+t_heap_queue	*hq_init(size_t initial_size, size_t el_size,
+		size_t (*get_key)(void *el),
+		size_t (*update_key)(t_heap_queue_item *item));
+
+#endif

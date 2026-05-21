@@ -6,31 +6,30 @@
 /*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 13:05:02 by smenard           #+#    #+#             */
-/*   Updated: 2026/05/14 16:42:21 by smenard          ###   ########.fr       */
+/*   Updated: 2026/05/20 18:22:25 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "headers/lib.h"
+#include "utils/headers/utils.h"
 
 static int	ft_log(t_shared_ctx *ctx, t_log_level log_level, size_t *coder_id,
 		char *str)
 {
-	int				result;
-	struct timeval	current_tv;
-	size_t			curr_usec_delta;
+	int		result;
+	size_t	curr_usec_delta;
 
-	gettimeofday(&current_tv, NULL);
-	curr_usec_delta = current_tv.tv_usec - ctx->timestamp_start;
+	curr_usec_delta = get_time_ms() - ctx->timestamp_start;
 	result = FAILURE;
 	if (log_level < LOG_LEVEL)
 		return (result);
 	if (ctx)
-		pthread_mutex_lock(&ctx->logging_mutex);
+		pthread_mutex_lock(&ctx->logging_active.mutex);
 	if ((coder_id && printf("%ld %zu %s\n", curr_usec_delta, *coder_id,
 				str) > 0) || (printf("%ld %s\n", curr_usec_delta, str) > 0))
 		result = SUCCESS;
 	if (ctx)
-		pthread_mutex_unlock(&ctx->logging_mutex);
+		pthread_mutex_unlock(&ctx->logging_active.mutex);
 	return (result);
 }
 

@@ -6,11 +6,12 @@
 /*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/13 13:08:06 by smenard           #+#    #+#             */
-/*   Updated: 2026/05/19 17:50:35 by smenard          ###   ########.fr       */
+/*   Updated: 2026/05/20 19:36:23 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "headers/lib.h"
+#include "utils/headers/utils.h"
 
 static int	take_dongles(t_coder *self)
 {
@@ -38,12 +39,9 @@ static void	release_dongles(t_coder *self)
 
 void	compile(t_coder *self)
 {
-	struct timeval	tv;
-
 	while (take_dongles(self) == FAILURE)
 		usleep(10);
-	gettimeofday(&tv, NULL);
-	self->last_compile_timestamp = tv.tv_usec;
+	self->last_compile_timestamp = get_time_ms();
 	ft_log_info(&self->shared, "has started compiling", &self->id);
 	usleep(self->shared.time_to_compile);
 	release_dongles(self);

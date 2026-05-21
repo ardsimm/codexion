@@ -23,7 +23,7 @@ SCHEDULER =						FIFO
 
 # ========== COMPILATION_DEFINES ==========
 
-LOG_LEVEL =	0 # 0 = DEBUG, 1 = INFO, 2 = WARN, 3 = ERROR
+LOG_LEVEL =	1 # 0 = DEBUG, 1 = INFO, 2 = WARN, 3 = ERROR
 
 COMPILE_D =	-DLOG_LEVEL=$(LOG_LEVEL) \
 
@@ -47,9 +47,10 @@ INIT_DIR =			init
 LOGGING_DIR =		logging
 MONITOR_DIR =		monitor
 PARSING_DIR =		parsing
-ROUTINE_DIR =		routine
+CODERS_DIR =		coders
 UTILS_DIR =			utils
 SCHEDULERS_DIR =	schedulers
+DEBUG_DIR =			debug
 
 # ---------- HEADERS ----------
 
@@ -61,17 +62,25 @@ INCLUDES = -I$(MAIN_DIR)
 
 MAIN_FILES =		$(MAIN_DIR)/main.c \
 
-DONGLES_FILES =		$(MAIN_DIR)/$(DONGLES_DIR)/dongle_utils.c \
+DONGLES_FILES =		$(MAIN_DIR)/$(DONGLES_DIR)/utils.c \
+					$(MAIN_DIR)/$(DONGLES_DIR)/free.c \
 
-HEAP_QUEUE_FILES =	$(MAIN_DIR)/$(HEAP_QUEUE_DIR)/heap_queue.c \
+HEAP_QUEUE_FILES =	$(MAIN_DIR)/$(HEAP_QUEUE_DIR)/add.c \
+					$(MAIN_DIR)/$(HEAP_QUEUE_DIR)/pop.c \
+					$(MAIN_DIR)/$(HEAP_QUEUE_DIR)/init.c \
+					$(MAIN_DIR)/$(HEAP_QUEUE_DIR)/align.c \
+					$(MAIN_DIR)/$(HEAP_QUEUE_DIR)/free.c \
+					$(MAIN_DIR)/$(HEAP_QUEUE_DIR)/update_keys.c \
 
 INIT_FILES =		$(MAIN_DIR)/$(INIT_DIR)/init.c \
+					$(MAIN_DIR)/$(INIT_DIR)/coders.c \
+					$(MAIN_DIR)/$(INIT_DIR)/dongles.c \
+					$(MAIN_DIR)/$(INIT_DIR)/ctx.c \
 
 LOGGING_FILES =		$(MAIN_DIR)/$(LOGGING_DIR)/logging.c \
 
-ROUTINE_FILES =		$(MAIN_DIR)/$(ROUTINE_DIR)/routine.c \
-					$(MAIN_DIR)/$(ROUTINE_DIR)/tasks.c \
-					$(MAIN_DIR)/$(ROUTINE_DIR)/routine_utils.c \
+CODERS_FILES =		$(MAIN_DIR)/$(CODERS_DIR)/routine.c \
+					$(MAIN_DIR)/$(CODERS_DIR)/tasks.c \
 
 
 MONITOR_FILES =		$(MAIN_DIR)/$(MONITOR_DIR)/monitor.c \
@@ -82,17 +91,23 @@ PARSING_FILES =		$(MAIN_DIR)/$(PARSING_DIR)/parse.c \
 
 SCHEDULERS_FILES =	$(MAIN_DIR)/$(SCHEDULERS_DIR)/schedulers.c\
 
-UTILS_FILES =		$(MAIN_DIR)/$(UTILS_DIR)/utils.c \
+UTILS_FILES =		$(MAIN_DIR)/$(UTILS_DIR)/free.c \
+					$(MAIN_DIR)/$(UTILS_DIR)/mem.c \
+					$(MAIN_DIR)/$(UTILS_DIR)/time.c \
+					$(MAIN_DIR)/$(UTILS_DIR)/str.c \
+
+DEBUG_FILES =		$(MAIN_DIR)/$(DEBUG_DIR)/print.c
 
 ALL_FILES =			$(DONGLES_FILES) \
 					$(HEAP_QUEUE_FILES) \
 					$(LOGGING_FILES) \
-					$(ROUTINE_FILES) \
+					$(CODERS_FILES) \
 					$(MONITOR_FILES) \
 					$(PARSING_FILES) \
 					$(UTILS_FILES) \
 					$(INIT_FILES) \
 					$(SCHEDULERS_FILES) \
+					$(DEBUG_FILES) \
 					$(MAIN_FILES) \
 
 # ========== OBJ ==========

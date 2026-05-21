@@ -1,29 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   schedulers.c                                       :+:      :+:    :+:   */
+/*   str.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smenard <smenard@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/05/20 15:22:23 by smenard           #+#    #+#             */
-/*   Updated: 2026/05/20 18:22:32 by smenard          ###   ########.fr       */
+/*   Created: 2026/05/20 18:01:04 by smenard           #+#    #+#             */
+/*   Updated: 2026/05/20 18:01:18 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "headers/lib.h"
-#include "utils/headers/utils.h"
 
-size_t	get_key_fifo(void *el)
+char	*ft_strcpy(char *s1)
 {
-	t_heap_queue_item	*item;
+	const size_t	len = strlen(s1);
+	char			*s2;
+	size_t			i;
 
-	item = (t_heap_queue_item *)el;
-	if (item->key)
-		return (item->key);
-	return (get_time_ms());
-}
-
-size_t	update_key_fifo(t_heap_queue_item *item)
-{
-	return (item->key);
+	if (len == 0)
+		return (NULL);
+	s2 = ft_calloc(len + 1, sizeof(char));
+	i = 0;
+	while (s1[i])
+	{
+		s2[i] = s1[i];
+		i++;
+	}
+	return (s2);
 }

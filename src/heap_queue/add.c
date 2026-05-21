@@ -1,29 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   schedulers.c                                       :+:      :+:    :+:   */
+/*   add.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smenard <smenard@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/05/20 15:22:23 by smenard           #+#    #+#             */
-/*   Updated: 2026/05/20 18:22:32 by smenard          ###   ########.fr       */
+/*   Created: 2026/05/20 16:59:59 by smenard           #+#    #+#             */
+/*   Updated: 2026/05/20 17:00:25 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "headers/lib.h"
-#include "utils/headers/utils.h"
+#include "heap_queue/headers/heap_queue_lib.h"
 
-size_t	get_key_fifo(void *el)
+void	hq_add(t_heap_queue *hq, void *data)
 {
-	t_heap_queue_item	*item;
-
-	item = (t_heap_queue_item *)el;
-	if (item->key)
-		return (item->key);
-	return (get_time_ms());
-}
-
-size_t	update_key_fifo(t_heap_queue_item *item)
-{
-	return (item->key);
+	if (hq->size >= hq->max_size)
+		return ;
+	hq->data[hq->size++] = (t_heap_queue_item){.key = hq->get_key(data),
+		.data = data};
+	heap_queue_align_up(hq, hq->size - 1);
 }

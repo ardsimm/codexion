@@ -1,29 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   schedulers.c                                       :+:      :+:    :+:   */
+/*   pop.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smenard <smenard@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/05/20 15:22:23 by smenard           #+#    #+#             */
-/*   Updated: 2026/05/20 18:22:32 by smenard          ###   ########.fr       */
+/*   Created: 2026/05/20 17:13:18 by smenard           #+#    #+#             */
+/*   Updated: 2026/05/20 17:13:41 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "headers/lib.h"
-#include "utils/headers/utils.h"
+#include "heap_queue/headers/heap_queue_lib.h"
 
-size_t	get_key_fifo(void *el)
+void	*hq_pop(t_heap_queue *hq)
 {
-	t_heap_queue_item	*item;
+	void	*data;
 
-	item = (t_heap_queue_item *)el;
-	if (item->key)
-		return (item->key);
-	return (get_time_ms());
-}
-
-size_t	update_key_fifo(t_heap_queue_item *item)
-{
-	return (item->key);
+	if (!hq->size)
+		return (NULL);
+	data = hq->data[0].data;
+	hq->data[0] = hq->data[--hq->size];
+	heap_queue_align_down(hq, 0);
+	return (data);
 }

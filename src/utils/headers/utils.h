@@ -6,12 +6,14 @@
 /*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/13 13:29:57 by smenard           #+#    #+#             */
-/*   Updated: 2026/05/13 13:29:59 by smenard          ###   ########.fr       */
+/*   Updated: 2026/05/20 18:21:18 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef UTILS_H
 # define UTILS_H
+
+# include "headers/defines.h"
 
 void	*ft_calloc(size_t nmemb, size_t size);
 
@@ -22,5 +24,7 @@ void	free_all(void **ptrs, size_t ptrs_len);
 void	*free_return(void **ptrs, size_t ptrs_len, void *value);
 
 int		free_return_int(void **ptrs, size_t ptrs_len, int value);
+
+size_t	get_time_ms();
 
 #endif

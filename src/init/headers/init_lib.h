@@ -1,23 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   routine_utils.c                                    :+:      :+:    :+:   */
+/*   init_lib.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smenard <smenard@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/05/20 15:37:00 by smenard           #+#    #+#             */
-/*   Updated: 2026/05/20 15:38:21 by smenard          ###   ########.fr       */
+/*   Created: 2026/05/20 17:19:58 by smenard           #+#    #+#             */
+/*   Updated: 2026/05/20 17:25:56 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "headers/lib.h"
+#ifndef INIT_LIB_H
+# define INIT_LIB_H
 
-bool	should_keep_running(t_shared_ctx shared)
-{
-	bool	run;
+#include "headers/defines.h"
 
-	pthread_mutex_lock(&shared.run_mutex);
-	run = shared.run;
-	pthread_mutex_unlock(&shared.run_mutex);
-	return (run);
-}
+/* coders.c */
+void	init_coder(int32_t i, t_ctx *ctx);
+
+/* dongles.c */
+int	init_dongle(uint32_t i, t_ctx *ctx);
+
+/* ctx.c */
+int	init_ctx(t_ctx *ctx);
+
+#endif

@@ -1,29 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   schedulers.c                                       :+:      :+:    :+:   */
+/*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smenard <smenard@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/05/20 15:22:23 by smenard           #+#    #+#             */
-/*   Updated: 2026/05/20 18:22:32 by smenard          ###   ########.fr       */
+/*   Created: 2026/05/20 16:53:18 by smenard           #+#    #+#             */
+/*   Updated: 2026/05/20 17:17:09 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "headers/lib.h"
-#include "utils/headers/utils.h"
 
-size_t	get_key_fifo(void *el)
+void	hq_free(t_heap_queue *hq)
 {
-	t_heap_queue_item	*item;
-
-	item = (t_heap_queue_item *)el;
-	if (item->key)
-		return (item->key);
-	return (get_time_ms());
-}
-
-size_t	update_key_fifo(t_heap_queue_item *item)
-{
-	return (item->key);
+	free(hq->data);
+	free(hq);
 }

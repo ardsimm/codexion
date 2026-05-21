@@ -6,7 +6,7 @@
 /*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 13:07:25 by smenard           #+#    #+#             */
-/*   Updated: 2026/05/20 15:35:20 by smenard          ###   ########.fr       */
+/*   Updated: 2026/05/20 19:16:15 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,9 @@
 # include "parsing/headers/parsing.h"
 # include "utils/headers/utils.h"
 # include "dongles/headers/dongles.h"
-# include "routine/headers/routine.h"
+# include "coders/headers/coders.h"
 # include "init/headers/init.h"
 # include "schedulers/headers/schedulers.h"
+# include "debug/headers/debug.h"
 
 #endif

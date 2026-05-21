@@ -6,7 +6,7 @@
 /*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 13:07:09 by smenard           #+#    #+#             */
-/*   Updated: 2026/05/20 16:11:48 by smenard          ###   ########.fr       */
+/*   Updated: 2026/05/20 22:27:37 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,44 @@ typedef struct s_heap_queue_item
 	void					*data;
 }							t_heap_queue_item;
 
+typedef enum e_data_type
+{
+	INT,
+	STR,
+}							t_data_type;
+
+typedef struct e_typed_voidp
+{
+	t_data_type				type;
+	void					*data;
+}							t_typed_voidp;
+
+typedef struct s_voidp_cond
+{
+	pthread_mutex_t			mutex;
+	pthread_cond_t			cond;
+	t_typed_voidp			value;
+}							t_voidp_cond;
+
+typedef struct s_int_cond
+{
+	pthread_mutex_t			mutex;
+	pthread_cond_t			cond;
+	int						value;
+}							t_int_cond;
+
+typedef struct s_voidp_mutex
+{
+	pthread_mutex_t			mutex;
+	t_typed_voidp			data;
+}							t_voidp_mutex;
+
+typedef struct s_bool_mutex
+{
+	pthread_mutex_t			mutex;
+	bool					data;
+}							t_bool_mutex;
+
 typedef struct s_shared_ctx
 {
 	uint32_t				time_to_burnout;
@@ -48,10 +86,10 @@ typedef struct s_shared_ctx
 	uint32_t				time_to_refactor;
 	uint32_t				number_of_compiles;
 	uint32_t				dongle_cooldown;
-	pthread_mutex_t			logging_mutex;
+	t_bool_mutex			logging_active;
 	size_t					timestamp_start;
-	pthread_mutex_t			run_mutex;
-	bool					run;
+	t_bool_mutex			run;
+	t_int_cond				start_condition;
 }							t_shared_ctx;
 
 typedef struct s_heap_queue
@@ -70,26 +108,13 @@ typedef enum e_scheduler_mode
 	INVALID
 }							t_scheduler_mode;
 
-typedef enum e_data_type
-{
-	INT,
-	STR
-}							t_data_type;
-
-typedef struct e_typed_voidp
-{
-	t_data_type				type;
-	void					*data;
-}							t_typed_voidp;
-
 typedef struct s_dongle
 {
 	size_t					id;
 	t_heap_queue			*hq;
 	size_t					cooldown;
 	size_t					last_use_timestamp;
-	pthread_mutex_t			in_use_mutex;
-	bool					in_use;
+	t_bool_mutex			in_use;
 }							t_dongle;
 
 typedef struct s_coder

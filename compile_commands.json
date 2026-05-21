@@ -1,12 +1,29 @@
 [
   {
+    "file": "src/dongles/dongle_utils.c",
+    "arguments": [
+      "/usr/bin/cc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-MMD",
+      "-c",
+      "src/dongles/dongle_utils.c",
+      "-o",
+      "src/dongles/dongle_utils.o",
+      "-Isrc",
+      "-DLOG_LEVEL=0"
+    ],
+    "directory": "/home/ardsimm/dev/ft/common_core/ms-3/codexion",
+    "output": "src/dongles/dongle_utils.o"
+  },
+  {
     "file": "src/heap_queue/heap_queue.c",
     "arguments": [
       "/usr/bin/cc",
       "-Wall",
       "-Wextra",
       "-Werror",
-      "-fsanitize=thread",
       "-MMD",
       "-c",
       "src/heap_queue/heap_queue.c",
@@ -15,7 +32,7 @@
       "-Isrc",
       "-DLOG_LEVEL=0"
     ],
-    "directory": "/home/smenard/dev/ft/common_core/ms-3/codexion",
+    "directory": "/home/ardsimm/dev/ft/common_core/ms-3/codexion",
     "output": "src/heap_queue/heap_queue.o"
   },
   {
@@ -25,7 +42,6 @@
       "-Wall",
       "-Wextra",
       "-Werror",
-      "-fsanitize=thread",
       "-MMD",
       "-c",
       "src/logging/logging.c",
@@ -34,140 +50,25 @@
       "-Isrc",
       "-DLOG_LEVEL=0"
     ],
-    "directory": "/home/smenard/dev/ft/common_core/ms-3/codexion",
+    "directory": "/home/ardsimm/dev/ft/common_core/ms-3/codexion",
     "output": "src/logging/logging.o"
   },
   {
-    "file": "src/routine/routine.c",
+    "file": "src/coders/routine.c",
     "arguments": [
       "/usr/bin/cc",
       "-Wall",
       "-Wextra",
       "-Werror",
-      "-fsanitize=thread",
       "-MMD",
       "-c",
-      "src/routine/routine.c",
+      "src/coders/routine.c",
       "-o",
-      "src/routine/routine.o",
+      "src/coders/routine.o",
       "-Isrc",
       "-DLOG_LEVEL=0"
     ],
-    "directory": "/home/smenard/dev/ft/common_core/ms-3/codexion",
-    "output": "src/routine/routine.o"
-  },
-  {
-    "file": "src/monitor/monitor.c",
-    "arguments": [
-      "/usr/bin/cc",
-      "-Wall",
-      "-Wextra",
-      "-Werror",
-      "-fsanitize=thread",
-      "-MMD",
-      "-c",
-      "src/monitor/monitor.c",
-      "-o",
-      "src/monitor/monitor.o",
-      "-Isrc",
-      "-DLOG_LEVEL=0"
-    ],
-    "directory": "/home/smenard/dev/ft/common_core/ms-3/codexion",
-    "output": "src/monitor/monitor.o"
-  },
-  {
-    "file": "src/parsing/parse.c",
-    "arguments": [
-      "/usr/bin/cc",
-      "-Wall",
-      "-Wextra",
-      "-Werror",
-      "-fsanitize=thread",
-      "-MMD",
-      "-c",
-      "src/parsing/parse.c",
-      "-o",
-      "src/parsing/parse.o",
-      "-Isrc",
-      "-DLOG_LEVEL=0"
-    ],
-    "directory": "/home/smenard/dev/ft/common_core/ms-3/codexion",
-    "output": "src/parsing/parse.o"
-  },
-  {
-    "file": "src/parsing/parse_validate.c",
-    "arguments": [
-      "/usr/bin/cc",
-      "-Wall",
-      "-Wextra",
-      "-Werror",
-      "-fsanitize=thread",
-      "-MMD",
-      "-c",
-      "src/parsing/parse_validate.c",
-      "-o",
-      "src/parsing/parse_validate.o",
-      "-Isrc",
-      "-DLOG_LEVEL=0"
-    ],
-    "directory": "/home/smenard/dev/ft/common_core/ms-3/codexion",
-    "output": "src/parsing/parse_validate.o"
-  },
-  {
-    "file": "src/parsing/parse_utils.c",
-    "arguments": [
-      "/usr/bin/cc",
-      "-Wall",
-      "-Wextra",
-      "-Werror",
-      "-fsanitize=thread",
-      "-MMD",
-      "-c",
-      "src/parsing/parse_utils.c",
-      "-o",
-      "src/parsing/parse_utils.o",
-      "-Isrc",
-      "-DLOG_LEVEL=0"
-    ],
-    "directory": "/home/smenard/dev/ft/common_core/ms-3/codexion",
-    "output": "src/parsing/parse_utils.o"
-  },
-  {
-    "file": "src/utils/utils.c",
-    "arguments": [
-      "/usr/bin/cc",
-      "-Wall",
-      "-Wextra",
-      "-Werror",
-      "-fsanitize=thread",
-      "-MMD",
-      "-c",
-      "src/utils/utils.c",
-      "-o",
-      "src/utils/utils.o",
-      "-Isrc",
-      "-DLOG_LEVEL=0"
-    ],
-    "directory": "/home/smenard/dev/ft/common_core/ms-3/codexion",
-    "output": "src/utils/utils.o"
-  },
-  {
-    "file": "src/main.c",
-    "arguments": [
-      "/usr/bin/cc",
-      "-Wall",
-      "-Wextra",
-      "-Werror",
-      "-fsanitize=thread",
-      "-MMD",
-      "-c",
-      "src/main.c",
-      "-o",
-      "src/main.o",
-      "-Isrc",
-      "-DLOG_LEVEL=0"
-    ],
-    "directory": "/home/smenard/dev/ft/common_core/ms-3/codexion",
-    "output": "src/main.o"
+    "directory": "/home/ardsimm/dev/ft/common_core/ms-3/codexion",
+    "output": "src/coders/routine.o"
   }
 ]

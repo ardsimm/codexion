@@ -1,26 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   routine_lib.h                                      :+:      :+:    :+:   */
+/*   coders_lib.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
+/*   By: smenard <smenard@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/05/13 13:18:35 by smenard           #+#    #+#             */
-/*   Updated: 2026/05/20 15:39:05 by smenard          ###   ########.fr       */
+/*   Created: 2026/05/20 17:29:21 by smenard           #+#    #+#             */
+/*   Updated: 2026/05/20 17:30:23 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ROUTINE_LIB_H
-# define ROUTINE_LIB_H
+#ifndef CODERS_LIB_H
+# define CODERS_LIB_H
 
-# include "headers/defines.h"
+# include "headers/lib.h"
 
 /* tasks.c */
-void	compile(const t_coder *self);
-void	debug(const t_coder *self);
-void	refactor(const t_coder *self);
-
-/* routine_utils.c */
-bool	should_keep_running(t_shared_ctx shared);
+void	compile(t_coder *self);
+void	debug(t_coder *self);
+void	refactor(t_coder *self);
 
 #endif
