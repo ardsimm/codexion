@@ -20,4 +20,3 @@ size_t	get_key_fifo(void *el);
 size_t	update_key_fifo(t_heap_queue_item *item);
 
 #endif
-

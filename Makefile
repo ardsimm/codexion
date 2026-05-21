@@ -36,6 +36,9 @@ ARGUMENTS =	$(NUMBER_OF_CODERS) \
 			$(NUMBER_OF_COMPILES_REQUIRED) \
 			$(DONGLE_COOLDOWN) \
 			$(SCHEDULER) \
+
+ARGUMENTS_TEST = "200 190 60 60 60 500 0 FIFO"
+
 # ========== DIRECTORIES ==========
 
 # ---------- MAIN ----------
@@ -51,6 +54,7 @@ CODERS_DIR =		coders
 UTILS_DIR =			utils
 SCHEDULERS_DIR =	schedulers
 DEBUG_DIR =			debug
+MUTEX_DIR =			mutex
 
 # ---------- HEADERS ----------
 
@@ -98,6 +102,11 @@ UTILS_FILES =		$(MAIN_DIR)/$(UTILS_DIR)/free.c \
 
 DEBUG_FILES =		$(MAIN_DIR)/$(DEBUG_DIR)/print.c
 
+MUTEX_FILES =		$(MAIN_DIR)/$(MUTEX_DIR)/getters.c \
+					$(MAIN_DIR)/$(MUTEX_DIR)/heap_queue.c \
+					$(MAIN_DIR)/$(MUTEX_DIR)/init.c \
+					$(MAIN_DIR)/$(MUTEX_DIR)/setters.c \
+
 ALL_FILES =			$(DONGLES_FILES) \
 					$(HEAP_QUEUE_FILES) \
 					$(LOGGING_FILES) \
@@ -108,6 +117,7 @@ ALL_FILES =			$(DONGLES_FILES) \
 					$(INIT_FILES) \
 					$(SCHEDULERS_FILES) \
 					$(DEBUG_FILES) \
+					$(MUTEX_FILES) \
 					$(MAIN_FILES) \
 
 # ========== OBJ ==========

@@ -13,12 +13,12 @@
 #ifndef INCLUDES_H
 # define INCLUDES_H
 
-# include <stdlib.h>
-# include <stdio.h>
-# include <string.h>
 # include <pthread.h>
-# include <stdint.h>
 # include <stdbool.h>
+# include <stdint.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <string.h>
 # include <sys/time.h>
 # include <unistd.h>
 

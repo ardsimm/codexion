@@ -15,15 +15,14 @@
 
 # include "headers/defines.h"
 
-
 /* align.c */
-void	heap_queue_align_up(t_heap_queue *hq, int idx);
-void	heap_queue_align_down(t_heap_queue *hq, size_t idx);
+void			heap_queue_align_up(t_heap_queue *hq, int idx);
+void			heap_queue_align_down(t_heap_queue *hq, size_t idx);
 
 /* init.c */
 
 t_heap_queue	*hq_init(size_t initial_size, size_t el_size,
-		size_t (*get_key)(void *el),
-		size_t (*update_key)(t_heap_queue_item *item));
+					size_t (*get_key)(void *el),
+					size_t (*update_key)(t_heap_queue_item *item));
 
 #endif

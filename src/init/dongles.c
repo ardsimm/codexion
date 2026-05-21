@@ -16,11 +16,11 @@
 int	init_dongle(uint32_t i, t_ctx *ctx)
 {
 	ctx->dongles[i].id = i;
-	ctx->dongles[i].hq = hq_init(2, sizeof(t_coder), get_key_fifo,
-			update_key_fifo);
-	if (!ctx->dongles[i].hq)
+	init_heap_queue_mutex(&ctx->dongles[i].hq, hq_init(2, sizeof(t_coder),
+			get_key_fifo, update_key_fifo));
+	if (!ctx->dongles[i].hq.data)
 		return (FAILURE);
-	init_bool_mutex(ctx->dongles[i].in_use, false);
+	init_bool_mutex(&ctx->dongles[i].in_use, false);
 	ctx->dongles[i].cooldown = ctx->shared.dongle_cooldown;
 	return (SUCCESS);
 }

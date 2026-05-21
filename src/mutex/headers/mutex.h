@@ -11,26 +11,45 @@
 /* ************************************************************************** */
 
 #ifndef MUTEX_H
-#define MUTEX_H
+# define MUTEX_H
 
 # include "headers/defines.h"
 
-size_t			get_size_t_mutex(t_size_t_mutex mutex);
+/* getters.c */
+size_t			get_size_t_mutex(t_size_t_mutex *mutex);
 
-t_typed_voidp	get_voidp_mutex(t_voidp_mutex mutex);
+t_typed_voidp	get_voidp_mutex(t_voidp_mutex *mutex);
 
-bool			get_bool_mutex(t_bool_mutex mutex);
+bool			get_bool_mutex(t_bool_mutex *mutex);
 
-void			set_voidp_mutex(t_voidp_mutex mutex, t_typed_voidp data);
+void			set_voidp_mutex(t_voidp_mutex *mutex, t_typed_voidp data);
 
-void			set_size_t_mutex(t_size_t_mutex mutex, size_t data);
+/* setters.c */
+void			set_size_t_mutex(t_size_t_mutex *mutex, size_t data);
 
-void			set_bool_mutex(t_bool_mutex mutex, bool data);
+void			set_bool_mutex(t_bool_mutex *mutex, bool data);
 
-void			init_voidp_mutex(t_voidp_mutex mutex, t_typed_voidp value);
+void			set_heap_queue_mutex(t_heap_queue_mutex *mutex,
+					t_heap_queue *value);
 
-void			init_size_t_mutex(t_size_t_mutex mutex, size_t value);
+/* init.c */
+void			init_voidp_mutex(t_voidp_mutex *mutex, t_typed_voidp value);
 
-void			init_bool_mutex(t_bool_mutex mutex, bool value);
+void			init_size_t_mutex(t_size_t_mutex *mutex, size_t value);
+
+void			init_bool_mutex(t_bool_mutex *mutex, bool value);
+
+void			init_heap_queue_mutex(t_heap_queue_mutex *mutex,
+					t_heap_queue *value);
+
+void			hq_mutex_add(t_heap_queue_mutex *mutex, void *value);
+
+void			*hq_mutex_pop(t_heap_queue_mutex *mutex);
+
+size_t			hq_mutex_get_size(t_heap_queue_mutex *mutex);
+
+bool			hq_mutex_compare_coder_id(t_heap_queue_mutex *mutex, size_t id);
+
+bool			hq_mutex_contains(t_heap_queue_mutex *mutex, void *data);
 
 #endif

@@ -12,32 +12,32 @@
 
 #include "headers/lib.h"
 
-size_t	get_size_t_mutex(t_size_t_mutex mutex)
+size_t	get_size_t_mutex(t_size_t_mutex *mutex)
 {
 	size_t	data;
 
-	pthread_mutex_lock(&mutex.mutex);
-	data = mutex.data;
-	pthread_mutex_unlock(&mutex.mutex);
+	pthread_mutex_lock(&mutex->mutex);
+	data = mutex->data;
+	pthread_mutex_unlock(&mutex->mutex);
 	return (data);
 }
 
-t_typed_voidp	get_voidp_mutex(t_voidp_mutex mutex)
+t_typed_voidp	get_voidp_mutex(t_voidp_mutex *mutex)
 {
 	t_typed_voidp	data;
 
-	pthread_mutex_lock(&mutex.mutex);
-	data = mutex.data;
-	pthread_mutex_unlock(&mutex.mutex);
+	pthread_mutex_lock(&mutex->mutex);
+	data = mutex->data;
+	pthread_mutex_unlock(&mutex->mutex);
 	return (data);
 }
 
-bool	get_bool_mutex(t_bool_mutex mutex)
+bool	get_bool_mutex(t_bool_mutex *mutex)
 {
 	bool	data;
 
-	pthread_mutex_lock(&mutex.mutex);
-	data = mutex.data;
-	pthread_mutex_unlock(&mutex.mutex);
+	pthread_mutex_lock(&mutex->mutex);
+	data = mutex->data;
+	pthread_mutex_unlock(&mutex->mutex);
 	return (data);
 }

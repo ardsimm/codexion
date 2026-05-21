@@ -15,15 +15,16 @@
 
 # include "headers/defines.h"
 
-t_heap_queue		*hq_init(size_t initial_size, size_t el_size,
-						size_t (*get_key)(void *el), size_t (*update_key)(t_heap_queue_item *item));
+t_heap_queue	*hq_init(size_t initial_size, size_t el_size,
+					size_t (*get_key)(void *el),
+					size_t (*update_key)(t_heap_queue_item *item));
 
-void				hq_add(t_heap_queue *hq, void *data);
+void			hq_add(t_heap_queue *hq, void *data);
 
-void				*hq_pop(t_heap_queue *hq);
+void			*hq_pop(t_heap_queue *hq);
 
-void				hq_update_keys(t_heap_queue *hq);
+void			hq_update_keys(t_heap_queue *hq);
 
-void				hq_free(t_heap_queue *hq);
+void			hq_free(t_heap_queue *hq);
 
 #endif

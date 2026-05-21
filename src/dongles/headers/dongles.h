@@ -17,6 +17,8 @@
 
 bool	can_take_dongle(t_coder *coder, t_dongle *dongle);
 
+int		request_dongle(t_coder *coder, t_dongle *dongle);
+
 int		take_dongle(t_coder *coder, t_dongle *dongle);
 
 int		release_dongle(t_dongle *dongle);

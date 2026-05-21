@@ -25,6 +25,6 @@ void	*free_return(void **ptrs, size_t ptrs_len, void *value);
 
 int		free_return_int(void **ptrs, size_t ptrs_len, int value);
 
-size_t	get_time_ms();
+size_t	get_time_ms(void);
 
 #endif

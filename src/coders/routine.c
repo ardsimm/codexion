@@ -37,7 +37,8 @@ void	*coder_routine(void *data)
 	// 		pthread_mutex_t *restrict mutex,
 	// 		const struct timespec *restrict abstime
 	// );
-	self->last_compile_timestamp = get_time_ms();
+	//
+	set_size_t_mutex(&self->last_compile_timestamp, get_time_ms());
 	ft_log_debug(&self->shared, "started routine", &self->id);
 	while (should_continue(&self->shared))
 	{
@@ -47,7 +48,7 @@ void	*coder_routine(void *data)
 		i++;
 		if (i == self->shared.number_of_compiles)
 		{
-			self->done = true;
+			set_bool_mutex(&self->done, true);
 			break ;
 		}
 	}

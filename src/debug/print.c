@@ -47,10 +47,11 @@ static void	print_dongle(t_dongle *d, int idx)
 	printf("    {\n");
 	printf("      \"id\": %zu,\n", d->id);
 	printf("      \"cooldown\": %zu,\n", d->cooldown);
-	printf("      \"last_use_timestamp\": %zu,\n", d->last_use_timestamp);
+	printf("      \"last_use_timestamp\": %zu,\n",
+		get_size_t_mutex(&d->last_use_timestamp));
 	printf("      \"in_use\": %s,\n", d->in_use.data ? "true" : "false");
 	printf("      \"hq\": ");
-	print_heap_queue(d->hq, 3);
+	print_heap_queue(d->hq.data, 3);
 	printf("\n    }");
 	(void)idx;
 }
@@ -77,8 +78,9 @@ static void	print_coder(t_coder *c)
 	printf("    {\n");
 	printf("      \"id\": %zu,\n", c->id);
 	printf("      \"last_compile_timestamp\": %zu,\n",
-		c->last_compile_timestamp);
-	printf("      \"done\": %s,\n", c->done ? "true" : "false");
+		get_size_t_mutex(&c->last_compile_timestamp));
+	printf("      \"done\": %s,\n",
+		get_bool_mutex(&c->done) ? "true" : "false");
 	printf("      \"dongle_left\": %s,\n", c->dongle_left ? "{ ... }" : "null");
 	printf("      \"dongle_right\": %s,\n",
 		c->dongle_right ? "{ ... }" : "null");

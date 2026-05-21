@@ -40,9 +40,9 @@ static bool	should_stop(t_ctx *ctx)
 	all_done = true;
 	while (i < ctx->coders_count)
 	{
-		if (get_size_t_mutex(ctx->coders[i].last_compile_timestamp) > 0
-			&& !get_bool_mutex(ctx->coders[i].done)
-			&& get_time_ms() > get_size_t_mutex(ctx->coders[i].last_compile_timestamp)
+		if (get_size_t_mutex(&ctx->coders[i].last_compile_timestamp) > 0
+			&& !get_bool_mutex(&ctx->coders[i].done)
+			&& get_time_ms() > get_size_t_mutex(&ctx->coders[i].last_compile_timestamp)
 			+ ctx->shared.time_to_burnout)
 		{
 			pthread_mutex_lock(&ctx->shared.run.mutex);
@@ -51,13 +51,13 @@ static bool	should_stop(t_ctx *ctx)
 			ft_log_error(&ctx->shared, "burned out", &ctx->coders[i].id);
 			return (true);
 		}
-		all_done &= ctx->coders[i].done;
+		all_done &= get_bool_mutex(&ctx->coders[i].done);
 		i++;
 	}
 	return (all_done);
 }
 
-void	join_threads(pthread_t *threads, size_t size)
+static void	join_threads(pthread_t *threads, size_t size)
 {
 	size_t	i;
 

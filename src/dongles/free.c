@@ -11,8 +11,10 @@
 /* ************************************************************************** */
 
 #include "headers/lib.h"
+#include <pthread.h>
 
 void	dongle_free(t_dongle *dongle)
 {
-	hq_free(dongle->hq);
+	hq_free(dongle->hq.data);
+	pthread_mutex_destroy(&dongle->hq.mutex);
 }

@@ -28,28 +28,35 @@ bool	can_take_dongle(t_coder *coder, t_dongle *dongle)
 {
 	bool	can_take;
 
-	can_take = (!get_bool_mutex(dongle->in_use) && dongle->hq->size
-			&& ((t_coder *)dongle->hq->data[0].data)->id == coder->id
-			&& dongle_cooldown_passed(get_size_t_mutex(dongle->last_use_timestamp),
+	can_take = (!get_bool_mutex(&dongle->in_use)
+			&& hq_mutex_get_size(&dongle->hq)
+			&& ((t_coder *)dongle->hq.data[0].data)->id == coder->id
+			&& dongle_cooldown_passed(get_size_t_mutex(&dongle->last_use_timestamp),
 				coder->shared.dongle_cooldown));
 	return (can_take);
+}
+
+int	request_dongle(t_coder *coder, t_dongle *dongle)
+{
+	if (hq_mutex_contains(&dongle->hq, coder))
+		return (FAILURE);
+	hq_mutex_add(&dongle->hq, coder);
+	return (SUCCESS);
 }
 
 int	take_dongle(t_coder *coder, t_dongle *dongle)
 {
 	if (!can_take_dongle(coder, dongle))
 		return (FAILURE);
-	pthread_mutex_lock(&dongle->in_use.mutex);
-	dongle->in_use.data = true;
-	pthread_mutex_unlock(&dongle->in_use.mutex);
+	set_bool_mutex(&dongle->in_use, true);
+	hq_mutex_pop(&dongle->hq);
 	ft_log_info(&coder->shared, "has taken a dongle", &coder->id);
 	return (SUCCESS);
 }
 
 int	release_dongle(t_dongle *dongle)
 {
-	set_bool_mutex(dongle->in_use, false);
-	hq_update_keys(dongle->hq);
-	set_size_t_mutex(dongle->last_use_timestamp, get_time_ms());
+	set_bool_mutex(&dongle->in_use, false);
+	set_size_t_mutex(&dongle->last_use_timestamp, get_time_ms());
 	return (SUCCESS);
 }

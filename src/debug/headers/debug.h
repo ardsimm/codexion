@@ -12,7 +12,7 @@
 #ifndef DEBUG_H
 # define DEBUG_H
 
-# include "headers/lib.h"
+# include "headers/defines.h"
 
 void	print_ctx(t_ctx *ctx);
 

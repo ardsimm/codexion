@@ -14,6 +14,6 @@
 # define INIT_H
 # include "headers/defines.h"
 
-int		init(t_ctx *ctx);
+int	init(t_ctx *ctx);
 
 #endif

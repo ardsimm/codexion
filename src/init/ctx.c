@@ -15,8 +15,8 @@
 
 int	init_ctx(t_ctx *ctx)
 {
-	init_bool_mutex(ctx->shared.logging_active, true);
-	init_bool_mutex(ctx->shared.run, true);
+	init_bool_mutex(&ctx->shared.logging_active, true);
+	init_bool_mutex(&ctx->shared.run, true);
 	ctx->shared.timestamp_start = get_time_ms();
 	ctx->coders = ft_calloc(ctx->coders_count, sizeof(t_coder));
 	if (!ctx->coders)

@@ -32,112 +32,112 @@ typedef enum e_log_level
 	INFO = 1,
 	WARN = 2,
 	ERROR = 3
-}							t_log_level;
+}						t_log_level;
 
 typedef struct s_heap_queue_item
 {
-	size_t					key;
-	void					*data;
-}							t_heap_queue_item;
+	size_t				key;
+	void				*data;
+}						t_heap_queue_item;
 
 typedef enum e_data_type
 {
 	INT,
 	STR,
-}							t_data_type;
+}						t_data_type;
 
 typedef struct s_heap_queue
 {
-	size_t					size;
-	size_t					max_size;
-	t_heap_queue_item		*data;
-	size_t					(*get_key)(void *el);
-	size_t					(*update_key)(t_heap_queue_item *item);
-}							t_heap_queue;
+	size_t				size;
+	size_t				max_size;
+	t_heap_queue_item	*data;
+	size_t				(*get_key)(void *el);
+	size_t				(*update_key)(t_heap_queue_item *item);
+}						t_heap_queue;
 
 typedef struct e_typed_voidp
 {
-	t_data_type				type;
-	void					*data;
-}							t_typed_voidp;
+	t_data_type			type;
+	void				*data;
+}						t_typed_voidp;
 
 typedef struct s_voidp_cond
 {
-	pthread_mutex_t			mutex;
-	pthread_cond_t			cond;
-	t_typed_voidp			value;
-}							t_voidp_cond;
+	pthread_mutex_t		mutex;
+	pthread_cond_t		cond;
+	t_typed_voidp		value;
+}						t_voidp_cond;
 
 typedef struct s_int_cond
 {
-	pthread_mutex_t			mutex;
-	pthread_cond_t			cond;
-	int						value;
-}							t_int_cond;
+	pthread_mutex_t		mutex;
+	pthread_cond_t		cond;
+	int					value;
+}						t_int_cond;
 
 typedef struct s_voidp_mutex
 {
-	pthread_mutex_t			mutex;
-	t_typed_voidp			data;
-}							t_voidp_mutex;
+	pthread_mutex_t		mutex;
+	t_typed_voidp		data;
+}						t_voidp_mutex;
 
 typedef struct s_bool_mutex
 {
-	pthread_mutex_t			mutex;
-	bool					data;
-}							t_bool_mutex;
+	pthread_mutex_t		mutex;
+	bool				data;
+}						t_bool_mutex;
 
 typedef struct s_size_t_mutex
 {
-	pthread_mutex_t			mutex;
-	size_t					data;
-}							t_size_t_mutex;
+	pthread_mutex_t		mutex;
+	size_t				data;
+}						t_size_t_mutex;
 
 typedef struct s_heap_queue_mutex
 {
-	pthread_mutex_t			mutex;
-	t_heap_queue			*data;
-}							t_heap_queue_mutex;
+	pthread_mutex_t		mutex;
+	t_heap_queue		*data;
+}						t_heap_queue_mutex;
 
 typedef struct s_shared_ctx
 {
-	uint32_t				time_to_burnout;
-	uint32_t				time_to_compile;
-	uint32_t				time_to_debug;
-	uint32_t				time_to_refactor;
-	uint32_t				number_of_compiles;
-	uint32_t				dongle_cooldown;
-	t_bool_mutex			logging_active;
-	size_t					timestamp_start;
-	t_bool_mutex			run;
-	t_int_cond				start_condition;
-}							t_shared_ctx;
+	uint32_t			time_to_burnout;
+	uint32_t			time_to_compile;
+	uint32_t			time_to_debug;
+	uint32_t			time_to_refactor;
+	uint32_t			number_of_compiles;
+	uint32_t			dongle_cooldown;
+	t_bool_mutex		logging_active;
+	size_t				timestamp_start;
+	t_bool_mutex		run;
+	t_int_cond			start_condition;
+}						t_shared_ctx;
 
 typedef enum e_scheduler_mode
 {
 	FIFO,
 	EDF,
 	INVALID
-}							t_scheduler_mode;
+}						t_scheduler_mode;
 
 typedef struct s_dongle
 {
-	size_t					id;
-	t_heap_queue			*hq;
-	size_t					cooldown;
-	t_size_t_mutex			last_use_timestamp;
-	t_bool_mutex			in_use;
-}							t_dongle;
+	size_t				id;
+	t_heap_queue_mutex	hq;
+	size_t				cooldown;
+	t_size_t_mutex		last_use_timestamp;
+	t_bool_mutex		in_use;
+}						t_dongle;
 
 typedef struct s_coder
 {
-	size_t					id;
-	t_size_t_mutex			last_compile_timestamp;
-	t_bool_mutex			done;
-	t_dongle				*dongle_left;
-	t_dongle				*dongle_right;
-	t_shared_ctx			shared;
-}							t_coder;
+	size_t				id;
+	t_size_t_mutex		last_compile_timestamp;
+	t_bool_mutex		done;
+	t_dongle			*dongle_left;
+	t_dongle			*dongle_right;
+	t_shared_ctx		shared;
+}						t_coder;
 
 /**
  * Simulation parameters
@@ -169,11 +169,11 @@ typedef struct s_coder
  */
 typedef struct s_ctx
 {
-	uint32_t				coders_count;
-	t_dongle				*dongles;
-	t_coder					*coders;
-	t_scheduler_mode		scheduler;
-	t_shared_ctx			shared;
-}							t_ctx;
+	uint32_t			coders_count;
+	t_dongle			*dongles;
+	t_coder				*coders;
+	t_scheduler_mode	scheduler;
+	t_shared_ctx		shared;
+}						t_ctx;
 
 #endif

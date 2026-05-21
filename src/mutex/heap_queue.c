@@ -35,16 +35,28 @@ size_t	hq_mutex_get_size(t_heap_queue_mutex *mutex)
 
 	pthread_mutex_lock(&mutex->mutex);
 	size = mutex->data->size;
-	pthread_mutex_lock(&mutex->mutex);
+	pthread_mutex_unlock(&mutex->mutex);
 	return (size);
 }
 
-bool	hq_compare_coder_id(t_heap_queue_mutex *mutex, size_t id)
+bool	hq_mutex_compare_coder_id(t_heap_queue_mutex *mutex, size_t id)
 {
 	bool	equals;
 
 	pthread_mutex_lock(&mutex->mutex);
-	equals = mutex->data->size && ((t_coder*) mutex->data->data[0].data)->id == id;
+	equals = mutex->data->size
+		&& ((t_coder *)mutex->data->data[0].data)->id == id;
 	pthread_mutex_unlock(&mutex->mutex);
 	return (equals);
+}
+
+bool	hq_mutex_contains(t_heap_queue_mutex *mutex, void *data)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < hq_mutex_get_size(mutex))
+		if (mutex->data->data[i++].data == data)
+			return (true);
+	return (false);
 }
