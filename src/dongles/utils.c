@@ -28,11 +28,16 @@ bool	can_take_dongle(t_coder *coder, t_dongle *dongle)
 {
 	bool	can_take;
 
-	can_take = (!get_bool_mutex(&dongle->in_use)
-			&& hq_mutex_get_size(&dongle->hq)
+	pthread_mutex_lock(&dongle->in_use.mutex);
+	pthread_mutex_lock(&dongle->hq.mutex);
+	pthread_mutex_lock(&dongle->last_use_timestamp.mutex);
+	can_take = (!dongle->in_use.data
 			&& ((t_coder *)dongle->hq.data[0].data)->id == coder->id
-			&& dongle_cooldown_passed(get_size_t_mutex(&dongle->last_use_timestamp),
+			&& dongle_cooldown_passed(dongle->last_use_timestamp.data,
 				coder->shared.dongle_cooldown));
+	pthread_mutex_unlock(&dongle->in_use.mutex);
+	pthread_mutex_unlock(&dongle->hq.mutex);
+	pthread_mutex_unlock(&dongle->last_use_timestamp.mutex);
 	return (can_take);
 }
 

@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "./headers/parsing_lib.h"
+#include "headers/defines.h"
 #include "headers/lib.h"
 
 static int	atoi_safe(char *value)
@@ -53,6 +54,15 @@ static void	build_simulation_ptrs_array(t_typed_voidp ptrs[EXPECTED_AC],
 	ptrs[7] = (t_typed_voidp){.type = STR, .data = &ctx->scheduler};
 }
 
+t_scheduler_mode	parse_scheduler(char *value)
+{
+	if (!strcmp(value, "FIFO"))
+		return (FIFO);
+	else if (!strcmp(value, "EDF"))
+		return (EDF);
+	return (INVALID);
+}
+
 t_ctx	*parse(int ac, char **av)
 {
 	size_t			i;
@@ -66,17 +76,12 @@ t_ctx	*parse(int ac, char **av)
 	i = 1;
 	if (ac < EXPECTED_AC)
 		return (free_return((void *[]){ctx}, 1, NULL));
-	printf("ac: %d\n", ac);
 	while (i < (size_t)ac)
 	{
 		if (ptrs[i - 1].type == INT)
 			*(int *)ptrs[i - 1].data = atoi_safe(av[i]);
-		else if (ptrs[i - 1].type == STR && !strcmp(av[i], "FIFO"))
-			*(t_scheduler_mode *)ptrs[i - 1].data = FIFO;
-		else if (ptrs[i - 1].type == STR && !strcmp(av[i], "EDF"))
-			*(t_scheduler_mode *)ptrs[i - 1].data = EDF;
 		else if (ptrs[i - 1].type == STR)
-			*(t_scheduler_mode *)ptrs[i - 1].data = INVALID;
+			*(t_scheduler_mode *)ptrs[i - 1].data = parse_scheduler(av[i]);
 		else
 			return ((free_return((void *[]){ctx}, 2, NULL)));
 		i++;

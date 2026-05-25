@@ -1,0 +1,55 @@
+$==================
+WARNING: ThreadSanitizer: data race (pid=1194085)
+  Write of size 8 at 0x725800000008 by thread T2 (mutexes: write M0):
+    #0 heap_queue_align_up src/heap_queue/align.c:23 (codexion+0x2abb) (BuildId: d3f31b268be5b074e4b5d22f9d8a36ab9e739fc2)
+    #1 hq_add src/heap_queue/add.c:22 (codexion+0x26e1) (BuildId: d3f31b268be5b074e4b5d22f9d8a36ab9e739fc2)
+    #2 hq_mutex_add src/mutex/heap_queue.c:18 (codexion+0x59e3) (BuildId: d3f31b268be5b074e4b5d22f9d8a36ab9e739fc2)
+    #3 request_dongle src/dongles/utils.c:43 (codexion+0x246b) (BuildId: d3f31b268be5b074e4b5d22f9d8a36ab9e739fc2)
+    #4 take_dongles src/coders/tasks.c:19 (codexion+0x32f1) (BuildId: d3f31b268be5b074e4b5d22f9d8a36ab9e739fc2)
+    #5 compile src/coders/tasks.c:37 (codexion+0x346b) (BuildId: d3f31b268be5b074e4b5d22f9d8a36ab9e739fc2)
+    #6 coder_routine src/coders/routine.c:45 (codexion+0x3227) (BuildId: d3f31b268be5b074e4b5d22f9d8a36ab9e739fc2)
+    #7 <null> <null> (libtsan.so.2+0x55829) (BuildId: b5c99e8ceaf9098eb9a01fcfcc35ece8603116df)
+
+  Previous read of size 8 at 0x725800000008 by thread T1:
+    #0 hq_mutex_contains src/mutex/heap_queue.c:59 (codexion+0x5c0a) (BuildId: d3f31b268be5b074e4b5d22f9d8a36ab9e739fc2)
+    #1 request_dongle src/dongles/utils.c:41 (codexion+0x2449) (BuildId: d3f31b268be5b074e4b5d22f9d8a36ab9e739fc2)
+    #2 take_dongles src/coders/tasks.c:20 (codexion+0x3318) (BuildId: d3f31b268be5b074e4b5d22f9d8a36ab9e739fc2)
+    #3 compile src/coders/tasks.c:37 (codexion+0x346b) (BuildId: d3f31b268be5b074e4b5d22f9d8a36ab9e739fc2)
+    #4 coder_routine src/coders/routine.c:45 (codexion+0x3227) (BuildId: d3f31b268be5b074e4b5d22f9d8a36ab9e739fc2)
+    #5 <null> <null> (libtsan.so.2+0x55829) (BuildId: b5c99e8ceaf9098eb9a01fcfcc35ece8603116df)
+
+  As if synchronized via sleep:
+    #0 usleep <null> (libtsan.so.2+0x5ec0a) (BuildId: b5c99e8ceaf9098eb9a01fcfcc35ece8603116df)
+    #1 coder_routine src/coders/routine.c:34 (codexion+0x31e0) (BuildId: d3f31b268be5b074e4b5d22f9d8a36ab9e739fc2)
+    #2 <null> <null> (libtsan.so.2+0x55829) (BuildId: b5c99e8ceaf9098eb9a01fcfcc35ece8603116df)
+
+  Location is heap block of size 688 at 0x725800000000 allocated by main thread:
+    #0 malloc <null> (libtsan.so.2+0x93fe2) (BuildId: b5c99e8ceaf9098eb9a01fcfcc35ece8603116df)
+    #1 ft_calloc src/utils/mem.c:21 (codexion+0x452f) (BuildId: d3f31b268be5b074e4b5d22f9d8a36ab9e739fc2)
+    #2 hq_init src/heap_queue/init.c:26 (codexion+0x28ba) (BuildId: d3f31b268be5b074e4b5d22f9d8a36ab9e739fc2)
+    #3 init_dongle src/init/dongles.c:19 (codexion+0x4b87) (BuildId: d3f31b268be5b074e4b5d22f9d8a36ab9e739fc2)
+    #4 init src/init/init.c:24 (codexion+0x4740) (BuildId: d3f31b268be5b074e4b5d22f9d8a36ab9e739fc2)
+    #5 main src/main.c:26 (codexion+0x604d) (BuildId: d3f31b268be5b074e4b5d22f9d8a36ab9e739fc2)
+
+  Mutex M0 (0x726400000008) created at:
+    #0 pthread_mutex_init <null> (libtsan.so.2+0x60028) (BuildId: b5c99e8ceaf9098eb9a01fcfcc35ece8603116df)
+    #1 init_heap_queue_mutex src/mutex/init.c:38 (codexion+0x5e29) (BuildId: d3f31b268be5b074e4b5d22f9d8a36ab9e739fc2)
+    #2 init_dongle src/init/dongles.c:19 (codexion+0x4bc5) (BuildId: d3f31b268be5b074e4b5d22f9d8a36ab9e739fc2)
+    #3 init src/init/init.c:24 (codexion+0x4740) (BuildId: d3f31b268be5b074e4b5d22f9d8a36ab9e739fc2)
+    #4 main src/main.c:26 (codexion+0x604d) (BuildId: d3f31b268be5b074e4b5d22f9d8a36ab9e739fc2)
+
+  Thread T2 (tid=1194088, running) created by main thread at:
+    #0 pthread_create <null> (libtsan.so.2+0x61642) (BuildId: b5c99e8ceaf9098eb9a01fcfcc35ece8603116df)
+    #1 create_threads src/monitor/monitor.c:28 (codexion+0x3655) (BuildId: d3f31b268be5b074e4b5d22f9d8a36ab9e739fc2)
+    #2 monitor_simulation src/monitor/monitor.c:73 (codexion+0x3932) (BuildId: d3f31b268be5b074e4b5d22f9d8a36ab9e739fc2)
+    #3 main src/main.c:32 (codexion+0x60ba) (BuildId: d3f31b268be5b074e4b5d22f9d8a36ab9e739fc2)
+
+  Thread T1 (tid=1194087, running) created by main thread at:
+    #0 pthread_create <null> (libtsan.so.2+0x61642) (BuildId: b5c99e8ceaf9098eb9a01fcfcc35ece8603116df)
+    #1 create_threads src/monitor/monitor.c:28 (codexion+0x3655) (BuildId: d3f31b268be5b074e4b5d22f9d8a36ab9e739fc2)
+    #2 monitor_simulation src/monitor/monitor.c:73 (codexion+0x3932) (BuildId: d3f31b268be5b074e4b5d22f9d8a36ab9e739fc2)
+    #3 main src/main.c:32 (codexion+0x60ba) (BuildId: d3f31b268be5b074e4b5d22f9d8a36ab9e739fc2)
+
+SUMMARY: ThreadSanitizer: data race src/heap_queue/align.c:23 in heap_queue_align_up
+==================
+make: *** [Makefile:157: run] Interrupt

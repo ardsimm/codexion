@@ -13,7 +13,6 @@
 #include "headers/defines.h"
 #include "headers/lib.h"
 #include "mutex/headers/mutex.h"
-#include <pthread.h>
 
 void	init_voidp_mutex(t_voidp_mutex *mutex, t_typed_voidp value)
 {

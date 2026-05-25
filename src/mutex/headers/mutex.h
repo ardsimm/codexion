@@ -42,14 +42,20 @@ void			init_bool_mutex(t_bool_mutex *mutex, bool value);
 void			init_heap_queue_mutex(t_heap_queue_mutex *mutex,
 					t_heap_queue *value);
 
-void			hq_mutex_add(t_heap_queue_mutex *mutex, void *value);
+/* heap_queue.c */
 
-void			*hq_mutex_pop(t_heap_queue_mutex *mutex);
+void			hq_mutex_add(t_heap_queue_mutex *hq_mutex, void *value);
 
-size_t			hq_mutex_get_size(t_heap_queue_mutex *mutex);
+void			*hq_mutex_pop(t_heap_queue_mutex *hq_mutex);
 
-bool			hq_mutex_compare_coder_id(t_heap_queue_mutex *mutex, size_t id);
+size_t			hq_mutex_get_size(t_heap_queue_mutex *hq_mutex);
 
-bool			hq_mutex_contains(t_heap_queue_mutex *mutex, void *data);
+bool			hq_mutex_compare_coder_id(t_heap_queue_mutex *hq_mutex,
+					size_t id);
+
+bool			hq_mutex_contains(t_heap_queue_mutex *hq_mutex, void *data);
+
+bool			hq_mutex_coder_is_next(t_heap_queue_mutex *hq_mutex,
+					t_coder *coder);
 
 #endif

@@ -12,15 +12,12 @@
 
 #include "coders/headers/coders_lib.h"
 #include "headers/lib.h"
+#include "mutex/headers/mutex.h"
 #include "utils/headers/utils.h"
 
 static bool	should_continue(t_shared_ctx *shared)
 {
-	bool shoud_continue ;
-	pthread_mutex_lock(&shared->run.mutex);
-	shoud_continue = shared->run.data;
-	pthread_mutex_unlock(&shared->run.mutex);
-	return (shoud_continue);
+	return (get_bool_mutex(&shared->run));
 }
 
 void	*coder_routine(void *data)
@@ -32,22 +29,20 @@ void	*coder_routine(void *data)
 	self = (t_coder *)data;
 	if (self->id % 2)
 		usleep(50);
-	// pthread_cond_timedwait(
-	// 		pthread_cond_t *restrict cond,
-	// 		pthread_mutex_t *restrict mutex,
-	// 		const struct timespec *restrict abstime
-	// );
-	//
-	set_size_t_mutex(&self->last_compile_timestamp, get_time_ms());
+	// set_size_t_mutex(&self->last_compile_timestamp, get_time_ms());
 	ft_log_debug(&self->shared, "started routine", &self->id);
 	while (should_continue(&self->shared))
 	{
+		// ft_log_debug(&self->shared, "Before compile", &self->id);
 		compile(self);
+		// ft_log_debug(&self->shared, "Before debug", &self->id);
 		debug(self);
+		// ft_log_debug(&self->shared, "Before refactor", &self->id);
 		refactor(self);
 		i++;
 		if (i == self->shared.number_of_compiles)
 		{
+			ft_log_debug(&self->shared, "Finished !", &self->id);
 			set_bool_mutex(&self->done, true);
 			break ;
 		}

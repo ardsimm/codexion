@@ -25,9 +25,13 @@ static int	ft_log(t_shared_ctx *ctx, t_log_level log_level, size_t *coder_id,
 		return (result);
 	if (ctx)
 		pthread_mutex_lock(&ctx->logging_active.mutex);
-	if ((coder_id && printf("%ld %zu %s\n", curr_usec_delta, *coder_id,
-				str) > 0) || (printf("%ld %s\n", curr_usec_delta, str) > 0))
-		result = SUCCESS;
+	if (coder_id)
+	{
+		if (printf("%ld %zu %s\n", curr_usec_delta, *coder_id, str))
+			return (SUCCESS);
+	}
+	else if (printf("%ld %s\n", curr_usec_delta, str) > 0)
+		return (SUCCESS);
 	if (ctx)
 		pthread_mutex_unlock(&ctx->logging_active.mutex);
 	return (result);

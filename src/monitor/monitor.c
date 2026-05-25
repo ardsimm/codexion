@@ -12,7 +12,6 @@
 
 #include "headers/lib.h"
 #include "utils/headers/utils.h"
-#include <pthread.h>
 
 static pthread_t	*create_threads(t_ctx *ctx)
 {
@@ -45,15 +44,15 @@ static bool	should_stop(t_ctx *ctx)
 			&& get_time_ms() > get_size_t_mutex(&ctx->coders[i].last_compile_timestamp)
 			+ ctx->shared.time_to_burnout)
 		{
-			pthread_mutex_lock(&ctx->shared.run.mutex);
-			ctx->shared.run.data = false;
-			pthread_mutex_unlock(&ctx->shared.run.mutex);
+			set_bool_mutex(&ctx->shared.run, false);
 			ft_log_error(&ctx->shared, "burned out", &ctx->coders[i].id);
 			return (true);
 		}
 		all_done &= get_bool_mutex(&ctx->coders[i].done);
 		i++;
 	}
+	if (all_done)
+		set_bool_mutex(&ctx->shared.run, false);
 	return (all_done);
 }
 
@@ -74,10 +73,7 @@ void	*monitor_simulation(t_ctx *ctx)
 	if (!threads)
 		return (NULL);
 	while (!should_stop(ctx))
-	{
-		ft_log_debug(&ctx->shared, "in loop", NULL);
 		usleep(10);
-	}
 	join_threads(threads, ctx->coders_count);
 	return (free_return((void *[]){threads}, 0, NULL));
 }

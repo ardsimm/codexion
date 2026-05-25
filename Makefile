@@ -4,11 +4,13 @@
 CFLAGS =	-Wall -Wextra -Werror -g -fsanitize=thread
 
 # ---------- VALGRIND ----------
-VGFLAGS =	--leak-check=full \
-			-s \
-			--show-mismatched-frees=yes \
-			--track-origins=yes \
-			--show-leak-kinds=all
+VGFLAGS =	\
+			# --leak-check=full \
+			# -s \
+			# --show-mismatched-frees=yes \
+			# --track-origins=yes \
+			# --show-leak-kinds=all \
+			--tool=helgrind
 
 # ========== PROGRAM ARGUMENTS ==========
 
@@ -23,7 +25,7 @@ SCHEDULER =						FIFO
 
 # ========== COMPILATION_DEFINES ==========
 
-LOG_LEVEL =	1 # 0 = DEBUG, 1 = INFO, 2 = WARN, 3 = ERROR
+LOG_LEVEL =	0 # 0 = DEBUG, 1 = INFO, 2 = WARN, 3 = ERROR
 
 COMPILE_D =	-DLOG_LEVEL=$(LOG_LEVEL) \
 
@@ -218,6 +220,8 @@ fclean: clean
 # ---------- re ----------
 
 re: fclean all
+
+rerun: re run
 
 .PHONY: all clean fclean re reset_counter run debug vg
 
