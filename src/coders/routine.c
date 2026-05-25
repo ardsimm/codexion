@@ -6,18 +6,22 @@
 /*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 13:04:32 by smenard           #+#    #+#             */
-/*   Updated: 2026/05/20 19:52:59 by smenard          ###   ########.fr       */
+/*   Updated: 2026/05/25 17:29:14 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "coders/headers/coders_lib.h"
 #include "headers/lib.h"
-#include "mutex/headers/mutex.h"
 #include "utils/headers/utils.h"
 
 static bool	should_continue(t_shared_ctx *shared)
 {
-	return (get_bool_mutex(&shared->run));
+	bool	result;
+
+	pthread_mutex_lock(&shared->mutex);
+	result = shared->run;
+	pthread_mutex_unlock(&shared->mutex);
+	return (result);
 }
 
 void	*coder_routine(void *data)
@@ -29,21 +33,21 @@ void	*coder_routine(void *data)
 	self = (t_coder *)data;
 	if (self->id % 2)
 		usleep(50);
-	// set_size_t_mutex(&self->last_compile_timestamp, get_time_ms());
-	ft_log_debug(&self->shared, "started routine", &self->id);
-	while (should_continue(&self->shared))
+	pthread_mutex_lock(&self->mutex);
+	self->last_compile_timestamp = get_time_us();
+	pthread_mutex_unlock(&self->mutex);
+	ft_log_debug(self->shared, "started routine", &self->id);
+	while (should_continue(self->shared))
 	{
-		// ft_log_debug(&self->shared, "Before compile", &self->id);
 		compile(self);
-		// ft_log_debug(&self->shared, "Before debug", &self->id);
 		debug(self);
-		// ft_log_debug(&self->shared, "Before refactor", &self->id);
 		refactor(self);
 		i++;
-		if (i == self->shared.number_of_compiles)
+		if (i == self->shared->number_of_compiles)
 		{
-			ft_log_debug(&self->shared, "Finished !", &self->id);
-			set_bool_mutex(&self->done, true);
+			pthread_mutex_lock(&self->mutex);
+			self->done = true;
+			pthread_mutex_unlock(&self->mutex);
 			break ;
 		}
 	}

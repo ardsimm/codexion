@@ -6,7 +6,7 @@
 /*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 13:03:38 by smenard           #+#    #+#             */
-/*   Updated: 2026/05/21 16:30:13 by smenard          ###   ########.fr       */
+/*   Updated: 2026/05/25 17:35:23 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,21 @@ static pthread_t	*create_threads(t_ctx *ctx)
 	return (threads);
 }
 
+static bool	check_deadlock(t_ctx *ctx, t_coder coder)
+{
+	if (coder.last_compile_timestamp > 0 && coder.done
+		&& get_time_us() > coder.last_compile_timestamp
+		+ ctx->shared.time_to_burnout)
+	{
+		pthread_mutex_lock(&ctx->shared.mutex);
+		ctx->shared.run = false;
+		ft_log_error(&ctx->shared, "burned out", &coder.id);
+		pthread_mutex_unlock(&ctx->shared.mutex);
+		return (true);
+	}
+	return (false);
+}
+
 static bool	should_stop(t_ctx *ctx)
 {
 	size_t	i;
@@ -39,20 +54,22 @@ static bool	should_stop(t_ctx *ctx)
 	all_done = true;
 	while (i < ctx->coders_count)
 	{
-		if (get_size_t_mutex(&ctx->coders[i].last_compile_timestamp) > 0
-			&& !get_bool_mutex(&ctx->coders[i].done)
-			&& get_time_ms() > get_size_t_mutex(&ctx->coders[i].last_compile_timestamp)
-			+ ctx->shared.time_to_burnout)
+		pthread_mutex_lock(&ctx->coders[i].mutex);
+		if (check_deadlock(ctx, ctx->coders[i]))
 		{
-			set_bool_mutex(&ctx->shared.run, false);
-			ft_log_error(&ctx->shared, "burned out", &ctx->coders[i].id);
+			pthread_mutex_unlock(&ctx->coders[i].mutex);
 			return (true);
 		}
-		all_done &= get_bool_mutex(&ctx->coders[i].done);
+		all_done &= ctx->coders[i].done;
+		pthread_mutex_unlock(&ctx->coders[i].mutex);
 		i++;
 	}
 	if (all_done)
-		set_bool_mutex(&ctx->shared.run, false);
+	{
+		pthread_mutex_lock(&ctx->shared.mutex);
+		ctx->shared.run = false;
+		pthread_mutex_unlock(&ctx->shared.mutex);
+	}
 	return (all_done);
 }
 

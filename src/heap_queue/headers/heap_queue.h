@@ -6,7 +6,7 @@
 /*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/13 11:53:00 by smenard           #+#    #+#             */
-/*   Updated: 2026/05/20 17:16:54 by smenard          ###   ########.fr       */
+/*   Updated: 2026/05/25 16:25:46 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,7 @@ void			*hq_pop(t_heap_queue *hq);
 void			hq_update_keys(t_heap_queue *hq);
 
 void			hq_free(t_heap_queue *hq);
+
+bool			hq_contains(t_heap_queue *hq, void *data);
 
 #endif

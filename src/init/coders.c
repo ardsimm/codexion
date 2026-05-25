@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "headers/lib.h"
-#include "utils/headers/utils.h"
 
 void	init_coder(int32_t i, t_ctx *ctx)
 {
@@ -25,7 +24,8 @@ void	init_coder(int32_t i, t_ctx *ctx)
 	if (dongle_right_idx > ctx->coders_count - 1)
 		dongle_left_idx = 0;
 	ctx->coders[i].id = i;
-	ctx->coders[i].shared = ctx->shared;
+	ctx->coders[i].shared = &ctx->shared;
 	ctx->coders[i].dongle_left = &ctx->dongles[dongle_left_idx];
 	ctx->coders[i].dongle_right = &ctx->dongles[dongle_right_idx];
+	pthread_mutex_init(&ctx->coders[i].mutex, NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/13 13:29:57 by smenard           #+#    #+#             */
-/*   Updated: 2026/05/20 18:21:18 by smenard          ###   ########.fr       */
+/*   Updated: 2026/05/25 17:07:40 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,6 @@ void	*free_return(void **ptrs, size_t ptrs_len, void *value);
 
 int		free_return_int(void **ptrs, size_t ptrs_len, int value);
 
-size_t	get_time_ms(void);
+size_t	get_time_us(void);
 
 #endif

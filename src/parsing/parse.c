@@ -6,7 +6,7 @@
 /*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 14:58:53 by smenard           #+#    #+#             */
-/*   Updated: 2026/05/20 19:35:28 by smenard          ###   ########.fr       */
+/*   Updated: 2026/05/25 17:06:48 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,15 @@ t_scheduler_mode	parse_scheduler(char *value)
 	return (INVALID);
 }
 
+void	convert_ms_to_us(t_ctx *ctx)
+{
+	ctx->shared.dongle_cooldown *= 1000;
+	ctx->shared.time_to_burnout *= 1000;
+	ctx->shared.time_to_compile *= 1000;
+	ctx->shared.time_to_debug *= 1000;
+	ctx->shared.time_to_refactor *= 1000;
+}
+
 t_ctx	*parse(int ac, char **av)
 {
 	size_t			i;
@@ -88,5 +97,6 @@ t_ctx	*parse(int ac, char **av)
 	}
 	if (!validate_ctx(ctx))
 		return ((free_return((void *[]){ctx}, 2, NULL)));
+	convert_ms_to_us(ctx);
 	return (ctx);
 }

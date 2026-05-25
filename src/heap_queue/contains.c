@@ -1,20 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   contains.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smenard <smenard@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/05/20 17:18:15 by smenard           #+#    #+#             */
-/*   Updated: 2026/05/25 16:28:45 by smenard          ###   ########.fr       */
+/*   Created: 2026/05/25 16:25:34 by smenard           #+#    #+#             */
+/*   Updated: 2026/05/25 16:26:57 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "headers/lib.h"
-#include <pthread.h>
 
-void	dongle_free(t_dongle *dongle)
+bool	hq_contains(t_heap_queue *hq, void *data)
 {
-	hq_free(dongle->hq);
-	pthread_mutex_destroy(&dongle->mutex);
+	size_t	i;
+
+	i = 0;
+	while (i < hq->size)
+	{
+		if (hq->data[i++].data == data)
+			return (true);
+	}
+	return (false);
 }

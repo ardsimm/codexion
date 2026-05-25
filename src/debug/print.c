@@ -48,10 +48,10 @@ static void	print_dongle(t_dongle *d, int idx)
 	printf("      \"id\": %zu,\n", d->id);
 	printf("      \"cooldown\": %zu,\n", d->cooldown);
 	printf("      \"last_use_timestamp\": %zu,\n",
-		get_size_t_mutex(&d->last_use_timestamp));
-	printf("      \"in_use\": %s,\n", d->in_use.data ? "true" : "false");
+		d->last_use_timestamp);
+	printf("      \"in_use\": %s,\n", d->in_use ? "true" : "false");
 	printf("      \"hq\": ");
-	print_heap_queue(d->hq.data, 3);
+	print_heap_queue(d->hq, 3);
 	printf("\n    }");
 	(void)idx;
 }
@@ -69,7 +69,7 @@ static void	print_shared_ctx(t_shared_ctx *s, int indent)
 	printf("%s\"number_of_compiles\": %u,\n", pad, s->number_of_compiles);
 	printf("%s\"dongle_cooldown\": %u,\n", pad, s->dongle_cooldown);
 	printf("%s\"timestamp_start\": %zu,\n", pad, s->timestamp_start);
-	printf("%s\"run\": %s\n", pad, s->run.data ? "true" : "false");
+	printf("%s\"run\": %s\n", pad, s->run ? "true" : "false");
 	printf("%s}", indent == 1 ? "" : "  ");
 }
 
@@ -78,14 +78,14 @@ static void	print_coder(t_coder *c)
 	printf("    {\n");
 	printf("      \"id\": %zu,\n", c->id);
 	printf("      \"last_compile_timestamp\": %zu,\n",
-		get_size_t_mutex(&c->last_compile_timestamp));
+		c->last_compile_timestamp);
 	printf("      \"done\": %s,\n",
-		get_bool_mutex(&c->done) ? "true" : "false");
+		c->done ? "true" : "false");
 	printf("      \"dongle_left\": %s,\n", c->dongle_left ? "{ ... }" : "null");
 	printf("      \"dongle_right\": %s,\n",
 		c->dongle_right ? "{ ... }" : "null");
 	printf("      \"shared\": ");
-	print_shared_ctx(&c->shared, 2);
+	print_shared_ctx(c->shared, 2);
 	printf("\n    }");
 }
 
