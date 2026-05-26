@@ -16,7 +16,8 @@ int	init_dongle(uint32_t i, t_ctx *ctx)
 {
 	ctx->dongles[i].id = i;
 	pthread_mutex_init(&ctx->dongles[i].mutex, NULL);
-	ctx->dongles[i].hq = hq_init(2, sizeof(t_coder), get_key_fifo, update_key_fifo);
+	ctx->dongles[i].hq = hq_init(2, sizeof(t_coder), get_key_fifo,
+			update_key_fifo);
 	if (!ctx->dongles[i].hq)
 		return (FAILURE);
 	ctx->dongles[i].cooldown = ctx->shared.dongle_cooldown;

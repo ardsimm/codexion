@@ -31,8 +31,8 @@ void	*coder_routine(void *data)
 
 	i = 0;
 	self = (t_coder *)data;
-	if (self->id % 2)
-		usleep(50);
+	if (!self->id % 2)
+		usleep(self->shared->time_to_compile / 2);
 	pthread_mutex_lock(&self->mutex);
 	self->last_compile_timestamp = get_time_us();
 	pthread_mutex_unlock(&self->mutex);

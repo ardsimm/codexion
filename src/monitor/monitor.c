@@ -30,18 +30,21 @@ static pthread_t	*create_threads(t_ctx *ctx)
 	return (threads);
 }
 
-static bool	check_deadlock(t_ctx *ctx, t_coder coder)
+static bool	check_burnout(t_ctx *ctx, t_coder *coder)
 {
-	if (coder.last_compile_timestamp > 0 && coder.done
-		&& get_time_us() > coder.last_compile_timestamp
+	pthread_mutex_lock(&coder->mutex);
+	if (coder->last_compile_timestamp > 0 && !coder->done
+		&& get_time_us() > coder->last_compile_timestamp
 		+ ctx->shared.time_to_burnout)
 	{
+		pthread_mutex_unlock(&coder->mutex);
 		pthread_mutex_lock(&ctx->shared.mutex);
 		ctx->shared.run = false;
-		ft_log_error(&ctx->shared, "burned out", &coder.id);
 		pthread_mutex_unlock(&ctx->shared.mutex);
+		ft_log_error(&ctx->shared, "burned out", &coder->id);
 		return (true);
 	}
+	pthread_mutex_unlock(&coder->mutex);
 	return (false);
 }
 
@@ -54,12 +57,9 @@ static bool	should_stop(t_ctx *ctx)
 	all_done = true;
 	while (i < ctx->coders_count)
 	{
-		pthread_mutex_lock(&ctx->coders[i].mutex);
-		if (check_deadlock(ctx, ctx->coders[i]))
-		{
-			pthread_mutex_unlock(&ctx->coders[i].mutex);
+		if (check_burnout(ctx, &ctx->coders[i]))
 			return (true);
-		}
+		pthread_mutex_lock(&ctx->coders[i].mutex);
 		all_done &= ctx->coders[i].done;
 		pthread_mutex_unlock(&ctx->coders[i].mutex);
 		i++;
@@ -91,6 +91,7 @@ void	*monitor_simulation(t_ctx *ctx)
 		return (NULL);
 	while (!should_stop(ctx))
 		usleep(10);
+	ft_log_debug(&ctx->shared, "joining threads...", NULL);
 	join_threads(threads, ctx->coders_count);
 	return (free_return((void *[]){threads}, 0, NULL));
 }

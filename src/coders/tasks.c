@@ -12,34 +12,39 @@
 
 #include "headers/lib.h"
 
-static int	take_dongles(t_coder *self)
+static bool	can_take_dongle_lock(t_coder *self, t_dongle *dongle)
 {
-	request_dongle(self, self->dongle_left);
-	request_dongle(self, self->dongle_right);
-	if (!can_take_dongle(self, self->dongle_left) || !can_take_dongle(self,
-			self->dongle_left))
-		return (FAILURE);
-	take_dongle(self, self->dongle_left);
-	take_dongle(self, self->dongle_right);
-	return (SUCCESS);
+	bool	result;
+
+	pthread_mutex_lock(&dongle->mutex);
+	result = can_take_dongle(self, dongle);
+	pthread_mutex_unlock(&dongle->mutex);
+	return (result);
 }
 
-static void	release_dongles(t_coder *self)
+static void	take_dongles(t_coder *self)
 {
-	release_dongle(self->dongle_left);
-	release_dongle(self->dongle_right);
+	while (!can_take_dongle_lock(self, self->dongle_left))
+		usleep(10);
+	take_dongle(self, self->dongle_left);
+	while (!can_take_dongle_lock(self, self->dongle_right))
+		usleep(10);
+	take_dongle(self, self->dongle_right);
 }
 
 void	compile(t_coder *self)
 {
-	while (take_dongles(self) == FAILURE)
-		usleep(10);
+	request_dongle(self, self->dongle_left);
+	request_dongle(self, self->dongle_right);
+	take_dongles(self);
+	ft_log_debug(self->shared, "after take", &self->id);
 	pthread_mutex_lock(&self->mutex);
 	self->last_compile_timestamp = get_time_us();
 	pthread_mutex_unlock(&self->mutex);
 	ft_log_info(self->shared, "has started compiling", &self->id);
 	usleep(self->shared->time_to_compile);
-	release_dongles(self);
+	release_dongle(self->dongle_left);
+	release_dongle(self->dongle_right);
 }
 
 void	debug(t_coder *self)

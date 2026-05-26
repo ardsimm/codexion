@@ -20,12 +20,12 @@ int	main(int ac, char **av)
 	ctx = parse(ac, av);
 	if (!ctx)
 	{
-		ft_log_error(&ctx->shared, "Parsing error", NULL);
+		ft_log_error(NULL, "Parsing error", NULL);
 		return (FAILURE);
 	}
 	if (init(ctx) == FAILURE)
 	{
-		ft_log_error(&ctx->shared, "Initialization error", NULL);
+		ft_log_error(NULL, "Initialization error", NULL);
 		return ((int)free_return_int((void *[]){ctx}, 1, EXIT_FAILURE));
 	}
 	print_ctx(ctx);

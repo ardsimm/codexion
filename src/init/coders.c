@@ -21,8 +21,6 @@ void	init_coder(int32_t i, t_ctx *ctx)
 	if (dongle_left_idx < 0)
 		dongle_left_idx = ctx->coders_count - 1;
 	dongle_right_idx = i;
-	if (dongle_right_idx > ctx->coders_count - 1)
-		dongle_left_idx = 0;
 	ctx->coders[i].id = i;
 	ctx->coders[i].shared = &ctx->shared;
 	ctx->coders[i].dongle_left = &ctx->dongles[dongle_left_idx];

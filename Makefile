@@ -4,18 +4,17 @@
 CFLAGS =	-Wall -Wextra -Werror -g -fsanitize=thread
 
 # ---------- VALGRIND ----------
-VGFLAGS =	\
+VGFLAGS =	--tool=helgrind \
 			# --leak-check=full \
 			# -s \
 			# --show-mismatched-frees=yes \
 			# --track-origins=yes \
 			# --show-leak-kinds=all \
-			--tool=helgrind
 
 # ========== PROGRAM ARGUMENTS ==========
 
-NUMBER_OF_CODERS =				8
-TIME_TO_BURNOUT =				240
+NUMBER_OF_CODERS =				7
+TIME_TO_BURNOUT =				200
 TIME_TO_COMPILE =				30
 TIME_TO_DEBUG =					30
 TIME_TO_REFACTOR =				30
@@ -25,21 +24,21 @@ SCHEDULER =						FIFO
 
 # ========== COMPILATION_DEFINES ==========
 
-LOG_LEVEL =	0 # 0 = DEBUG, 1 = INFO, 2 = WARN, 3 = ERROR
+LOG_LEVEL ?=	1 # 0 = DEBUG, 1 = INFO, 2 = WARN, 3 = ERROR
 
 COMPILE_D =	-DLOG_LEVEL=$(LOG_LEVEL) \
 
 # ---------- COMBINED ARGUMENTS ----------
-ARGUMENTS =	$(NUMBER_OF_CODERS) \
-			$(TIME_TO_BURNOUT) \
-			$(TIME_TO_COMPILE) \
-			$(TIME_TO_DEBUG) \
-			$(TIME_TO_REFACTOR) \
-			$(NUMBER_OF_COMPILES_REQUIRED) \
-			$(DONGLE_COOLDOWN) \
-			$(SCHEDULER) \
+ARGUMENTS ?=	$(NUMBER_OF_CODERS) \
+				$(TIME_TO_BURNOUT) \
+				$(TIME_TO_COMPILE) \
+				$(TIME_TO_DEBUG) \
+				$(TIME_TO_REFACTOR) \
+				$(NUMBER_OF_COMPILES_REQUIRED) \
+				$(DONGLE_COOLDOWN) \
+				$(SCHEDULER) \
 
-ARGUMENTS_TEST = "200 190 60 60 60 500 0 FIFO"
+ARGUMENTS_TEST = 100 260 60 60 60 500 0 FIFO
 
 # ========== DIRECTORIES ==========
 
