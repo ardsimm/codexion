@@ -63,6 +63,7 @@ typedef struct e_typed_voidp
 
 typedef struct s_shared_ctx
 {
+	uint32_t			coders_count;
 	uint32_t			time_to_burnout;
 	uint32_t			time_to_compile;
 	uint32_t			time_to_debug;
@@ -74,6 +75,7 @@ typedef struct s_shared_ctx
 	bool				run;
 	pthread_mutex_t		mutex;
 	pthread_mutex_t		logging_mutex;
+	pthread_mutex_t		start;
 }						t_shared_ctx;
 
 typedef enum e_scheduler_mode
@@ -134,7 +136,6 @@ typedef struct s_coder
  */
 typedef struct s_ctx
 {
-	uint32_t			coders_count;
 	t_dongle			*dongles;
 	t_coder				*coders;
 	t_scheduler_mode	scheduler;

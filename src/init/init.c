@@ -20,10 +20,10 @@ int	init(t_ctx *ctx)
 	if (init_ctx(ctx) == FAILURE)
 		return (FAILURE);
 	i = 0;
-	while (i < ctx->coders_count)
+	while (i < ctx->shared.coders_count)
 		init_dongle(i++, ctx);
 	i = 0;
-	while (i < ctx->coders_count)
+	while (i < ctx->shared.coders_count)
 		init_coder(i++, ctx);
 	return (SUCCESS);
 }

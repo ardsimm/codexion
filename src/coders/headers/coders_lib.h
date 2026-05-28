@@ -20,4 +20,7 @@ void	compile(t_coder *self);
 void	debug(t_coder *self);
 void	refactor(t_coder *self);
 
+/* routine.c */
+bool	should_continue(t_shared_ctx *shared);
+
 #endif

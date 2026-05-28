@@ -14,7 +14,7 @@
 #include "headers/lib.h"
 #include "utils/headers/utils.h"
 
-static bool	should_continue(t_shared_ctx *shared)
+bool	should_continue(t_shared_ctx *shared)
 {
 	bool	result;
 
@@ -31,7 +31,9 @@ void	*coder_routine(void *data)
 
 	i = 0;
 	self = (t_coder *)data;
-	if (!self->id % 2)
+	pthread_mutex_lock(&self->shared->start);
+	pthread_mutex_unlock(&self->shared->start);
+	if (self->id % 2)
 		usleep(self->shared->time_to_compile / 2);
 	pthread_mutex_lock(&self->mutex);
 	self->last_compile_timestamp = get_time_us();

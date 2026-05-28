@@ -93,15 +93,15 @@ void	print_ctx(t_ctx *ctx)
 	size_t	i;
 
 	printf("{\n");
-	printf("  \"coders_count\": %u,\n", ctx->coders_count);
+	printf("  \"coders_count\": %u,\n", ctx->shared.coders_count);
 	printf("  \"scheduler_mode\": %s\n",
 		ctx->scheduler == FIFO ? "FIFO" : "EDF");
 	printf("  \"dongles\": [\n");
 	i = 0;
-	while (i < ctx->coders_count)
+	while (i < ctx->shared.coders_count)
 	{
 		print_dongle(&ctx->dongles[i], i);
-		if (i + 1 < ctx->coders_count)
+		if (i + 1 < ctx->shared.coders_count)
 			printf(",");
 		printf("\n");
 		i++;
@@ -109,10 +109,10 @@ void	print_ctx(t_ctx *ctx)
 	printf("  ],\n");
 	printf("  \"coders\": [\n");
 	i = 0;
-	while (i < ctx->coders_count)
+	while (i < ctx->shared.coders_count)
 	{
 		print_coder(&ctx->coders[i]);
-		if (i + 1 < ctx->coders_count)
+		if (i + 1 < ctx->shared.coders_count)
 			printf(",");
 		printf("\n");
 		i++;

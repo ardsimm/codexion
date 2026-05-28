@@ -24,15 +24,15 @@ static int	ft_log(t_shared_ctx *ctx, t_log_level log_level, size_t *coder_id,
 		printf("0 (nil) %s\n", str);
 		return (SUCCESS);
 	}
-	// pthread_mutex_lock(&ctx->mutex);
-	// if (!ctx->run && coder_id)
-	// {
-	// 	pthread_mutex_unlock(&ctx->mutex);
-	// 	return (FAILURE);
-	// }
-	// pthread_mutex_unlock(&ctx->mutex);
-	curr_usec_delta = (get_time_us() - ctx->timestamp_start) / 1000;
+	pthread_mutex_lock(&ctx->mutex);
+	if (!ctx->run && coder_id && log_level <= INFO)
+	{
+		pthread_mutex_unlock(&ctx->mutex);
+		return (FAILURE);
+	}
+	pthread_mutex_unlock(&ctx->mutex);
 	pthread_mutex_lock(&ctx->logging_mutex);
+	curr_usec_delta = (get_time_us() - ctx->timestamp_start) / 1000;
 	if (coder_id)
 		printf("%ld %zu %s\n", curr_usec_delta, *coder_id, str);
 	else

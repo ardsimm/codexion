@@ -16,8 +16,7 @@
 # include "headers/defines.h"
 
 t_heap_queue	*hq_init(size_t initial_size, size_t el_size,
-					size_t (*get_key)(void *el),
-					size_t (*update_key)(t_heap_queue_item *item));
+					size_t (*get_key)(void *el));
 
 void			hq_add(t_heap_queue *hq, void *data);
 

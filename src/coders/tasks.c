@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "coders/headers/coders_lib.h"
 #include "headers/lib.h"
 
 static bool	can_take_dongle_lock(t_coder *self, t_dongle *dongle)
@@ -24,12 +25,22 @@ static bool	can_take_dongle_lock(t_coder *self, t_dongle *dongle)
 
 static void	take_dongles(t_coder *self)
 {
-	while (!can_take_dongle_lock(self, self->dongle_left))
+	t_dongle	*current_dongle;
+
+	// if (self->id == self->shared->coders_count && false)
+	// 	current_dongle = self->dongle_right;
+	// else
+	current_dongle = self->dongle_left;
+	while (!can_take_dongle_lock(self, current_dongle))
 		usleep(10);
-	take_dongle(self, self->dongle_left);
-	while (!can_take_dongle_lock(self, self->dongle_right))
+	take_dongle(self, current_dongle);
+	// if (self->id == self->shared->coders_count && false)
+	// 	current_dongle = self->dongle_left;
+	// else
+	current_dongle = self->dongle_right;
+	while (!can_take_dongle_lock(self, current_dongle))
 		usleep(10);
-	take_dongle(self, self->dongle_right);
+	take_dongle(self, current_dongle);
 }
 
 void	compile(t_coder *self)
@@ -41,7 +52,7 @@ void	compile(t_coder *self)
 	pthread_mutex_lock(&self->mutex);
 	self->last_compile_timestamp = get_time_us();
 	pthread_mutex_unlock(&self->mutex);
-	ft_log_info(self->shared, "has started compiling", &self->id);
+	ft_log_info(self->shared, "is compiling", &self->id);
 	usleep(self->shared->time_to_compile);
 	release_dongle(self->dongle_left);
 	release_dongle(self->dongle_right);

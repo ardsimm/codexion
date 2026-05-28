@@ -16,13 +16,14 @@ int	init_ctx(t_ctx *ctx)
 {
 	pthread_mutex_init(&ctx->shared.mutex, NULL);
 	pthread_mutex_init(&ctx->shared.logging_mutex, NULL);
+	pthread_mutex_init(&ctx->shared.start, NULL);
 	ctx->shared.logging_active = true;
 	ctx->shared.run = true;
 	ctx->shared.timestamp_start = get_time_us();
-	ctx->coders = ft_calloc(ctx->coders_count, sizeof(t_coder));
+	ctx->coders = ft_calloc(ctx->shared.coders_count, sizeof(t_coder));
 	if (!ctx->coders)
 		return (FAILURE);
-	ctx->dongles = ft_calloc(ctx->coders_count, sizeof(t_dongle));
+	ctx->dongles = ft_calloc(ctx->shared.coders_count, sizeof(t_dongle));
 	if (!ctx->dongles)
 		return (free_return_int((void *[]){ctx->dongles}, 1, FAILURE));
 	return (SUCCESS);

@@ -40,26 +40,24 @@ int	request_dongle(t_coder *coder, t_dongle *dongle)
 		result = SUCCESS;
 		hq_add(dongle->hq, coder);
 	}
+	ft_log_debug(coder->shared, "requested a dongle", &dongle->id);
 	pthread_mutex_unlock(&dongle->mutex);
 	return (result);
 }
 
 int	take_dongle(t_coder *coder, t_dongle *dongle)
 {
-	int	result;
-
 	pthread_mutex_lock(&dongle->mutex);
 	if (!can_take_dongle(coder, dongle))
-		result = FAILURE;
-	else
 	{
-		dongle->in_use = true;
-		hq_pop(dongle->hq);
-		ft_log_info(coder->shared, "has taken a dongle", &coder->id);
-		result = SUCCESS;
+		pthread_mutex_unlock(&dongle->mutex);
+		return (FAILURE);
 	}
+	dongle->in_use = true;
+	hq_pop(dongle->hq);
 	pthread_mutex_unlock(&dongle->mutex);
-	return (result);
+	ft_log_info(coder->shared, "has taken a dongle", &coder->id);
+	return (SUCCESS);
 }
 
 int	release_dongle(t_dongle *dongle)

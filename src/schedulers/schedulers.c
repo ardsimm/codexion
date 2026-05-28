@@ -15,15 +15,21 @@
 
 size_t	get_key_fifo(void *el)
 {
-	t_heap_queue_item	*item;
-
-	item = (t_heap_queue_item *)el;
-	if (item->key)
-		return (item->key);
+	(void)el;
 	return (get_time_us());
 }
 
 size_t	update_key_fifo(t_heap_queue_item *item)
 {
 	return (item->key);
+}
+
+size_t	get_key_edf(void *el)
+{
+	const t_coder	*coder = (const t_coder *)el;
+	size_t			time_to_burnout;
+
+	time_to_burnout = get_time_us() - coder->last_compile_timestamp
+		+ coder->shared->time_to_burnout;
+	return (time_to_burnout);
 }

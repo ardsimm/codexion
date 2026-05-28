@@ -14,10 +14,15 @@
 
 int	init_dongle(uint32_t i, t_ctx *ctx)
 {
+	size_t	(*get_key)(void *el);
+
+	if (ctx->scheduler == FIFO)
+		get_key = get_key_fifo;
+	else
+		get_key = get_key_edf;
 	ctx->dongles[i].id = i;
 	pthread_mutex_init(&ctx->dongles[i].mutex, NULL);
-	ctx->dongles[i].hq = hq_init(2, sizeof(t_coder), get_key_fifo,
-			update_key_fifo);
+	ctx->dongles[i].hq = hq_init(2, sizeof(t_coder), get_key);
 	if (!ctx->dongles[i].hq)
 		return (FAILURE);
 	ctx->dongles[i].cooldown = ctx->shared.dongle_cooldown;

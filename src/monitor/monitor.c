@@ -18,11 +18,11 @@ static pthread_t	*create_threads(t_ctx *ctx)
 	pthread_t	*threads;
 	size_t		i;
 
-	threads = ft_calloc(ctx->coders_count, sizeof(pthread_t));
+	threads = ft_calloc(ctx->shared.coders_count, sizeof(pthread_t));
 	if (!threads)
 		return (NULL);
 	i = 0;
-	while (i < ctx->coders_count)
+	while (i < ctx->shared.coders_count)
 	{
 		pthread_create(&threads[i], NULL, coder_routine, &ctx->coders[i]);
 		i++;
@@ -55,7 +55,7 @@ static bool	should_stop(t_ctx *ctx)
 
 	i = 0;
 	all_done = true;
-	while (i < ctx->coders_count)
+	while (i < ctx->shared.coders_count)
 	{
 		if (check_burnout(ctx, &ctx->coders[i]))
 			return (true);
@@ -86,12 +86,15 @@ void	*monitor_simulation(t_ctx *ctx)
 {
 	pthread_t	*threads;
 
+	pthread_mutex_lock(&ctx->shared.start);
 	threads = create_threads(ctx);
+	pthread_mutex_unlock(&ctx->shared.start);
 	if (!threads)
 		return (NULL);
 	while (!should_stop(ctx))
 		usleep(10);
 	ft_log_debug(&ctx->shared, "joining threads...", NULL);
-	join_threads(threads, ctx->coders_count);
+	join_threads(threads, ctx->shared.coders_count);
+	ft_log_debug(NULL, "Finished, exiting...", NULL);
 	return (free_return((void *[]){threads}, 0, NULL));
 }

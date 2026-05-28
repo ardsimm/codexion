@@ -39,7 +39,7 @@ static int	atoi_safe(char *value)
 static void	build_simulation_ptrs_array(t_typed_voidp ptrs[EXPECTED_AC],
 		t_ctx *ctx)
 {
-	ptrs[0] = (t_typed_voidp){.type = INT, .data = &ctx->coders_count};
+	ptrs[0] = (t_typed_voidp){.type = INT, .data = &ctx->shared.coders_count};
 	ptrs[1] = (t_typed_voidp){.type = INT,
 		.data = &ctx->shared.time_to_burnout};
 	ptrs[2] = (t_typed_voidp){.type = INT,
@@ -56,9 +56,9 @@ static void	build_simulation_ptrs_array(t_typed_voidp ptrs[EXPECTED_AC],
 
 t_scheduler_mode	parse_scheduler(char *value)
 {
-	if (!strcmp(value, "FIFO"))
+	if (!strcmp(value, "fifo"))
 		return (FIFO);
-	else if (!strcmp(value, "EDF"))
+	else if (!strcmp(value, "edf"))
 		return (EDF);
 	return (INVALID);
 }
@@ -96,7 +96,7 @@ t_ctx	*parse(int ac, char **av)
 		i++;
 	}
 	if (!validate_ctx(ctx))
-		return ((free_return((void *[]){ctx}, 2, NULL)));
+		return ((free_return((void *[]){ctx}, 1, NULL)));
 	convert_ms_to_us(ctx);
 	return (ctx);
 }

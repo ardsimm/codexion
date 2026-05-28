@@ -13,8 +13,7 @@
 #include "headers/lib.h"
 
 t_heap_queue	*hq_init(size_t initial_size, size_t el_size,
-		size_t (*get_key)(void *el),
-		size_t (*update_key)(t_heap_queue_item *item))
+		size_t (*get_key)(void *el))
 {
 	t_heap_queue	*hq;
 
@@ -25,6 +24,5 @@ t_heap_queue	*hq_init(size_t initial_size, size_t el_size,
 	hq->size = 0;
 	hq->data = ft_calloc(initial_size, el_size);
 	hq->get_key = get_key;
-	hq->update_key = update_key;
 	return (hq);
 }

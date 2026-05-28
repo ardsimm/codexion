@@ -22,7 +22,7 @@ bool	validate_ctx(t_ctx *ctx)
 	bool	valid;
 
 	valid = true;
-	valid &= validate_int_value(ctx->coders_count);
+	valid &= validate_int_value(ctx->shared.coders_count);
 	valid &= validate_int_value(ctx->shared.time_to_burnout);
 	valid &= validate_int_value(ctx->shared.time_to_compile);
 	valid &= validate_int_value(ctx->shared.time_to_debug);
@@ -30,5 +30,6 @@ bool	validate_ctx(t_ctx *ctx)
 	valid &= validate_int_value(ctx->shared.number_of_compiles);
 	valid &= validate_int_value(ctx->shared.dongle_cooldown);
 	valid &= ctx->scheduler == FIFO || ctx->scheduler == EDF;
+	// valid &= ctx->coders_count >= 2;
 	return (valid);
 }
