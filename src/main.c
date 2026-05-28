@@ -30,6 +30,7 @@ int	main(int ac, char **av)
 	}
 	print_ctx(ctx);
 	monitor_simulation(ctx);
+	dongles_free(ctx->dongles, ctx->shared.coders_count);
 	free_all((void *[]){ctx->dongles, ctx->coders, ctx}, 3);
 	return (EXIT_SUCCESS);
 }

@@ -4,12 +4,11 @@
 CFLAGS =	-Wall -Wextra -Werror -g -fsanitize=thread
 
 # ---------- VALGRIND ----------
-VGFLAGS =	--tool=helgrind \
-			# --leak-check=full \
-			# -s \
-			# --show-mismatched-frees=yes \
-			# --track-origins=yes \
-			# --show-leak-kinds=all \
+VGFLAGS =	--leak-check=full \
+			-s \
+			--show-mismatched-frees=yes \
+			--track-origins=yes \
+			--show-leak-kinds=all \
 
 # ========== PROGRAM ARGUMENTS ==========
 

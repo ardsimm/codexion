@@ -96,5 +96,5 @@ void	*monitor_simulation(t_ctx *ctx)
 	ft_log_debug(&ctx->shared, "joining threads...", NULL);
 	join_threads(threads, ctx->shared.coders_count);
 	ft_log_debug(NULL, "Finished, exiting...", NULL);
-	return (free_return((void *[]){threads}, 0, NULL));
+	return (free_return((void *[]){threads}, 1, NULL));
 }
