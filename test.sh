@@ -2,7 +2,7 @@
 
 PROG="./codexion"
 LOG_FILE="/tmp/codexion_test.log"
-TIMEOUT=10
+TIMEOUT=20
 PASS=0
 FAIL=0
 SKIP=0

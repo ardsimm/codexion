@@ -37,10 +37,10 @@ void	heap_queue_align_down(t_heap_queue *hq, size_t idx)
 	smallest = idx;
 	left = 2 * idx + 1;
 	right = 2 * idx + 2;
-	if (right < hq->size && hq->data[right].key < hq->data[smallest].key)
-		smallest = right;
 	if (left < hq->size && hq->data[left].key < hq->data[smallest].key)
 		smallest = left;
+	if (right < hq->size && hq->data[right].key < hq->data[smallest].key)
+		smallest = right;
 	if (smallest != idx)
 	{
 		temp = hq->data[idx];
