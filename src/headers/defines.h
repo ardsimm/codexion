@@ -6,7 +6,7 @@
 /*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 13:07:09 by smenard           #+#    #+#             */
-/*   Updated: 2026/05/25 17:31:23 by smenard          ###   ########.fr       */
+/*   Updated: 2026/05/29 15:15:55 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,20 @@ typedef enum e_data_type
 	STR,
 }						t_data_type;
 
+typedef struct s_logging_arguments
+{
+	t_log_level			log_level;
+	FILE				*print_f;
+}						t_logging_arguments;
+
+typedef size_t			(*t_get_key)(void *el);
+
 typedef struct s_heap_queue
 {
 	size_t				size;
 	size_t				max_size;
 	t_heap_queue_item	*data;
-	size_t				(*get_key)(void *el);
-	size_t				(*update_key)(t_heap_queue_item *item);
+	t_get_key			get_key;
 }						t_heap_queue;
 
 typedef struct e_typed_voidp

@@ -6,7 +6,7 @@
 /*   By: smenard <your@email.com>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/19 15:53:03 by smenard           #+#    #+#             */
-/*   Updated: 2026/05/25 17:08:22 by smenard          ###   ########.fr       */
+/*   Updated: 2026/05/29 15:34:46 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,8 @@ int	take_dongle(t_coder *coder, t_dongle *dongle)
 
 int	release_dongle(t_dongle *dongle)
 {
-	pthread_mutex_lock(&dongle->mutex);
-	dongle->in_use = false;
-	dongle->last_use_timestamp = get_time_us();
-	pthread_mutex_unlock(&dongle->mutex);
+	set_bool_value(&dongle->in_use, false, &dongle->mutex);
+	set_size_t_value(&dongle->last_use_timestamp, get_time_us(),
+		&dongle->mutex);
 	return (SUCCESS);
 }

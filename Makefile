@@ -10,6 +10,8 @@ VGFLAGS =	--leak-check=full \
 			--track-origins=yes \
 			--show-leak-kinds=all \
 
+HGFLAGS =	--tool=helgrind \
+
 # ========== PROGRAM ARGUMENTS ==========
 
 NUMBER_OF_CODERS ?=				16
@@ -39,8 +41,6 @@ ARGUMENTS ?=	$(NUMBER_OF_CODERS) \
 
 ARGUMENTS_TEST = 200 200 60 60 60 500 0 fifo
 
-ARGUMENTS = $(ARGUMENTS_TEST)
-
 # ========== DIRECTORIES ==========
 
 # ---------- MAIN ----------
@@ -55,7 +55,7 @@ PARSING_DIR =		parsing
 CODERS_DIR =		coders
 UTILS_DIR =			utils
 SCHEDULERS_DIR =	schedulers
-DEBUG_DIR =			debug
+MUTEX_DIR =			mutex
 
 # ---------- HEADERS ----------
 
@@ -75,7 +75,6 @@ HEAP_QUEUE_FILES =	$(MAIN_DIR)/$(HEAP_QUEUE_DIR)/add.c \
 					$(MAIN_DIR)/$(HEAP_QUEUE_DIR)/init.c \
 					$(MAIN_DIR)/$(HEAP_QUEUE_DIR)/align.c \
 					$(MAIN_DIR)/$(HEAP_QUEUE_DIR)/free.c \
-					$(MAIN_DIR)/$(HEAP_QUEUE_DIR)/update_keys.c \
 					$(MAIN_DIR)/$(HEAP_QUEUE_DIR)/contains.c \
 
 INIT_FILES =		$(MAIN_DIR)/$(INIT_DIR)/init.c \
@@ -97,12 +96,14 @@ PARSING_FILES =		$(MAIN_DIR)/$(PARSING_DIR)/parse.c \
 
 SCHEDULERS_FILES =	$(MAIN_DIR)/$(SCHEDULERS_DIR)/schedulers.c\
 
+MUTEX_FILES =		$(MAIN_DIR)/$(MUTEX_DIR)/getters.c \
+					$(MAIN_DIR)/$(MUTEX_DIR)/setters.c \
+
 UTILS_FILES =		$(MAIN_DIR)/$(UTILS_DIR)/free.c \
 					$(MAIN_DIR)/$(UTILS_DIR)/mem.c \
 					$(MAIN_DIR)/$(UTILS_DIR)/time.c \
 					$(MAIN_DIR)/$(UTILS_DIR)/str.c \
 
-DEBUG_FILES =		$(MAIN_DIR)/$(DEBUG_DIR)/print.c
 
 ALL_FILES =			$(DONGLES_FILES) \
 					$(HEAP_QUEUE_FILES) \
@@ -113,7 +114,7 @@ ALL_FILES =			$(DONGLES_FILES) \
 					$(UTILS_FILES) \
 					$(INIT_FILES) \
 					$(SCHEDULERS_FILES) \
-					$(DEBUG_FILES) \
+					$(MUTEX_FILES) \
 					$(MAIN_FILES) \
 
 # ========== OBJ ==========
@@ -163,6 +164,9 @@ $(NAME_VG): $(ALL_FILES)
 
 vg: $(NAME_VG)
 	valgrind $(VGFLAGS) ./$(NAME_VG) $(ARGUMENTS)
+
+hg: $(NAME_VG)
+	valgrind $(HGFLAGS) ./$(NAME_VG) $(ARGUMENTS)
 
 $(NAME_MAIN): $(SRCS_OBJ)
 	@echo "\033[1;32m[LINKING]\033[0m $@"

@@ -6,14 +6,13 @@
 /*   By: smenard <smenard@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/20 16:59:08 by smenard           #+#    #+#             */
-/*   Updated: 2026/05/20 16:59:20 by smenard          ###   ########.fr       */
+/*   Updated: 2026/05/29 15:17:01 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "headers/lib.h"
 
-t_heap_queue	*hq_init(size_t initial_size, size_t el_size,
-		size_t (*get_key)(void *el))
+t_heap_queue	*hq_init(size_t initial_size, size_t el_size, t_get_key get_key)
 {
 	t_heap_queue	*hq;
 

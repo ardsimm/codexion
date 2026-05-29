@@ -6,7 +6,7 @@
 /*   By: smenard <smenard@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/20 17:23:14 by smenard           #+#    #+#             */
-/*   Updated: 2026/05/25 17:40:13 by smenard          ###   ########.fr       */
+/*   Updated: 2026/05/29 15:16:23 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	init_dongle(uint32_t i, t_ctx *ctx)
 {
-	size_t	(*get_key)(void *el);
+	t_get_key	get_key;
 
 	if (ctx->scheduler == FIFO)
 		get_key = get_key_fifo;

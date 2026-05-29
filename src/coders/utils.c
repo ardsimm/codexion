@@ -1,29 +1,11 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smenard <smenard@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/05/20 17:18:15 by smenard           #+#    #+#             */
-/*   Updated: 2026/05/25 16:28:45 by smenard          ###   ########.fr       */
+/*   Created: 2026/05/29 14:39:51 by smenard           #+#    #+#             */
+/*   Updated: 2026/05/29 14:41:57 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include "headers/lib.h"
-#include <pthread.h>
-
-static void	dongle_free(t_dongle dongle)
-{
-	hq_free(dongle.hq);
-	pthread_mutex_destroy(&dongle.mutex);
-}
-
-void	dongles_free(t_dongle *dongles, size_t size)
-{
-	size_t	i;
-
-	i = 0;
-	while (i < size)
-		dongle_free(dongles[i++]);
-}

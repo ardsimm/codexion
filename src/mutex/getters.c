@@ -1,19 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   debug.h                                            :+:      :+:    :+:   */
+/*   getters.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smenard <smenard@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/05/20 15:48:31 by smenard           #+#    #+#             */
-/*   Updated: 2026/05/20 19:15:53 by smenard          ###   ########.fr       */
+/*   Created: 2026/05/29 14:43:00 by smenard           #+#    #+#             */
+/*   Updated: 2026/05/29 14:45:51 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#ifndef DEBUG_H
-# define DEBUG_H
 
-# include "headers/defines.h"
+#include "headers/lib.h"
 
-void	print_ctx(t_ctx *ctx);
+bool	get_bool_value(bool *ptr, pthread_mutex_t *mutex)
+{
+	bool	value;
 
-#endif
+	pthread_mutex_lock(mutex);
+	value = *ptr;
+	pthread_mutex_unlock(mutex);
+	return (value);
+}
+
+size_t	get_size_t_value(size_t *ptr, pthread_mutex_t *mutex)
+{
+	size_t	value;
+
+	pthread_mutex_lock(mutex);
+	value = *ptr;
+	pthread_mutex_unlock(mutex);
+	return (value);
+}

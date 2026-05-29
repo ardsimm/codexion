@@ -6,12 +6,14 @@
 /*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 13:03:38 by smenard           #+#    #+#             */
-/*   Updated: 2026/05/25 17:35:23 by smenard          ###   ########.fr       */
+/*   Updated: 2026/05/29 15:38:23 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "headers/lib.h"
 #include "utils/headers/utils.h"
+
+static void			join_threads(pthread_t *threads, size_t size);
 
 static pthread_t	*create_threads(t_ctx *ctx)
 {
@@ -24,7 +26,17 @@ static pthread_t	*create_threads(t_ctx *ctx)
 	i = 0;
 	while (i < ctx->shared.coders_count)
 	{
-		pthread_create(&threads[i], NULL, coder_routine, &ctx->coders[i]);
+		if (pthread_create(&threads[i], NULL, coder_routine, &ctx->coders[i]))
+		{
+			ft_log_error(&ctx->shared, "thread creation failed.", NULL);
+			pthread_mutex_lock(&ctx->shared.mutex);
+			ctx->shared.run = false;
+			pthread_mutex_unlock(&ctx->shared.mutex);
+			pthread_mutex_unlock(&ctx->shared.start);
+			join_threads(threads, i + 1);
+			free(threads);
+			return (NULL);
+		}
 		i++;
 	}
 	return (threads);
@@ -79,22 +91,26 @@ static void	join_threads(pthread_t *threads, size_t size)
 
 	i = 0;
 	while (i < size)
-		pthread_join(threads[i++], NULL);
+	{
+		if (threads[i])
+			pthread_join(threads[i], NULL);
+		i++;
+	}
 }
 
-void	*monitor_simulation(t_ctx *ctx)
+int	monitor_simulation(t_ctx *ctx)
 {
 	pthread_t	*threads;
 
 	pthread_mutex_lock(&ctx->shared.start);
 	threads = create_threads(ctx);
-	pthread_mutex_unlock(&ctx->shared.start);
 	if (!threads)
-		return (NULL);
+		return (FAILURE);
+	pthread_mutex_unlock(&ctx->shared.start);
 	while (!should_stop(ctx))
 		usleep(10);
 	ft_log_debug(&ctx->shared, "joining threads...", NULL);
 	join_threads(threads, ctx->shared.coders_count);
-	ft_log_debug(NULL, "Finished, exiting...", NULL);
-	return (free_return((void *[]){threads}, 1, NULL));
+	ft_log_debug(&ctx->shared, "Finished, exiting...", NULL);
+	return (free_return_int((void *[]){threads}, 1, SUCCESS));
 }

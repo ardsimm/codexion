@@ -6,31 +6,38 @@
 /*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 13:01:17 by smenard           #+#    #+#             */
-/*   Updated: 2026/05/20 19:38:14 by smenard          ###   ########.fr       */
+/*   Updated: 2026/05/29 15:46:41 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "debug/headers/debug.h"
 #include "headers/lib.h"
+
+static int	raise_error(t_shared_ctx *ctx, char *err)
+{
+	ft_log_error(ctx, err, NULL);
+	return (EXIT_FAILURE);
+}
 
 int	main(int ac, char **av)
 {
 	t_ctx	*ctx;
+	int		exit_value;
 
 	ctx = parse(ac, av);
 	if (!ctx)
-	{
-		ft_log_error(NULL, "Parsing error", NULL);
-		return (FAILURE);
-	}
+		return (raise_error(NULL, "Parsing error"));
 	if (init(ctx) == FAILURE)
 	{
 		ft_log_error(NULL, "Initialization error", NULL);
 		return ((int)free_return_int((void *[]){ctx}, 1, EXIT_FAILURE));
 	}
-	print_ctx(ctx);
-	monitor_simulation(ctx);
+	if (ctx->shared.coders_count <= 1)
+		return (raise_error(&ctx->shared,
+				"cannot run the simulation with less than 2 coders"));
+	exit_value = EXIT_SUCCESS;
+	if (monitor_simulation(ctx) == FAILURE)
+		exit_value = EXIT_FAILURE;
 	dongles_free(ctx->dongles, ctx->shared.coders_count);
 	free_all((void *[]){ctx->dongles, ctx->coders, ctx}, 3);
-	return (EXIT_SUCCESS);
+	return (exit_value);
 }

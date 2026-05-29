@@ -1,29 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   update_keys.c                                      :+:      :+:    :+:   */
+/*   setters.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smenard <smenard@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/05/20 16:58:12 by smenard           #+#    #+#             */
-/*   Updated: 2026/05/20 17:15:36 by smenard          ###   ########.fr       */
+/*   Created: 2026/05/29 14:48:08 by smenard           #+#    #+#             */
+/*   Updated: 2026/05/29 14:49:19 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "headers/lib.h"
-#include "heap_queue/headers/heap_queue_lib.h"
 
-void	hq_update_keys(t_heap_queue *hq)
+void	set_size_t_value(size_t *ptr, size_t value, pthread_mutex_t *mutex)
 {
-	size_t	i;
+	pthread_mutex_lock(mutex);
+	*ptr = value;
+	pthread_mutex_unlock(mutex);
+}
 
-	i = 0;
-	while (i < hq->size)
-	{
-		hq->data[i].key = hq->update_key(&hq->data[i]);
-		i++;
-	}
-	i = hq->size / 2;
-	while (i-- > 0)
-		heap_queue_align_down(hq, i);
+void	set_bool_value(bool *ptr, bool value, pthread_mutex_t *mutex)
+{
+	pthread_mutex_lock(mutex);
+	*ptr = value;
+	pthread_mutex_unlock(mutex);
 }

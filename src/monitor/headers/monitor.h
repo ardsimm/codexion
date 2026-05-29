@@ -13,6 +13,8 @@
 #ifndef MONITOR_H
 # define MONITOR_H
 
-void	*monitor_simulation(t_ctx *sim);
+# include "headers/defines.h"
+
+int	monitor_simulation(t_ctx *sim);
 
 #endif

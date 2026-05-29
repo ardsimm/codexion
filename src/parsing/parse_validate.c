@@ -6,7 +6,7 @@
 /*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/29 13:50:32 by smenard           #+#    #+#             */
-/*   Updated: 2026/05/13 12:44:37 by smenard          ###   ########.fr       */
+/*   Updated: 2026/05/29 15:12:22 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,5 @@ bool	validate_ctx(t_ctx *ctx)
 	valid &= validate_int_value(ctx->shared.number_of_compiles);
 	valid &= validate_int_value(ctx->shared.dongle_cooldown);
 	valid &= ctx->scheduler == FIFO || ctx->scheduler == EDF;
-	// valid &= ctx->coders_count >= 2;
 	return (valid);
 }

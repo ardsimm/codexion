@@ -1,29 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   mutex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smenard <smenard@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/05/20 17:18:15 by smenard           #+#    #+#             */
-/*   Updated: 2026/05/25 16:28:45 by smenard          ###   ########.fr       */
+/*   Created: 2026/05/29 14:46:14 by smenard           #+#    #+#             */
+/*   Updated: 2026/05/29 14:49:32 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "headers/lib.h"
-#include <pthread.h>
+#ifndef MUTEX_H
+# define MUTEX_H
 
-static void	dongle_free(t_dongle dongle)
-{
-	hq_free(dongle.hq);
-	pthread_mutex_destroy(&dongle.mutex);
-}
+# include "headers/defines.h"
 
-void	dongles_free(t_dongle *dongles, size_t size)
-{
-	size_t	i;
+/* getters.c */
+size_t	get_size_t_value(size_t *ptr, pthread_mutex_t *mutex);
 
-	i = 0;
-	while (i < size)
-		dongle_free(dongles[i++]);
-}
+bool	get_bool_value(bool *ptr, pthread_mutex_t *mutex);
+
+/* setters.c */
+void	set_size_t_value(size_t *ptr, size_t value, pthread_mutex_t *mutex);
+
+void	set_bool_value(bool *ptr, bool value, pthread_mutex_t *mutex);
+
+#endif

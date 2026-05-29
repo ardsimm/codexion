@@ -6,23 +6,12 @@
 /*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 13:04:32 by smenard           #+#    #+#             */
-/*   Updated: 2026/05/25 17:29:14 by smenard          ###   ########.fr       */
+/*   Updated: 2026/05/29 15:26:59 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "coders/headers/coders_lib.h"
 #include "headers/lib.h"
-#include "utils/headers/utils.h"
-
-bool	should_continue(t_shared_ctx *shared)
-{
-	bool	result;
-
-	pthread_mutex_lock(&shared->mutex);
-	result = shared->run;
-	pthread_mutex_unlock(&shared->mutex);
-	return (result);
-}
 
 void	*coder_routine(void *data)
 {
@@ -35,11 +24,9 @@ void	*coder_routine(void *data)
 	pthread_mutex_unlock(&self->shared->start);
 	if (self->id % 2)
 		usleep(self->shared->time_to_compile / 2);
-	pthread_mutex_lock(&self->mutex);
-	self->last_compile_timestamp = get_time_us();
-	pthread_mutex_unlock(&self->mutex);
-	ft_log_debug(self->shared, "started routine", &self->id);
-	while (should_continue(self->shared))
+	set_size_t_value(&self->last_compile_timestamp, get_time_us(),
+		&self->mutex);
+	while (get_bool_value(&self->shared->run, &self->shared->mutex))
 	{
 		compile(self);
 		debug(self);
@@ -47,9 +34,7 @@ void	*coder_routine(void *data)
 		i++;
 		if (i == self->shared->number_of_compiles)
 		{
-			pthread_mutex_lock(&self->mutex);
-			self->done = true;
-			pthread_mutex_unlock(&self->mutex);
+			set_bool_value(&self->done, true, &self->mutex);
 			break ;
 		}
 	}

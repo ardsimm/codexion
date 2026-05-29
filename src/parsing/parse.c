@@ -6,7 +6,7 @@
 /*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 14:58:53 by smenard           #+#    #+#             */
-/*   Updated: 2026/05/25 17:06:48 by smenard          ###   ########.fr       */
+/*   Updated: 2026/05/29 15:44:52 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ t_ctx	*parse(int ac, char **av)
 		else if (ptrs[i - 1].type == STR)
 			*(t_scheduler_mode *)ptrs[i - 1].data = parse_scheduler(av[i]);
 		else
-			return ((free_return((void *[]){ctx}, 2, NULL)));
+			return ((free_return((void *[]){ctx}, 1, NULL)));
 		i++;
 	}
 	if (!validate_ctx(ctx))
