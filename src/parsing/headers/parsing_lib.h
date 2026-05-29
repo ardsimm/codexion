@@ -13,6 +13,8 @@
 #ifndef PARSING_LIB_H
 # define PARSING_LIB_H
 
+# include "headers/defines.h"
+
 bool	ft_isspace(char c);
 
 bool	ft_isdigit(char c);
