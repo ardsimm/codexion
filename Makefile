@@ -15,7 +15,7 @@ HGFLAGS =	--tool=helgrind \
 # ========== PROGRAM ARGUMENTS ==========
 
 NUMBER_OF_CODERS ?=				42
-TIME_TO_BURNOUT ?=				185
+TIME_TO_BURNOUT ?=				190
 TIME_TO_COMPILE ?=				30
 TIME_TO_DEBUG ?=				30
 TIME_TO_REFACTOR ?=				30
@@ -160,7 +160,7 @@ debug: $(NAME_DEBUG)
 	gdb $(NAME_DEBUG) --args $(NAME_DEBUG) $(ARGUMENTS)
 
 $(NAME_VG): $(ALL_FILES)
-	$(CC) -g $(CLFAGS) $(ALL_FILES) -o $(NAME_VG) $(COMPILE_D) $(INCLUDES) -DLOG_LEVEL=0
+	$(CC) -g $(CLFAGS) $(ALL_FILES) -o $(NAME_VG) $(COMPILE_D)
 
 vg: $(NAME_VG)
 	valgrind $(VGFLAGS) ./$(NAME_VG) $(ARGUMENTS)
