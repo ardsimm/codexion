@@ -47,6 +47,8 @@ int	request_dongle(t_coder *coder, t_dongle *dongle)
 
 int	take_dongle(t_coder *coder, t_dongle *dongle)
 {
+	if (!get_bool_value(&coder->shared->run, &coder->shared->mutex))
+		return (FAILURE);
 	pthread_mutex_lock(&dongle->mutex);
 	if (!can_take_dongle(coder, dongle))
 	{
