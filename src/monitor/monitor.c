@@ -51,9 +51,11 @@ static bool	check_burnout(t_ctx *ctx, t_coder *coder)
 	{
 		pthread_mutex_unlock(&coder->mutex);
 		pthread_mutex_lock(&ctx->shared.mutex);
+		pthread_mutex_lock(&ctx->shared.logging_mutex);
+		printf("%zu %zu burned out\n", (get_time_us() - ctx->shared.timestamp_start) / 1000, coder->id);
+		pthread_mutex_unlock(&ctx->shared.logging_mutex);
 		ctx->shared.run = false;
 		pthread_mutex_unlock(&ctx->shared.mutex);
-		ft_log_info(&ctx->shared, "burned out", &coder->id);
 		return (true);
 	}
 	pthread_mutex_unlock(&coder->mutex);
