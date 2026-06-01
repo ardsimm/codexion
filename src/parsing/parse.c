@@ -31,7 +31,7 @@ static int	atoi_safe(char *value)
 		val += value[i] - '0';
 		i++;
 	}
-	if (val > INT32_MAX || (int)val < 0)
+	if (value[i] || val > INT32_MAX || (int)val < 0)
 		return (-1);
 	return (val);
 }
