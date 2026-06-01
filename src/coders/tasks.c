@@ -25,7 +25,8 @@ static bool	can_take_dongle_lock(t_coder *self, t_dongle *dongle)
 
 static void	take_dongles(t_coder *self)
 {
-	while (!can_take_dongle_lock(self, self->dongle_left) || !can_take_dongle_lock(self, self->dongle_right))
+	while (get_bool_value(&self->shared->run, &self->shared->mutex)
+			&& ( !can_take_dongle_lock(self, self->dongle_left) || !can_take_dongle_lock(self, self->dongle_right) ))
 		usleep(10);
 	take_dongle(self, self->dongle_left);
 	take_dongle(self, self->dongle_right);
