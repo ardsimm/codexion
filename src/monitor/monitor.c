@@ -53,7 +53,7 @@ static bool	check_burnout(t_ctx *ctx, t_coder *coder)
 		pthread_mutex_lock(&ctx->shared.mutex);
 		ctx->shared.run = false;
 		pthread_mutex_unlock(&ctx->shared.mutex);
-		ft_log_error(&ctx->shared, "burned out", &coder->id);
+		ft_log_info(&ctx->shared, "burned out", &coder->id);
 		return (true);
 	}
 	pthread_mutex_unlock(&coder->mutex);

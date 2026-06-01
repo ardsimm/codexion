@@ -57,11 +57,11 @@ int	ft_log_info(t_shared_ctx *ctx, char *message, size_t *coder_id)
 int	ft_log_warn(t_shared_ctx *ctx, char *message, size_t *coder_id)
 {
 	return (ft_log(ctx, coder_id, message,
-			(t_logging_arguments){.log_level = WARN, .print_f = stdout}));
+			(t_logging_arguments){.log_level = WARN, .print_f = stderr}));
 }
 
 int	ft_log_error(t_shared_ctx *ctx, char *message, size_t *coder_id)
 {
 	return (ft_log(ctx, coder_id, message,
-			(t_logging_arguments){.log_level = ERROR, .print_f = stdout}));
+			(t_logging_arguments){.log_level = ERROR, .print_f = stderr}));
 }
