@@ -25,17 +25,21 @@ static bool	can_take_dongle_lock(t_coder *self, t_dongle *dongle)
 
 static void	take_dongles(t_coder *self)
 {
-	t_dongle	*current_dongle;
-
-	current_dongle = self->dongle_left;
-	while (!can_take_dongle_lock(self, current_dongle))
+	while (!can_take_dongle_lock(self, self->dongle_left) || !can_take_dongle_lock(self, self->dongle_right))
 		usleep(10);
-	take_dongle(self, current_dongle);
-	current_dongle = self->dongle_right;
-	while (!can_take_dongle_lock(self, current_dongle))
-		usleep(10);
-	take_dongle(self, current_dongle);
+	take_dongle(self, self->dongle_left);
+	take_dongle(self, self->dongle_right);
 }
+
+// static void	take_dongles(t_coder *self)
+// {
+// 	while (!can_take_dongle_lock(self, self->dongle_left))
+// 		usleep(10);
+// 	take_dongle(self, self->dongle_left);
+// 	while (!can_take_dongle_lock(self, self->dongle_right))
+// 		usleep(10);
+// 	take_dongle(self, self->dongle_right);
+// }
 
 void	compile(t_coder *self)
 {

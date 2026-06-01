@@ -1,7 +1,7 @@
 # ========== FLAGS ==========
 
 # ---------- CLANG ----------
-CFLAGS =	-Wall -Wextra -Werror -g -fsanitize=thread
+CFLAGS =	-Wall -Wextra -Werror -g
 
 # ---------- VALGRIND ----------
 VGFLAGS =	--leak-check=full \

@@ -22,10 +22,10 @@ void	*coder_routine(void *data)
 	self = (t_coder *)data;
 	pthread_mutex_lock(&self->shared->start);
 	pthread_mutex_unlock(&self->shared->start);
-	if (self->id % 2)
-		usleep(self->shared->time_to_compile / 2);
 	set_size_t_value(&self->last_compile_timestamp, get_time_us(),
 		&self->mutex);
+	if (self->id % 2)
+		usleep(self->shared->time_to_compile);
 	while (get_bool_value(&self->shared->run, &self->shared->mutex))
 	{
 		compile(self);
