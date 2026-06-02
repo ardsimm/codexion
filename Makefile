@@ -1,7 +1,7 @@
 # ========== FLAGS ==========
 
 # ---------- CLANG ----------
-CFLAGS =	-Wall -Wextra -Werror
+CFLAGS ?=	-Wall -Wextra -Werror
 
 # ---------- VALGRIND ----------
 VGFLAGS =	--leak-check=full \
@@ -116,6 +116,7 @@ ALL_FILES =			$(DONGLES_FILES) \
 					$(SCHEDULERS_FILES) \
 					$(MUTEX_FILES) \
 					$(MAIN_FILES) \
+					ft_malloc.c
 
 # ========== OBJ ==========
 
@@ -160,7 +161,7 @@ debug: $(NAME_DEBUG)
 	gdb $(NAME_DEBUG) --args $(NAME_DEBUG) $(ARGUMENTS)
 
 $(NAME_VG): $(ALL_FILES)
-	$(CC) -g $(CLFAGS) $(ALL_FILES) -o $(NAME_VG) $(COMPILE_D)
+	$(CC) -g $(CLFAGS) $(ALL_FILES) -o $(NAME_VG) $(INCLUDES) $(COMPILE_D)
 
 vg: $(NAME_VG)
 	valgrind $(VGFLAGS) ./$(NAME_VG) $(ARGUMENTS)
