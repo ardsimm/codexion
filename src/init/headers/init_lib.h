@@ -16,12 +16,12 @@
 # include "headers/defines.h"
 
 /* coders.c */
-void	init_coder(int32_t i, t_ctx *ctx);
+int	init_coder(int32_t i, t_ctx *ctx);
 
 /* dongles.c */
-int		init_dongle(uint32_t i, t_ctx *ctx);
+int	init_dongle(uint32_t i, t_ctx *ctx);
 
 /* ctx.c */
-int		init_ctx(t_ctx *ctx);
+int	init_ctx(t_ctx *ctx);
 
 #endif

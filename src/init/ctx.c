@@ -14,9 +14,19 @@
 
 int	init_ctx(t_ctx *ctx)
 {
-	pthread_mutex_init(&ctx->shared.mutex, NULL);
-	pthread_mutex_init(&ctx->shared.logging_mutex, NULL);
-	pthread_mutex_init(&ctx->shared.start, NULL);
+	if (pthread_mutex_init(&ctx->shared.mutex, NULL))
+		return (FAILURE);
+	if (pthread_mutex_init(&ctx->shared.logging_mutex, NULL))
+	{
+		pthread_mutex_destroy(&ctx->shared.mutex);
+		return (FAILURE);
+	}
+	if (pthread_mutex_init(&ctx->shared.start, NULL))
+	{
+		pthread_mutex_destroy(&ctx->shared.mutex);
+		pthread_mutex_destroy(&ctx->shared.logging_mutex);
+		return (FAILURE);
+	}
 	ctx->shared.logging_active = true;
 	ctx->shared.run = true;
 	ctx->shared.timestamp_start = get_time_us();
@@ -25,6 +35,7 @@ int	init_ctx(t_ctx *ctx)
 		return (FAILURE);
 	ctx->dongles = ft_calloc(ctx->shared.coders_count, sizeof(t_dongle));
 	if (!ctx->dongles)
-		return (free_return_int((void *[]){ctx->dongles}, 1, FAILURE));
+		return (free_return_int((void *[]){ctx->coders, ctx->dongles}, 2,
+			FAILURE));
 	return (SUCCESS);
 }

@@ -25,4 +25,6 @@ int		release_dongle(t_dongle *dongle);
 
 void	dongles_free(t_dongle *dongles, size_t size);
 
+void	dongle_free(t_dongle dongle);
+
 #endif

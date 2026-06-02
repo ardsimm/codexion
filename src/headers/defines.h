@@ -25,6 +25,8 @@
 /* EXIT STATUSES */
 # define SUCCESS 0
 # define FAILURE 1
+# define MUTEX_INIT_FAILED 2
+# define MEMORY_ALLOCATION_FAILED 3
 
 typedef enum e_log_level
 {

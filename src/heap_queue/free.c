@@ -14,6 +14,8 @@
 
 void	hq_free(t_heap_queue *hq)
 {
+	if (!hq)
+		return ;
 	free(hq->data);
 	free(hq);
 }

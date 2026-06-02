@@ -12,7 +12,7 @@
 
 #include "headers/lib.h"
 
-void	init_coder(int32_t i, t_ctx *ctx)
+int	init_coder(int32_t i, t_ctx *ctx)
 {
 	int64_t	dongle_left_idx;
 	int64_t	dongle_right_idx;
@@ -25,5 +25,7 @@ void	init_coder(int32_t i, t_ctx *ctx)
 	ctx->coders[i].shared = &ctx->shared;
 	ctx->coders[i].dongle_left = &ctx->dongles[dongle_left_idx];
 	ctx->coders[i].dongle_right = &ctx->dongles[dongle_right_idx];
-	pthread_mutex_init(&ctx->coders[i].mutex, NULL);
+	if (pthread_mutex_init(&ctx->coders[i].mutex, NULL))
+		return (FAILURE);
+	return (SUCCESS);
 }

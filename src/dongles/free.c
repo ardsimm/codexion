@@ -13,7 +13,7 @@
 #include "headers/lib.h"
 #include <pthread.h>
 
-static void	dongle_free(t_dongle dongle)
+void	dongle_free(t_dongle dongle)
 {
 	hq_free(dongle.hq);
 	pthread_mutex_destroy(&dongle.mutex);
