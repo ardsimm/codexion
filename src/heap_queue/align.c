@@ -12,11 +12,20 @@
 
 #include "headers/lib.h"
 
+int	compare_key_tie_breaker(t_heap_queue_item item1, t_heap_queue_item item2)
+{
+	if (item1.key == item2.key)
+		return (((t_coder *)item1.data)->id - ((t_coder *)item2.data)->id);
+	return (item1.key - item2.key);
+}
+
 void	heap_queue_align_up(t_heap_queue *hq, int idx)
 {
 	t_heap_queue_item	temp;
 
-	if (idx && hq->data[(idx - 1) / 2].key > hq->data[idx].key)
+	if (!idx)
+		return ;
+	if (compare_key_tie_breaker(hq->data[(idx - 1) / 2], hq->data[idx]) < 0)
 	{
 		temp = hq->data[idx];
 		hq->data[idx] = hq->data[(idx - 1) / 2];
@@ -37,9 +46,11 @@ void	heap_queue_align_down(t_heap_queue *hq, size_t idx)
 	smallest = idx;
 	left = 2 * idx + 1;
 	right = 2 * idx + 2;
-	if (left < hq->size && hq->data[left].key < hq->data[smallest].key)
+	if (left < hq->size && compare_key_tie_breaker(hq->data[left],
+			hq->data[smallest]) < 0)
 		smallest = left;
-	if (right < hq->size && hq->data[right].key < hq->data[smallest].key)
+	if (right < hq->size && compare_key_tie_breaker(hq->data[right],
+			hq->data[smallest]) < 0)
 		smallest = right;
 	if (smallest != idx)
 	{
