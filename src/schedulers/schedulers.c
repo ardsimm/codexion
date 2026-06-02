@@ -21,7 +21,7 @@ size_t	get_key_fifo(void *el)
 
 size_t	get_key_edf(void *el)
 {
-    const t_coder   *coder = (const t_coder *)el;
+	const t_coder	*coder = (const t_coder *)el;
 
-    return (coder->last_compile_timestamp + coder->shared->time_to_burnout);
+	return (coder->last_compile_timestamp + coder->shared->time_to_burnout);
 }

@@ -26,7 +26,8 @@ void	*coder_routine(void *data)
 		&self->mutex);
 	if (self->id % 2)
 		usleep(self->shared->time_to_compile);
-	while (get_bool_value(&self->shared->run, &self->shared->mutex) && i < self->shared->number_of_compiles)
+	while (get_bool_value(&self->shared->run, &self->shared->mutex)
+		&& i < self->shared->number_of_compiles)
 	{
 		compile(self);
 		debug(self);
