@@ -39,8 +39,6 @@ ARGUMENTS ?=	$(NUMBER_OF_CODERS) \
 				$(DONGLE_COOLDOWN) \
 				$(SCHEDULER) \
 
-ARGUMENTS_TEST = 200 200 60 60 60 500 0 fifo
-
 # ========== DIRECTORIES ==========
 
 # ---------- MAIN ----------
@@ -116,7 +114,6 @@ ALL_FILES =			$(DONGLES_FILES) \
 					$(SCHEDULERS_FILES) \
 					$(MUTEX_FILES) \
 					$(MAIN_FILES) \
-					ft_malloc.c
 
 # ========== OBJ ==========
 
