@@ -28,7 +28,6 @@ int	main(int ac, char **av)
 		return (raise_error(NULL, "Parsing error"));
 	if (init(ctx) == FAILURE)
 	{
-		printf("after init (failure)\n");
 		ft_log_error(NULL, "Initialization error", NULL);
 		return ((int)free_return_int((void *[]){ctx}, 1, EXIT_FAILURE));
 	}

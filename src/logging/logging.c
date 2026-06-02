@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "headers/lib.h"
-#include <unistd.h>
 
 static int	ft_log(t_shared_ctx *ctx, size_t *coder_id, char *str,
 		t_logging_arguments args)
@@ -31,7 +30,6 @@ static int	ft_log(t_shared_ctx *ctx, size_t *coder_id, char *str,
 		pthread_mutex_unlock(&ctx->mutex);
 		return (FAILURE);
 	}
-	pthread_mutex_unlock(&ctx->mutex);
 	pthread_mutex_lock(&ctx->logging_mutex);
 	curr_usec_delta = (get_time_us() - ctx->timestamp_start) / 1000;
 	if (coder_id)
@@ -39,6 +37,7 @@ static int	ft_log(t_shared_ctx *ctx, size_t *coder_id, char *str,
 	else
 		fprintf(args.print_f, "%ld %s\n", curr_usec_delta, str);
 	pthread_mutex_unlock(&ctx->logging_mutex);
+	pthread_mutex_unlock(&ctx->mutex);
 	return (SUCCESS);
 }
 
