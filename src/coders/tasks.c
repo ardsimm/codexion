@@ -13,35 +13,30 @@
 #include "coders/headers/coders_lib.h"
 #include "headers/lib.h"
 
-static bool	can_take_dongle_lock(t_coder *self, t_dongle *dongle)
-{
-	bool	result;
-
-	pthread_mutex_lock(&dongle->mutex);
-	result = can_take_dongle(self, dongle);
-	pthread_mutex_unlock(&dongle->mutex);
-	return (result);
-}
-
 static void	take_dongles(t_coder *self)
 {
-	while (get_bool_value(&self->shared->run, &self->shared->mutex)
-		&& (!can_take_dongle_lock(self, self->dongle_left)
-			|| !can_take_dongle_lock(self, self->dongle_right)))
-		usleep(10);
-	take_dongle(self, self->dongle_left);
-	take_dongle(self, self->dongle_right);
+    while (get_bool_value(&self->shared->run, &self->shared->mutex))
+    {
+        pthread_mutex_lock(&self->dongle_left->mutex);
+        pthread_mutex_lock(&self->dongle_right->mutex);
+        if (can_take_dongle(self, self->dongle_left)
+            && can_take_dongle(self, self->dongle_right))
+        {
+            self->dongle_left->in_use = true;
+            hq_pop(self->dongle_left->hq);
+            self->dongle_right->in_use = true;
+            hq_pop(self->dongle_right->hq);
+            pthread_mutex_unlock(&self->dongle_right->mutex);
+            pthread_mutex_unlock(&self->dongle_left->mutex);
+            ft_log_info(self->shared, "has taken a dongle", &self->id);
+            ft_log_info(self->shared, "has taken a dongle", &self->id);
+            return ;
+        }
+        pthread_mutex_unlock(&self->dongle_right->mutex);
+        pthread_mutex_unlock(&self->dongle_left->mutex);
+        usleep(10);
+    }
 }
-
-// static void	take_dongles(t_coder *self)
-// {
-// 	while (!can_take_dongle_lock(self, self->dongle_left))
-// 		usleep(10);
-// 	take_dongle(self, self->dongle_left);
-// 	while (!can_take_dongle_lock(self, self->dongle_right))
-// 		usleep(10);
-// 	take_dongle(self, self->dongle_right);
-// }
 
 void	compile(t_coder *self)
 {
