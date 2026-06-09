@@ -42,7 +42,6 @@ int	init(t_ctx *ctx)
 
 	if (init_ctx(ctx) != SUCCESS)
 		return (FAILURE);
-	printf("After init ctx\n");
 	i = 0;
 	dongle_init_result = SUCCESS;
 	while (((size_t)i) < ctx->shared.coders_count
@@ -52,10 +51,8 @@ int	init(t_ctx *ctx)
 		return (handle_dongle_memory_allocation_failed(ctx));
 	else if (dongle_init_result == MUTEX_INIT_FAILED)
 		return (handle_dongle_mutex_init_failed(ctx, i));
-	printf("After init dongles (all ok)\n");
 	i = 0;
 	while (((size_t)i) < ctx->shared.coders_count)
 		init_coder(i++, ctx);
-	printf("After init coder\n");
 	return (SUCCESS);
 }
