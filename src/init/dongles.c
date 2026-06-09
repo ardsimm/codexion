@@ -24,7 +24,7 @@ int	init_dongle(uint32_t i, t_ctx *ctx)
 	if (pthread_mutex_init(&ctx->dongles[i].mutex, NULL))
 		return (MUTEX_INIT_FAILED);
 	ctx->dongles[i].hq = hq_init(2, sizeof(t_coder), get_key);
-	if (!ctx->dongles[i].hq)
+	if (!ctx->dongles[i].hq || !ctx->dongles[i].hq->data)
 		return (MEMORY_ALLOCATION_FAILED);
 	ctx->dongles[i].cooldown = ctx->shared.dongle_cooldown;
 	return (SUCCESS);

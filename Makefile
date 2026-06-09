@@ -84,6 +84,7 @@ LOGGING_FILES =		$(MAIN_DIR)/$(LOGGING_DIR)/logging.c \
 
 CODERS_FILES =		$(MAIN_DIR)/$(CODERS_DIR)/routine.c \
 					$(MAIN_DIR)/$(CODERS_DIR)/tasks.c \
+					$(MAIN_DIR)/$(CODERS_DIR)/utils.c \
 
 
 MONITOR_FILES =		$(MAIN_DIR)/$(MONITOR_DIR)/monitor.c \
@@ -114,6 +115,7 @@ ALL_FILES =			$(DONGLES_FILES) \
 					$(SCHEDULERS_FILES) \
 					$(MUTEX_FILES) \
 					$(MAIN_FILES) \
+					src/ft_malloc.c
 
 # ========== OBJ ==========
 

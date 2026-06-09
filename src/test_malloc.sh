@@ -2,7 +2,7 @@
 
 ARGS="2 3000 60 60 60 2 0 fifo"
 
-for FAIL in $(seq 0 120); do
+for FAIL in $(seq 1 120); do
     echo "========== FAIL=$FAIL =========="
 
     # Build must succeed
@@ -12,7 +12,9 @@ for FAIL in $(seq 0 120); do
     fi
 
     # Run program
-    valgrind ./codexion $ARGS 2>> out
+	echo "==============">>out
+	echo "=== FAIL=$FAIL ===">>out
+    valgrind -s --leak-check=full ./codexion $ARGS 2>> out
     STATUS=$?
 
     if [ $STATUS -eq 139 ]; then

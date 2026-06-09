@@ -16,11 +16,15 @@
 # include "headers/lib.h"
 
 /* tasks.c */
-void	compile(t_coder *self);
-void	debug(t_coder *self);
-void	refactor(t_coder *self);
+void		compile(t_coder *self);
+void		debug(t_coder *self);
+void		refactor(t_coder *self);
 
 /* routine.c */
-bool	should_continue(t_shared_ctx *shared);
+bool		should_continue(t_shared_ctx *shared);
+
+/* utils.c */
+t_dongle	*get_first_dongle(t_coder *coder);
+t_dongle	*get_second_dongle(t_coder *coder);
 
 #endif
