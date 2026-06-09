@@ -15,27 +15,27 @@
 
 static void	take_dongles(t_coder *self)
 {
-    while (get_bool_value(&self->shared->run, &self->shared->mutex))
-    {
-        pthread_mutex_lock(&self->dongle_left->mutex);
-        pthread_mutex_lock(&self->dongle_right->mutex);
-        if (can_take_dongle(self, self->dongle_left)
-            && can_take_dongle(self, self->dongle_right))
-        {
-            self->dongle_left->in_use = true;
-            hq_pop(self->dongle_left->hq);
-            self->dongle_right->in_use = true;
-            hq_pop(self->dongle_right->hq);
-            pthread_mutex_unlock(&self->dongle_right->mutex);
-            pthread_mutex_unlock(&self->dongle_left->mutex);
-            ft_log_info(self->shared, "has taken a dongle", &self->id);
-            ft_log_info(self->shared, "has taken a dongle", &self->id);
-            return ;
-        }
-        pthread_mutex_unlock(&self->dongle_right->mutex);
-        pthread_mutex_unlock(&self->dongle_left->mutex);
-        usleep(10);
-    }
+	while (get_bool_value(&self->shared->run, &self->shared->mutex))
+	{
+		pthread_mutex_lock(&self->dongle_left->mutex);
+		pthread_mutex_lock(&self->dongle_right->mutex);
+		if (can_take_dongle(self, self->dongle_left) && can_take_dongle(self,
+				self->dongle_right))
+		{
+			self->dongle_left->in_use = true;
+			hq_pop(self->dongle_left->hq);
+			self->dongle_right->in_use = true;
+			hq_pop(self->dongle_right->hq);
+			pthread_mutex_unlock(&self->dongle_right->mutex);
+			pthread_mutex_unlock(&self->dongle_left->mutex);
+			ft_log_info(self->shared, "has taken a dongle", &self->id);
+			ft_log_info(self->shared, "has taken a dongle", &self->id);
+			return ;
+		}
+		pthread_mutex_unlock(&self->dongle_right->mutex);
+		pthread_mutex_unlock(&self->dongle_left->mutex);
+		usleep(10);
+	}
 }
 
 void	compile(t_coder *self)

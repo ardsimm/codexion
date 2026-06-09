@@ -12,7 +12,8 @@
 
 #include "headers/lib.h"
 
-bool	compare_key_tie_breaker(t_heap_queue_item item1, t_heap_queue_item item2)
+bool	compare_key_tie_breaker(t_heap_queue_item item1,
+		t_heap_queue_item item2)
 {
 	if (item1.key == item2.key)
 		return (((t_coder *)item1.data)->id < ((t_coder *)item2.data)->id);
