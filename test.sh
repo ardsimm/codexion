@@ -36,8 +36,7 @@ echo "🔥  [HARD] Burnout edge cases"
 echo "--------------------------------------------"
 run_test "4 1000 100 300 200 2 400 edf"   "4 philo — hard 25%"
 run_test "4 1000 300 100 100 2 200 edf"   "4 philo — hard 35%"
-echo "  ⏭  SKIP (argument manquant): 4 400 100 189 110 4 95"
-((SKIP++))
+run_test "4 400 100 189 110 4 95 edf"    "4 philo — hard 45%"
 
 # ─── MID ───────────────────────────────────────
 echo ""
