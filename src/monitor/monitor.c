@@ -105,11 +105,15 @@ int	monitor_simulation(t_ctx *ctx)
 {
 	pthread_t	*threads;
 
+	ft_log_debug(&ctx->shared, "Monitor starting", NULL);
 	pthread_mutex_lock(&ctx->shared.start);
+	ft_log_debug(&ctx->shared, "Creating threads...", NULL);
 	threads = create_threads(ctx);
 	if (!threads)
 		return (FAILURE);
+	ft_log_debug(&ctx->shared, "Threads created", NULL);
 	pthread_mutex_unlock(&ctx->shared.start);
+	ft_log_debug(&ctx->shared, "Threads started", NULL);
 	while (!should_stop(ctx))
 		usleep(10);
 	ft_log_debug(&ctx->shared, "joining threads...", NULL);

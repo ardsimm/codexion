@@ -41,27 +41,6 @@ static void	take_dongles(t_coder *self)
 	}
 }
 
-// bool	can_take_dongle_lock(t_coder *self, t_dongle *dongle)
-// {
-// 	bool	value;
-//
-// 	pthread_mutex_lock(&dongle->mutex);
-// 	value = can_take_dongle(self, dongle);
-// 	pthread_mutex_unlock(&dongle->mutex);
-// 	return (value);
-// }
-//
-//
-// static void	take_dongles(t_coder *self)
-// {
-// 	while (get_bool_value(&self->shared->run, &self->shared->mutex)
-// 		&& !can_take_dongle_lock(self, self->dongle_left)
-// 		&& !can_take_dongle_lock(self, self->dongle_right))
-// 			usleep(10);
-// 	take_dongle(self, self->dongle_left);
-// 	take_dongle(self, self->dongle_right);
-// }
-
 void	compile(t_coder *self)
 {
 	request_dongle(self, self->dongle_left);

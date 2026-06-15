@@ -11,12 +11,11 @@
 /* ************************************************************************** */
 
 #include "headers/lib.h"
-#include <pthread.h>
 
-void	dongle_free(t_dongle dongle)
+static void	dongle_free(t_dongle *dongle)
 {
-	hq_free(dongle.hq);
-	pthread_mutex_destroy(&dongle.mutex);
+	hq_free(dongle->hq);
+	pthread_mutex_destroy(&dongle->mutex);
 }
 
 void	dongles_free(t_dongle *dongles, size_t size)
@@ -25,5 +24,5 @@ void	dongles_free(t_dongle *dongles, size_t size)
 
 	i = 0;
 	while (i < size)
-		dongle_free(dongles[i++]);
+		dongle_free(&(dongles[i++]));
 }

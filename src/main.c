@@ -31,7 +31,7 @@ int	main(int ac, char **av)
 		ft_log_error(NULL, "Initialization error", NULL);
 		return ((int)free_return_int((void *[]){ctx}, 1, EXIT_FAILURE));
 	}
-	if (ctx->shared.coders_count <= 1)
+	if (ctx->shared.coders_count < 1)
 		return (raise_error(&ctx->shared,
 				"cannot run the simulation with less than 2 coders"));
 	exit_value = EXIT_SUCCESS;

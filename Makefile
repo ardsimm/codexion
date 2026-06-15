@@ -1,7 +1,7 @@
 # ========== FLAGS ==========
 
 # ---------- CLANG ----------
-CFLAGS ?=	-Wall -Wextra -Werror
+CFLAGS ?=	-Wall -Wextra -Werror -pthread
 
 # ---------- VALGRIND ----------
 VGFLAGS =	--leak-check=full \
@@ -10,7 +10,9 @@ VGFLAGS =	--leak-check=full \
 			--track-origins=yes \
 			--show-leak-kinds=all \
 
-HGFLAGS =	--tool=helgrind \
+HGFLAGS =	--tool=helgrind -s \
+
+DRDFLAGS =	--tool=drd -s \
 
 # ========== PROGRAM ARGUMENTS ==========
 
@@ -115,7 +117,6 @@ ALL_FILES =			$(DONGLES_FILES) \
 					$(SCHEDULERS_FILES) \
 					$(MUTEX_FILES) \
 					$(MAIN_FILES) \
-					src/ft_malloc.c
 
 # ========== OBJ ==========
 
@@ -167,6 +168,9 @@ vg: $(NAME_VG)
 
 hg: $(NAME_VG)
 	valgrind $(HGFLAGS) ./$(NAME_VG) $(ARGUMENTS)
+
+drd: $(NAME_VG)
+	valgrind $(DRDFLAGS) ./$(NAME_VG) $(ARGUMENTS)
 
 $(NAME_MAIN): $(SRCS_OBJ)
 	@echo "\033[1;32m[LINKING]\033[0m $@"

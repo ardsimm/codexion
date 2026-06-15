@@ -33,9 +33,9 @@ static int	ft_log(t_shared_ctx *ctx, size_t *coder_id, char *str,
 	pthread_mutex_lock(&ctx->logging_mutex);
 	curr_usec_delta = (get_time_us() - ctx->timestamp_start) / 1000;
 	if (coder_id)
-		fprintf(args.print_f, "%ld %zu %s\n", curr_usec_delta, *coder_id, str);
+		fprintf(args.print_f, "%zu %zu %s\n", curr_usec_delta, *coder_id, str);
 	else
-		fprintf(args.print_f, "%ld %s\n", curr_usec_delta, str);
+		fprintf(args.print_f, "%zu %s\n", curr_usec_delta, str);
 	pthread_mutex_unlock(&ctx->logging_mutex);
 	pthread_mutex_unlock(&ctx->mutex);
 	return (SUCCESS);

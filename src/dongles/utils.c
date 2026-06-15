@@ -6,7 +6,7 @@
 /*   By: smenard <your@email.com>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/19 15:53:03 by smenard           #+#    #+#             */
-/*   Updated: 2026/05/29 15:34:46 by smenard          ###   ########.fr       */
+/*   Updated: 2026/05/29 153446 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ static bool	dongle_cooldown_passed(long last_use_ts, size_t dongle_cooldown)
 
 bool	can_take_dongle(t_coder *coder, t_dongle *dongle)
 {
-	return (!dongle->in_use
+	return (dongle
+		&& !dongle->in_use
 		&& ((t_coder *)dongle->hq->data[0].data)->id == coder->id
 		&& dongle_cooldown_passed(dongle->last_use_timestamp,
 			coder->shared->dongle_cooldown));
@@ -43,23 +44,6 @@ int	request_dongle(t_coder *coder, t_dongle *dongle)
 	ft_log_debug(coder->shared, "requested a dongle", &dongle->id);
 	pthread_mutex_unlock(&dongle->mutex);
 	return (result);
-}
-
-int	take_dongle(t_coder *coder, t_dongle *dongle)
-{
-	if (!get_bool_value(&coder->shared->run, &coder->shared->mutex))
-		return (FAILURE);
-	pthread_mutex_lock(&dongle->mutex);
-	if (!can_take_dongle(coder, dongle))
-	{
-		pthread_mutex_unlock(&dongle->mutex);
-		return (FAILURE);
-	}
-	dongle->in_use = true;
-	hq_pop(dongle->hq);
-	pthread_mutex_unlock(&dongle->mutex);
-	ft_log_info(coder->shared, "has taken a dongle", &coder->id);
-	return (SUCCESS);
 }
 
 int	release_dongle(t_dongle *dongle)

@@ -20,10 +20,14 @@ void	*coder_routine(void *data)
 
 	i = 0;
 	self = (t_coder *)data;
+	ft_log_debug(self->shared, "Routine begins", &self->id);
+	ft_log_debug(self->shared, "Waiting for signal from monitor", &self->id);
 	pthread_mutex_lock(&self->shared->start);
 	pthread_mutex_unlock(&self->shared->start);
 	set_size_t_value(&self->last_compile_timestamp, get_time_us(),
 		&self->mutex);
+	if (self->dongle_left == self->dongle_right)
+		return (NULL);
 	if (self->id % 2)
 		usleep(self->shared->time_to_compile);
 	while (get_bool_value(&self->shared->run, &self->shared->mutex)
