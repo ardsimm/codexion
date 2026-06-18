@@ -6,7 +6,7 @@
 /*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 13:07:09 by smenard           #+#    #+#             */
-/*   Updated: 2026/05/29 15:15:55 by smenard          ###   ########.fr       */
+/*   Updated: 2026/06/18 12:32:25 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,12 +73,12 @@ typedef struct e_typed_voidp
 typedef struct s_shared_ctx
 {
 	uint32_t			coders_count;
-	uint32_t			time_to_burnout;
-	uint32_t			time_to_compile;
-	uint32_t			time_to_debug;
-	uint32_t			time_to_refactor;
-	uint32_t			number_of_compiles;
-	uint32_t			dongle_cooldown;
+	size_t				time_to_burnout;
+	size_t				time_to_compile;
+	size_t				time_to_debug;
+	size_t				time_to_refactor;
+	size_t				number_of_compiles;
+	size_t				dongle_cooldown;
 	bool				logging_active;
 	size_t				timestamp_start;
 	bool				run;
@@ -129,7 +129,7 @@ typedef struct s_coder
  *     from the beggining of the simulation
  *     or the start of their last compilation
  *
- *   - {time_to_compile}: Time required by the coders for the compile task
+ *   - {time_to_compile}1: Time required by the coders for the compile task
  *
  *   - {time_to_debug}: Time required by the coders for the debug task
  *

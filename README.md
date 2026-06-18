@@ -1,4 +1,4 @@
-*This project has been created as part of the 42 curriculum by sm*This project has been created as part of the 42 curriculum by smenard.*
+*This project has been created as part of the 42 curriculum by smenard.*
 
 # Codexion
 
@@ -7,8 +7,7 @@
 Codexion is a concurrency simulation inspired by the classic Dining Philosophers
 problem. Multiple coders sit around a shared Quantum Compiler, each needing two
 USB dongles simultaneously to compile their code. The challenge is to orchestrate
-resource sharing using POSIX threads, mutexes, and condition variables
-— preventing deadlocks, starvation, and burnout.
+resource sharing using POSIX threads, mutexes, preventing deadlocks, starvation, and burnout.
 
 Each coder cycles through three phases: **compiling** (requires 2 dongles),
 **debugging**, and **refactoring**. A coder burns out if they don't start
@@ -100,7 +99,7 @@ Two complementary fixes address this. First, every coder always picks up their
 left dongle before their right. On its own this is not enough to break
 circularity, but combined with the second fix it guarantees that whoever holds a
 left dongle will eventually get the matching right one. Second, coders with an
-odd ID wait for half the compile duration before starting. This stagger creates a
+odd ID wait for the compile duration before starting. This stagger creates a
 natural alternation between even and odd coders, giving each pair enough time to
 acquire both dongles before the other side can compete for them.
 

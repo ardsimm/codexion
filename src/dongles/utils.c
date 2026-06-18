@@ -22,8 +22,7 @@ static bool	dongle_cooldown_passed(long last_use_ts, size_t dongle_cooldown)
 
 bool	can_take_dongle(t_coder *coder, t_dongle *dongle)
 {
-	return (dongle
-		&& !dongle->in_use
+	return (dongle && !dongle->in_use
 		&& ((t_coder *)dongle->hq->data[0].data)->id == coder->id
 		&& dongle_cooldown_passed(dongle->last_use_timestamp,
 			coder->shared->dongle_cooldown));

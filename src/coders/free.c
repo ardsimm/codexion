@@ -1,30 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   coders_lib.h                                       :+:      :+:    :+:   */
+/*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/05/20 17:29:21 by smenard           #+#    #+#             */
-/*   Updated: 2026/06/18 12:38:20 by smenard          ###   ########.fr       */
+/*   Created: 2026/06/18 12:48:50 by smenard           #+#    #+#             */
+/*   Updated: 2026/06/18 12:49:09 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CODERS_LIB_H
-# define CODERS_LIB_H
+#include "headers/lib.h"
 
-# include "headers/lib.h"
+static void	free_coder(t_coder *coder)
+{
+	pthread_mutex_destroy(&coder->mutex);
+}
 
-/* tasks.c */
-void		compile(t_coder *self);
-void		debug(t_coder *self);
-void		refactor(t_coder *self);
+void	coders_free(t_coder *coders, size_t size)
+{
+	size_t	i;
 
-/* routine.c */
-bool		should_continue(t_shared_ctx *shared);
-
-/* utils.c */
-t_dongle	*get_first_dongle(t_coder *coder);
-t_dongle	*get_second_dongle(t_coder *coder);
-
-#endif
+	i = 0;
+	while (i < size)
+		free_coder(&coders[i++]);
+}

@@ -87,6 +87,7 @@ LOGGING_FILES =		$(MAIN_DIR)/$(LOGGING_DIR)/logging.c \
 CODERS_FILES =		$(MAIN_DIR)/$(CODERS_DIR)/routine.c \
 					$(MAIN_DIR)/$(CODERS_DIR)/tasks.c \
 					$(MAIN_DIR)/$(CODERS_DIR)/utils.c \
+					$(MAIN_DIR)/$(CODERS_DIR)/free.c \
 
 
 MONITOR_FILES =		$(MAIN_DIR)/$(MONITOR_DIR)/monitor.c \
@@ -155,13 +156,13 @@ run: $(NAME_MAIN)
 	./$(NAME_MAIN) $(ARGUMENTS)
 
 $(NAME_DEBUG): $(ALL_FILES)
-	$(CC) -g $(CLFAGS) $(ALL_FILES) -o $(NAME_DEBUG) $(INCLUDES) -DLOG_LEVEL=0
+	$(CC) -g $(CFLAGS) $(ALL_FILES) -o $(NAME_DEBUG) $(INCLUDES) -DLOG_LEVEL=0
 
 debug: $(NAME_DEBUG)
 	gdb $(NAME_DEBUG) --args $(NAME_DEBUG) $(ARGUMENTS)
 
 $(NAME_VG): $(ALL_FILES)
-	$(CC) -g $(CLFAGS) $(ALL_FILES) -o $(NAME_VG) $(INCLUDES) $(COMPILE_D)
+	$(CC) -g $(CFLAGS) $(ALL_FILES) -o $(NAME_VG) $(INCLUDES) $(COMPILE_D)
 
 vg: $(NAME_VG)
 	valgrind $(VGFLAGS) ./$(NAME_VG) $(ARGUMENTS)

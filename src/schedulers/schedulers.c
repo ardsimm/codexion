@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   schedulers.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smenard <smenard@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/05/20 15:22:23 by smenard           #+#    #+#             */
-/*   Updated: 2026/05/29 15:17:57 by smenard          ###   ########.fr       */
+/*   Created: 2026/06/18 12:50:14 by smenard           #+#    #+#             */
+/*   Updated: 2026/06/18 12:50:17 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,12 @@ size_t	get_key_fifo(void *el)
 
 size_t	get_key_edf(void *el)
 {
-	const t_coder	*coder = (const t_coder *)el;
+	t_coder	*coder;
+	size_t	key;
 
-	return (coder->last_compile_timestamp + coder->shared->time_to_burnout);
+	coder = (t_coder *)el;
+	pthread_mutex_lock(&coder->mutex);
+	key = coder->last_compile_timestamp + coder->shared->time_to_burnout;
+	pthread_mutex_unlock(&coder->mutex);
+	return (key);
 }

@@ -1,29 +1,22 @@
-//* ************************************************************************** */
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smenard <smenard@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: smenard <smenard@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/05/20 15:20:03 by smenard           #+#    #+#             */
-/*   Updated: 2026/05/20 17:26:03 by smenard          ###   ########.fr       */
+/*   Created: 2026/06/18 12:49:42 by smenard           #+#    #+#             */
+/*   Updated: 2026/06/18 12:53:36 by smenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "headers/lib.h"
 #include "init/headers/init_lib.h"
 
-static int	free_ctx_return(t_ctx *ctx, int value)
-{
-	free(ctx->coders);
-	free(ctx->dongles);
-	return (value);
-}
-
 static int	handle_dongle_memory_allocation_failed(t_ctx *ctx)
 {
 	dongles_free(ctx->dongles, ctx->shared.coders_count);
-	return (free_ctx_return(ctx, FAILURE));
+	return (FAILURE);
 }
 
 static int	handle_dongle_mutex_init_failed(t_ctx *ctx, int i)
@@ -32,7 +25,7 @@ static int	handle_dongle_mutex_init_failed(t_ctx *ctx, int i)
 	{
 		hq_free(ctx->dongles[--i].hq);
 	}
-	return (free_ctx_return(ctx, FAILURE));
+	return (FAILURE);
 }
 
 int	init(t_ctx *ctx)
@@ -53,6 +46,13 @@ int	init(t_ctx *ctx)
 		return (handle_dongle_mutex_init_failed(ctx, i));
 	i = 0;
 	while (((size_t)i) < ctx->shared.coders_count)
-		init_coder(i++, ctx);
+	{
+		if (init_coder(i++, ctx) != SUCCESS)
+		{
+			dongles_free(ctx->dongles, ctx->shared.coders_count);
+			coders_free(ctx->coders, i);
+			return (FAILURE);
+		}
+	}
 	return (SUCCESS);
 }
